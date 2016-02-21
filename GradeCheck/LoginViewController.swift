@@ -80,7 +80,6 @@ class LoginViewController: UIViewController {
                     dispatch_async(dispatch_get_main_queue(), {
                         do{
                             self.jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
-                            print(self.jsonDict);
                             if(self.keychain.getPasscode("GCPassword") == "" || self.keychain.getPasscode("GCUsername") == ""){
                                 self.keychain.setPasscode("GCPassword", passcode: pass)
                                 self.keychain.setPasscode("GCUsername", passcode: user)
@@ -104,14 +103,19 @@ class LoginViewController: UIViewController {
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if(segue.identifier == "LoginSegue"){
+            let viewcontroller = segue.destinationViewController as! GradeViewController
+            viewcontroller.grades = self.jsonDict;
+            
+        }
     }
-    */
+    
 
 }

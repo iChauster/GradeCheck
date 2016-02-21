@@ -19,6 +19,7 @@
 		EDBE86091C7A4B9A0031EE8B /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE86081C7A4B9A0031EE8B /* Keychain.swift */; };
 		EDBE860B1C7A5ADD0031EE8B /* GradeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE860A1C7A5ADD0031EE8B /* GradeTableViewController.swift */; };
 		EDBE860D1C7A5BB60031EE8B /* GradeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE860C1C7A5BB60031EE8B /* GradeTableViewCell.swift */; };
+		EDBE86101C7A5F2B0031EE8B /* GradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE860F1C7A5F2B0031EE8B /* GradeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		EDBE86081C7A4B9A0031EE8B /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		EDBE860A1C7A5ADD0031EE8B /* GradeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeTableViewController.swift; sourceTree = "<group>"; };
 		EDBE860C1C7A5BB60031EE8B /* GradeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeTableViewCell.swift; sourceTree = "<group>"; };
+		EDBE860F1C7A5F2B0031EE8B /* GradeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 				EDBE85DF1C78ED280031EE8B /* AppDelegate.swift */,
 				EDBE860E1C7A5BC30031EE8B /* GradeTable */,
 				EDBE85FF1C7A2A150031EE8B /* LoginViewController.swift */,
+				EDBE860F1C7A5F2B0031EE8B /* GradeViewController.swift */,
 				EDBE86081C7A4B9A0031EE8B /* Keychain.swift */,
 				EDBE85E31C78ED280031EE8B /* Main.storyboard */,
 				EDBE86031C7A2D5D0031EE8B /* art */,
@@ -238,6 +241,7 @@
 				EDBE86001C7A2A150031EE8B /* LoginViewController.swift in Sources */,
 				EDBE85E01C78ED280031EE8B /* AppDelegate.swift in Sources */,
 				EDBE86091C7A4B9A0031EE8B /* Keychain.swift in Sources */,
+				EDBE86101C7A5F2B0031EE8B /* GradeViewController.swift in Sources */,
 				EDBE860B1C7A5ADD0031EE8B /* GradeTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

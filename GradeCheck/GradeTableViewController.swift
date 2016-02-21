@@ -9,10 +9,11 @@
 import UIKit
 
 class GradeTableViewController: UITableViewController {
-
+    
+    var gradeArray : NSArray!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print(gradeArray)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -29,23 +30,24 @@ class GradeTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return gradeArray.count;
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("ClassCell", forIndexPath: indexPath) as! GradeTableViewCell;
+        let element = gradeArray[indexPath.row] as! NSDictionary;
+        cell.classg.text = element.objectForKey("class") as? String;
+        cell.grade.text = element.objectForKey("grade") as? String;
+        cell.teacher.text = element.objectForKey("teacher") as? String;
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
