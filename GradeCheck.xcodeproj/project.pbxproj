@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED7AA2081C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7AA2071C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift */; };
+		ED7AA20B1C83986D001B2E68 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = ED7AA20A1C83986D001B2E68 /* calendar.png */; };
+		ED7AA20D1C84E9CF001B2E68 /* CellAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7AA20C1C84E9CF001B2E68 /* CellAnimation.swift */; };
 		EDBE85E01C78ED280031EE8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE85DF1C78ED280031EE8B /* AppDelegate.swift */; };
 		EDBE85E51C78ED280031EE8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDBE85E31C78ED280031EE8B /* Main.storyboard */; };
 		EDBE85E71C78ED280031EE8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDBE85E61C78ED280031EE8B /* Assets.xcassets */; };
@@ -20,6 +23,7 @@
 		EDBE860B1C7A5ADD0031EE8B /* GradeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE860A1C7A5ADD0031EE8B /* GradeTableViewController.swift */; };
 		EDBE860D1C7A5BB60031EE8B /* GradeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE860C1C7A5BB60031EE8B /* GradeTableViewCell.swift */; };
 		EDBE86101C7A5F2B0031EE8B /* GradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE860F1C7A5F2B0031EE8B /* GradeViewController.swift */; };
+		EDBE86121C7A9B230031EE8B /* AssignmentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE86111C7A9B230031EE8B /* AssignmentsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +37,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED7AA2071C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsTableViewCell.swift; sourceTree = "<group>"; };
+		ED7AA20A1C83986D001B2E68 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
+		ED7AA20C1C84E9CF001B2E68 /* CellAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellAnimation.swift; sourceTree = "<group>"; };
 		EDBE85DC1C78ED280031EE8B /* GradeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDBE85DF1C78ED280031EE8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDBE85E41C78ED280031EE8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -50,6 +57,7 @@
 		EDBE860A1C7A5ADD0031EE8B /* GradeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeTableViewController.swift; sourceTree = "<group>"; };
 		EDBE860C1C7A5BB60031EE8B /* GradeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeTableViewCell.swift; sourceTree = "<group>"; };
 		EDBE860F1C7A5F2B0031EE8B /* GradeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeViewController.swift; sourceTree = "<group>"; };
+		EDBE86111C7A9B230031EE8B /* AssignmentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AssignmentsTableViewController.swift; path = ../AssignmentsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +78,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED7AA2091C7E9C0B001B2E68 /* Assignments */ = {
+			isa = PBXGroup;
+			children = (
+				EDBE86111C7A9B230031EE8B /* AssignmentsTableViewController.swift */,
+				ED7AA2071C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift */,
+			);
+			name = Assignments;
+			sourceTree = "<group>";
+		};
 		EDBE85D31C78ED260031EE8B = {
 			isa = PBXGroup;
 			children = (
@@ -93,9 +110,11 @@
 			children = (
 				EDBE85DF1C78ED280031EE8B /* AppDelegate.swift */,
 				EDBE860E1C7A5BC30031EE8B /* GradeTable */,
+				ED7AA2091C7E9C0B001B2E68 /* Assignments */,
 				EDBE85FF1C7A2A150031EE8B /* LoginViewController.swift */,
 				EDBE860F1C7A5F2B0031EE8B /* GradeViewController.swift */,
 				EDBE86081C7A4B9A0031EE8B /* Keychain.swift */,
+				ED7AA20C1C84E9CF001B2E68 /* CellAnimation.swift */,
 				EDBE85E31C78ED280031EE8B /* Main.storyboard */,
 				EDBE86031C7A2D5D0031EE8B /* art */,
 				EDBE85E61C78ED280031EE8B /* Assets.xcassets */,
@@ -117,6 +136,7 @@
 		EDBE86031C7A2D5D0031EE8B /* art */ = {
 			isa = PBXGroup;
 			children = (
+				ED7AA20A1C83986D001B2E68 /* calendar.png */,
 				EDBE86041C7A2F870031EE8B /* appicon.png */,
 				EDBE86061C7A46B10031EE8B /* back1.png */,
 				EDBE86011C7A2D460031EE8B /* background.png */,
@@ -214,6 +234,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED7AA20B1C83986D001B2E68 /* calendar.png in Resources */,
 				EDBE86071C7A46B10031EE8B /* back1.png in Resources */,
 				EDBE86051C7A2F870031EE8B /* appicon.png in Resources */,
 				EDBE85EA1C78ED280031EE8B /* LaunchScreen.storyboard in Resources */,
@@ -237,10 +258,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED7AA2081C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift in Sources */,
+				EDBE86121C7A9B230031EE8B /* AssignmentsTableViewController.swift in Sources */,
 				EDBE860D1C7A5BB60031EE8B /* GradeTableViewCell.swift in Sources */,
 				EDBE86001C7A2A150031EE8B /* LoginViewController.swift in Sources */,
 				EDBE85E01C78ED280031EE8B /* AppDelegate.swift in Sources */,
 				EDBE86091C7A4B9A0031EE8B /* Keychain.swift in Sources */,
+				ED7AA20D1C84E9CF001B2E68 /* CellAnimation.swift in Sources */,
 				EDBE86101C7A5F2B0031EE8B /* GradeViewController.swift in Sources */,
 				EDBE860B1C7A5ADD0031EE8B /* GradeTableViewController.swift in Sources */,
 			);
@@ -430,6 +454,7 @@
 				EDBE85FB1C78ED2A0031EE8B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EDBE85FC1C78ED2A0031EE8B /* Build configuration list for PBXNativeTarget "GradeCheckUITests" */ = {
 			isa = XCConfigurationList;
@@ -438,6 +463,7 @@
 				EDBE85FE1C78ED2A0031EE8B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
