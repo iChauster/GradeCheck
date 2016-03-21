@@ -24,9 +24,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             key.setPasscode("GCPassword", passcode: "");
             
         }
+            let types: UIUserNotificationType = [.Alert, .Badge, .Sound]
+            let settings = UIUserNotificationSettings(forTypes: types, categories: nil)
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
+       
         return true
     }
-
+    
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        print("ayy");
+        NSUserDefaults.standardUserDefaults().setBool(true,forKey:"PushNotifs");
+        NSUserDefaults.standardUserDefaults().setObject(deviceToken, forKey: "deviceToken");
+        print(deviceToken)
+        
+    }
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("push notifs failed")
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "PushNotifs");
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

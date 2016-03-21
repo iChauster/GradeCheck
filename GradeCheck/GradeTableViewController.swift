@@ -89,6 +89,23 @@ class GradeTableViewController: UITableViewController {
                         }
                     })
                     
+                }else if(httpResponse?.statusCode == 440){
+                    dispatch_async(dispatch_get_main_queue(), {
+                        do{
+                            let cookie = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            print(cookie);
+                            let cooke = cookie[0] as! NSDictionary
+                            let hafl = cooke.objectForKey("set-cookie") as! NSArray;
+                            self.cookie = hafl[0] as! String;
+                            print(self.cookie);
+                            self.refresh();
+                            
+                            self.refreshControl?.endRefreshing()
+                        }catch{
+                            
+                        }
+                    })
+
                 }
             }
         })

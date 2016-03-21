@@ -22,6 +22,8 @@ class GradeViewController: UITabBarController {
         assignments.cookie = cookieArray![0] as? String;
         assignments.id = cookieID.objectForKey("id") as? String;
         print(cookieID.objectForKey("id") as? String);
+        let stats = self.viewControllers?[2] as! StatViewController
+        stats.gradesArray = grades;
 
 
         // Do any additional setup after loading the view.

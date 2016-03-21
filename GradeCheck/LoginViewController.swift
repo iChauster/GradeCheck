@@ -12,6 +12,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usn : UITextField!
     @IBOutlet weak var psw : UITextField!
     @IBOutlet weak var login : UIButton!
+    @IBOutlet weak var regist : UIButton!
     let keychain = Keychain()
     var jsonDict : NSArray!
     var loggedIn = false;
@@ -31,21 +32,85 @@ class LoginViewController: UIViewController {
             self.makeLoginRequestWithParams(self.usn.text!, pass: self.psw.text!);
         }
     }
+    @IBAction func register(sender:UIButton!){
+        NSLog("clicked");
+        NSLog(usn!.text!);
+        NSLog(psw.text!);
+        self.usn.resignFirstResponder()
+        self.psw.resignFirstResponder()
+        if(self.usn.text == "" || self.psw.text == ""){
+            let alert = UIAlertController(title: "funni", message: "Are you really?", preferredStyle: .Alert);
+            let o = UIAlertAction(title: "srry", style: .Default, handler: nil);
+            alert.addAction(o)
+            self.presentViewController(alert, animated: true, completion: nil);
+            return;
+        }else{
+            let headers = [
+                "cache-control": "no-cache",
+                "content-type": "application/x-www-form-urlencoded"
+            ]
+            let usernameString = "username=" + usn!.text!
+            let passwordString = "&password=" + psw.text!
+            let postData = NSMutableData(data: usernameString.dataUsingEncoding(NSUTF8StringEncoding)!)
+            postData.appendData(passwordString.dataUsingEncoding(NSUTF8StringEncoding)!)
+            if(NSUserDefaults.standardUserDefaults().boolForKey("PushNotifs")){
+                let deviceTokenString = "&deviceToken=" + (NSUserDefaults.standardUserDefaults().objectForKey("deviceToken") as! String)
+                postData.appendData(deviceTokenString.dataUsingEncoding(NSUTF8StringEncoding)!)
+            }
+            
+            
+            let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/register")!,
+                cachePolicy: .UseProtocolCachePolicy,
+                timeoutInterval: 10.0)
+            request.HTTPMethod = "POST"
+            request.allHTTPHeaderFields = headers
+            request.HTTPBody = postData
+            
+            let session = NSURLSession.sharedSession()
+            let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+                if (error != nil) {
+                    print(error)
+                } else {
+                    let httpResponse = response as? NSHTTPURLResponse
+                    print(httpResponse)
+                    if(httpResponse?.statusCode == 200){
+                        dispatch_async(dispatch_get_main_queue(), {
+                                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasRegistered")
+                                NSUserDefaults.standardUserDefaults().synchronize()
+                                self.makeLoginRequestWithParams(self.usn!.text!, pass: self.psw.text!)
+                        })
+                    }
+                }
+            })
+            
+            dataTask.resume()
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         UIGraphicsBeginImageContext(self.view.frame.size);
         let image = UIImage(named: "back1.png")
         image?.drawInRect(self.view.bounds)
         UIGraphicsEndImageContext()
-        self.login.layer.cornerRadius = 0.5 * login.bounds.size.width
-        if(self.keychain.getPasscode("GCUsername")! != "" && self.keychain.getPasscode("GCPassword")! != ""){
-            makeLoginRequestWithParams(self.keychain.getPasscode("GCUsername")! as String, pass: self.keychain.getPasscode("GCPassword")! as String);
-            print(self.keychain.getPasscode("GCUsername"))
-            print(self.keychain.getPasscode("GCPassword"))
-        }
-        // This could also be another view, connected with an outlet
         self.view.backgroundColor = UIColor(patternImage: image!)
-        // Do any additional setup after loading the view.
+        if(!NSUserDefaults.standardUserDefaults().boolForKey("HasRegistered")){
+            self.login.hidden = true
+            self.regist.hidden = false
+            self.regist.layer.cornerRadius = 0.5 * self.regist.bounds.size.width;
+        }else{
+            self.regist.hidden = true
+            
+            self.login.layer.cornerRadius = 0.5 * login.bounds.size.width
+            if(self.keychain.getPasscode("GCUsername")! != "" && self.keychain.getPasscode("GCPassword")! != ""){
+                makeLoginRequestWithParams(self.keychain.getPasscode("GCUsername")! as String, pass: self.keychain.getPasscode("GCPassword")! as String);
+                print(self.keychain.getPasscode("GCUsername"))
+                print(self.keychain.getPasscode("GCPassword"))
+            }
+            // This could also be another view, connected with an outlet
+            
+            // Do any additional setup after loading the view.
+        }
     }
 
     override func didReceiveMemoryWarning() {
