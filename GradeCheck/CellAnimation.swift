@@ -69,7 +69,7 @@ class CellAnimation {
             view.layer.opacity = 1
         }
     }
-    class func growAndShrink(view:GPAView){
+    class func growAndShrink(view:UIView){
         UIView.animateKeyframesWithDuration(0.4, delay: 0.0, options: .CalculationModeLinear, animations: {
             UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: { () -> Void in
                 view.layer.transform = CATransform3DIdentity

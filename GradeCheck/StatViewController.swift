@@ -8,18 +8,60 @@
 
 import UIKit
 
+class Grade : NSObject {
+    var grade : Int!
+    var classTitle : String!
+    init(grade:Int, className:String){
+        self.grade = grade;
+        self.classTitle = className;
+    }
+}
+
 class StatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var gpaCircle : GPAView!
     @IBOutlet weak var statTable : UITableView!
     var gradesArray = NSArray();
+    var sortedArray : [Grade] = [];
     override func viewDidLoad() {
         super.viewDidLoad()
         self.gpaCircle.layer.cornerRadius = 0.5 * gpaCircle.bounds.size.width;
         self.statTable.dataSource = self;
         self.statTable.delegate = self;
+        
+        self.getGPA()
+        // Do any additional setup after loading the view.
+    }
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("StatClassCell", forIndexPath: indexPath) as! StatTableViewCell;
+        let element = self.sortedArray[indexPath.row] ;
+        cell.classTitle.text = element.classTitle
+        let g = element.grade
+            switch Int(g){
+            case 0..<50:
+                cell.backgroundColor = UIColor.blackColor()
+            case 51..<75 :
+                cell.backgroundColor = UIColor.redColor()
+            case 76..<85 :
+                cell.backgroundColor = UIColor.yellowColor()
+            case 86..<110 :
+                cell.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
+            default :
+                cell.backgroundColor = UIColor.purpleColor()
+            }
+       
+        return cell
+    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sortedArray.count;
+    }
+    override func viewDidAppear(animated: Bool) {
+        self.getGPA()
+    }
+    func getGPA(){
         var gradeTotal = 0.0;
         var classes = 0;
         var gpaTotal = 0.0;
+        self.sortedArray = [];
         for var i = 0; i < gradesArray.count; ++i{
             if(i == 0){
                 continue;
@@ -29,8 +71,10 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             print(a);
             var grade : String!;
             var gradeInt : Int!;
-
+            
             if(a.objectForKey("grade") as! String == "No Grades"){
+                let new = Grade(grade: 0, className: gradesArray[i].objectForKey("class") as! String);
+                self.sortedArray.append(new)
                 continue;
             }
             if(a.objectForKey("class")!.containsString(" H") || a.objectForKey("class")!.containsString("AP") || a.objectForKey("class")!.containsString("Honors") || a.objectForKey("class")!.containsString("Hon")){
@@ -39,6 +83,8 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 print(grade);
                 gradeInt = Int(grade)! + 5;
                 gradeTotal += Double(gradeInt);
+                let new = Grade(grade: gradeInt, className: a.objectForKey("class") as! String);
+                self.sortedArray.append(new);
                 if(gradeInt > 100){
                     gradeInt = 100;
                 }
@@ -50,6 +96,8 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 grade = String(grade.characters.dropLast());
                 print(grade);
                 gradeInt = Int(grade)!;
+                let new = Grade(grade: gradeInt, className: a.objectForKey("class") as! String);
+                self.sortedArray.append(new);
                 gradeTotal += Double(gradeInt);
                 if(gradeInt > 95){
                     gradeInt = 95;
@@ -57,8 +105,9 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 gpaTotal += Double(gradeInt);
                 ++classes;
             }
+            
         }
-
+        
         let average = gradeTotal/Double(classes);
         print(average);
         print(round(average))
@@ -72,34 +121,11 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         CellAnimation.growAndShrink(self.gpaCircle);
         self.gpaCircle.GPA.text = String(gpa)
         self.gpaCircle.avg.text = String(average) + "%";
-        // Do any additional setup after loading the view.
-    }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("StatClassCell", forIndexPath: indexPath) as! StatTableViewCell;
-        let element = self.gradesArray[indexPath.row + 1] as! NSDictionary;
-        cell.classTitle.text = element.objectForKey("class") as? String
-        var g = element.objectForKey("grade") as! String
-        if(g.containsString("%")){
-            g = String(g.characters.dropLast());
-            switch Int(g)!{
-            case 0..<50:
-                cell.backgroundColor = UIColor.blackColor()
-            case 51..<75 :
-                cell.backgroundColor = UIColor.redColor()
-            case 76..<85 :
-                cell.backgroundColor = UIColor.yellowColor()
-            case 86..<110 :
-                cell.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
-            default :
-                cell.backgroundColor = UIColor.purpleColor()
-            }
-        }else{
-            cell.backgroundColor = UIColor.blackColor()
+        self.sortedArray.sortInPlace { (element, second) -> Bool in
+            return element.grade > second.grade
         }
-        return cell
-    }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gradesArray.count;
+        self.statTable.reloadData()
+
     }
     
 

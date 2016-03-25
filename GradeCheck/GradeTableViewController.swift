@@ -15,12 +15,11 @@ class GradeTableViewController: UITableViewController {
     var id : String!
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(gradeArray)
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.backgroundColor = UIColor.blackColor()
         self.refreshControl!.tintColor = UIColor.whiteColor()
         self.refreshControl!.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged);
-        
+
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -81,7 +80,6 @@ class GradeTableViewController: UITableViewController {
                     dispatch_async(dispatch_get_main_queue(), {
                         do{
                             self.gradeArray = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
-                            print(self.gradeArray)
                             self.tableView.reloadData()
                             self.refreshControl?.endRefreshing()
                         }catch{
@@ -127,26 +125,55 @@ class GradeTableViewController: UITableViewController {
             switch Int(g)!{
             case 0..<50:
                 cell.views.backgroundColor = UIColor.blackColor()
+                cell.color = UIColor.blackColor()
             case 51..<75 :
                 cell.views.backgroundColor = UIColor.redColor()
+                cell.color = UIColor.redColor()
             case 76..<85 :
                 cell.views.backgroundColor = UIColor.yellowColor()
+                cell.color = UIColor.yellowColor()
             case 86..<110 :
                 cell.views.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
+                cell.color = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
+
             default :
                 cell.views.backgroundColor = UIColor.purpleColor()
+                cell.color = UIColor.purpleColor()
             }
         }else{
             cell.views.backgroundColor = UIColor.blackColor()
+            cell.color = UIColor.blackColor()
         }
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 0.3647, green: 0.8431, blue: 0.3176, alpha: 1.0);
+        backgroundView.alpha = 0.0;
+        cell.selectedBackgroundView = backgroundView
         return cell
     }
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         CellAnimation.animate(cell);
     }
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("GradeSegue", sender: self);
+    }
     
+    // MARK: - Navigation
     
-
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if(segue.identifier == "GradeSegue"){
+            let viewcontroller = segue.destinationViewController as! DetailGradeViewController
+            viewcontroller.data = self.gradeArray[(self.tableView.indexPathForSelectedRow?.row)! + 1] as! NSDictionary
+            let selectedCell = self.tableView.cellForRowAtIndexPath(self.tableView.indexPathForSelectedRow!) as! GradeTableViewCell
+            viewcontroller.color = selectedCell.color;
+            viewcontroller.cookieData = self.gradeArray[0] as! NSDictionary
+            viewcontroller.whole = self.gradeArray;
+            viewcontroller.classtitle = selectedCell.classg.text! + " - " + selectedCell.grade.text!;
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -154,7 +181,6 @@ class GradeTableViewController: UITableViewController {
         return true
     }
     */
-
     /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -166,30 +192,19 @@ class GradeTableViewController: UITableViewController {
         }    
     }
     */
-
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
 
     }
     */
-
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
     }
-    */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
     */
 
 }
