@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailGradeViewController: UIViewController,UITableViewDataSource {
+class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var data : NSDictionary!
     var cookieData : NSDictionary!
     var assignments = NSArray()
@@ -25,6 +25,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource {
         self.navBar.barTintColor = color;
         self.navItem.title = self.classtitle;
         self.assignmentTable.dataSource = self;
+        self.assignmentTable.delegate = self;
         let cookieArray = self.cookieData.objectForKey("cookie") as? NSArray;
         self.cookie = cookieArray![0] as? String;
         self.id = self.cookieData.objectForKey("id") as? String;
@@ -121,7 +122,10 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource {
         
         return cell;
     }
-
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let actualCell = cell as! DetailGradeTableViewCell
+        actualCell.move()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

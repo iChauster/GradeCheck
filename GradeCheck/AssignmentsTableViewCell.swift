@@ -11,7 +11,7 @@ import EventKit
 class AssignmentsTableViewCell: UITableViewCell {
     @IBOutlet weak var title : UILabel!
     @IBOutlet weak var detail : UILabel!
-    @IBOutlet weak var grade : UILabel!
+    @IBOutlet weak var grade : GradeView!
     @IBOutlet weak var course : UILabel!
     @IBOutlet weak var date : UILabel!
     @IBOutlet weak var view : UIView!
@@ -68,7 +68,13 @@ class AssignmentsTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.grade.layer.cornerRadius = 0.5 * self.grade.bounds.size.width;
+        CellAnimation.growAndShrink(self.grade)
+        self.view.layer.cornerRadius = 10;
         // Initialization code
+    }
+    func move(){
+        CellAnimation.growAndShrink(self.grade)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

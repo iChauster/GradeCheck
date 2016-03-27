@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var regist : UIButton!
     let keychain = Keychain()
     var jsonDict : NSArray!
+    var confirmationDict : NSArray!
     var loggedIn = false;
     @IBAction func login(sender:UIButton!){
         NSLog("clicked");
@@ -103,9 +104,14 @@ class LoginViewController: UIViewController {
             
             self.login.layer.cornerRadius = 0.5 * login.bounds.size.width
             if(self.keychain.getPasscode("GCUsername")! != "" && self.keychain.getPasscode("GCPassword")! != ""){
-                makeLoginRequestWithParams(self.keychain.getPasscode("GCUsername")! as String, pass: self.keychain.getPasscode("GCPassword")! as String);
-                print(self.keychain.getPasscode("GCUsername"))
-                print(self.keychain.getPasscode("GCPassword"))
+                if(self.keychain.getPasscode("GCEmail") == ""){
+                    print(self.keychain.getPasscode("GCEmail"))
+                    makeLoginRequestWithParams(self.keychain.getPasscode("GCUsername")! as String, pass: self.keychain.getPasscode("GCPassword")! as String);
+                    print(self.keychain.getPasscode("GCUsername"))
+                    print(self.keychain.getPasscode("GCPassword"))
+                }else{
+                    makeLoginRequestWithParams(self.keychain.getPasscode("GCUsername")as! String, pass: self.keychain.getPasscode("GCPassword")as! String)
+                }
             }
             // This could also be another view, connected with an outlet
             
@@ -123,9 +129,21 @@ class LoginViewController: UIViewController {
             "content-type": "application/x-www-form-urlencoded"
         ]
         let usernameString = "username=" + user
+        print(usernameString)
         let passwordString = "&password=" + pass
+        print(passwordString)
         let postData = NSMutableData(data: usernameString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(passwordString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        if((NSUserDefaults.standardUserDefaults().objectForKey("id")) != nil){
+            let idString = "&id=" + (NSUserDefaults.standardUserDefaults().objectForKey("id") as! String);
+            postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
+            print("good");
+        }
+        if((self.keychain.getPasscode("GCEmail")) != ""){
+            let emailString = "&email=" + (self.keychain.getPasscode("GCEmail") as! String)
+            postData.appendData(emailString.dataUsingEncoding(NSUTF8StringEncoding)!)
+            print("in")
+        }
         
         let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/login")!,
             cachePolicy: .UseProtocolCachePolicy,
@@ -160,6 +178,40 @@ class LoginViewController: UIViewController {
                             
                         }
                     })
+                }else if (httpResponse?.statusCode == 679){
+                    dispatch_async(dispatch_get_main_queue(), {
+                        print("Fetty Wap was here");
+                        do{
+                            self.confirmationDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            if(self.keychain.getPasscode("GCPassword") == "" || self.keychain.getPasscode("GCUsername") == ""){
+                                self.keychain.setPasscode("GCPassword", passcode: pass)
+                                self.keychain.setPasscode("GCUsername", passcode: user)
+                            }
+                            print(self.confirmationDict);
+                            let alert = UIAlertController(title: "Who are you?", message: "You've got siblings, so pick who you are.", preferredStyle: .Alert);
+                            for object in self.confirmationDict {
+                                if((object.objectForKey("username")) != nil){
+                                    
+                                }else{
+                                let id = object.objectForKey("id") as! String;
+                                let name = object.objectForKey("name") as! String;
+                                let o = UIAlertAction(title: id + " , " + name, style: .Default, handler: {(alert:UIAlertAction!) in
+                                    print(id + " " + name)
+                                    NSUserDefaults.standardUserDefaults().setObject(id, forKey: "id");
+                                    self.makeLoginRequestWithParams(self.keychain.getPasscode("GCUsername") as! String, pass: self.keychain.getPasscode("GCPassword")as! String)
+                                    self.updateUser("username", value: id);
+                                    self.updateUser("studId", value: self.keychain.getPasscode("GCUsername")as! String);
+                                });
+                                alert.addAction(o)
+                                }
+                            }
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }catch{
+                            
+                        }
+                    })
+
                 }
             }
         })
@@ -167,7 +219,48 @@ class LoginViewController: UIViewController {
         dataTask.resume()
     }
     
-
+    func updateUser(field : String, value : String){
+        print(field + " " + value);
+        let headers = [
+            "cache-control": "no-cache",
+            "content-type": "application/x-www-form-urlencoded"
+        ]
+        let string = field + "=" + value;
+        print(string)
+        let id = "&id=" + (self.confirmationDict[0].objectForKey("_id") as! String)
+        let postData = NSMutableData(data: string.dataUsingEncoding(NSUTF8StringEncoding)!)
+        postData.appendData(id.dataUsingEncoding(NSUTF8StringEncoding)!);
+        
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/update")!,
+            cachePolicy: .UseProtocolCachePolicy,
+            timeoutInterval: 10.0)
+        request.HTTPMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.HTTPBody = postData
+        
+        let session = NSURLSession.sharedSession()
+        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print(error)
+            } else {
+                let httpResponse = response as? NSHTTPURLResponse
+                print(httpResponse)
+                if(httpResponse?.statusCode == 200){
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if(field == "username"){
+                            self.keychain.setPasscode("GCEmail", passcode: self.keychain.getPasscode("GCUsername") as! String)
+                            self.keychain.setPasscode("GCUsername", passcode: value);
+                            
+                        }
+                    })
+                }
+            }
+        })
+        
+        dataTask.resume()
+        
+    }
     
     // MARK: - Navigation
 

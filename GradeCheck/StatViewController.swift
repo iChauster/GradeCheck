@@ -11,9 +11,11 @@ import UIKit
 class Grade : NSObject {
     var grade : Int!
     var classTitle : String!
-    init(grade:Int, className:String){
+    var dictionaryObject : NSDictionary!
+    init(grade:Int, className:String, dictionaryObject : NSDictionary){
         self.grade = grade;
         self.classTitle = className;
+        self.dictionaryObject = dictionaryObject;
     }
 }
 
@@ -73,7 +75,7 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             var gradeInt : Int!;
             
             if(a.objectForKey("grade") as! String == "No Grades"){
-                let new = Grade(grade: 0, className: gradesArray[i].objectForKey("class") as! String);
+                let new = Grade(grade: 0, className: gradesArray[i].objectForKey("class") as! String, dictionaryObject : a as! NSDictionary);
                 self.sortedArray.append(new)
                 continue;
             }
@@ -83,7 +85,7 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 print(grade);
                 gradeInt = Int(grade)! + 5;
                 gradeTotal += Double(gradeInt);
-                let new = Grade(grade: gradeInt, className: a.objectForKey("class") as! String);
+                let new = Grade(grade: gradeInt, className: a.objectForKey("class") as! String, dictionaryObject : a as! NSDictionary);
                 self.sortedArray.append(new);
                 if(gradeInt > 100){
                     gradeInt = 100;
@@ -96,7 +98,7 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 grade = String(grade.characters.dropLast());
                 print(grade);
                 gradeInt = Int(grade)!;
-                let new = Grade(grade: gradeInt, className: a.objectForKey("class") as! String);
+                let new = Grade(grade: gradeInt, className: a.objectForKey("class") as! String, dictionaryObject : a as! NSDictionary);
                 self.sortedArray.append(new);
                 gradeTotal += Double(gradeInt);
                 if(gradeInt > 95){
@@ -127,7 +129,9 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.statTable.reloadData()
 
     }
-    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("StatSegue", sender: self)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -135,14 +139,18 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if(segue.identifier == "StatSegue"){
+            let view = segue.destinationViewController as! DetailStatViewController
+            view.data = self.sortedArray[self.statTable.indexPathForSelectedRow!.row].dictionaryObject as NSDictionary
+        }
     }
-    */
+    
 
 }

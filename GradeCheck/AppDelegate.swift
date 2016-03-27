@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let key = Keychain()
             key.setPasscode("GCUsername", passcode: "");
             key.setPasscode("GCPassword", passcode: "");
+            key.setPasscode("GCEmail", passcode:  "");
             
         }
             let types: UIUserNotificationType = [.Alert, .Badge, .Sound]

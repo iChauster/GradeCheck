@@ -136,14 +136,38 @@ class AssignmentsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("AssignmentCell", forIndexPath: indexPath) as! AssignmentsTableViewCell
         let given = self.assignments[indexPath.row] as! NSDictionary;
-        let assign = given.objectForKey("assignment") as! NSDictionary;
+        let assign = given["assignment"]!
         cell.title.text = assign.objectForKey("title") as? String;
         cell.detail.text = assign.objectForKey("details") as? String;
         cell.course.text = given.objectForKey("course") as? String;
-        cell.grade.text = given.objectForKey("percent") as? String;
+        var g = given.objectForKey("percent") as! String;
         cell.date.text = given.objectForKey("dueDate") as? String;
         cell.dateString = given.objectForKey("stringDate") as? String;
+        cell.grade.grade.text = g
+        if(g.containsString("%")){
+            g = String(g.characters.dropLast());
+            switch Double(g)!{
+            case 0..<50:
+                cell.grade.backgroundColor = UIColor.blackColor()
+            case 51..<75 :
+                cell.grade.backgroundColor = UIColor.redColor()
+            case 76..<85 :
+                cell.grade.backgroundColor = UIColor.yellowColor()
+            case 86..<110 :
+                cell.grade.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
+                
+            default :
+                cell.grade.backgroundColor = UIColor.purpleColor()
+            }
+        }else{
+            cell.grade.backgroundColor = UIColor.blackColor()
+        }
+
         return cell
+    }
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let realCell = cell as! AssignmentsTableViewCell
+        realCell.move()
     }
     
 

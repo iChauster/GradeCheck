@@ -23,7 +23,9 @@ class DetailGradeTableViewCell: UITableViewCell {
         
         
     }
-
+    func move(){
+        CellAnimation.growAndShrink(self.grade)
+    }
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

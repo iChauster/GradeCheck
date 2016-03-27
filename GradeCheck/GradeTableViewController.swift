@@ -52,7 +52,7 @@ class GradeTableViewController: UITableViewController {
         let cookieID = gradeArray[0] as! NSDictionary;
         let cookieArray = cookieID.objectForKey("cookie") as? NSArray;
         self.cookie = cookieArray![0] as? String;
-        self.id = cookieID.objectForKey("id") as? String;
+        self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"
