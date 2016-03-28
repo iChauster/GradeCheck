@@ -50,6 +50,20 @@ class AssignmentsTableViewController: UITableViewController {
                         do{
                             self.assignments = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
                             print(self.assignments)
+                            if(self.assignments.count == 0){
+                                print("No Assignments")
+                                let noView = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,UIScreen.mainScreen().bounds.size.height))
+                                noView.backgroundColor = UIColor(red: 0.0, green: 0.5019, blue: 0.2509, alpha: 1.0)
+                                let noLabel = UILabel(frame:CGRectMake(10,0, 240,21));
+                                noLabel.textAlignment = .Center;
+                                noLabel.text = "No Assignments :)";
+                                noLabel.textColor = UIColor.whiteColor()
+                                noLabel.center = noView.center;
+                                noView.addSubview(noLabel)
+                                noView.bringSubviewToFront(noLabel)
+                                self.tableView.backgroundView = noView;
+                            }
+
                             self.tableView.reloadData()
                         }catch{
                             
@@ -100,6 +114,20 @@ class AssignmentsTableViewController: UITableViewController {
                         do{
                             self.assignments = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
                             print(self.assignments)
+                            print(self.assignments.count)
+                            if(self.assignments.count == 0){
+                                print("No Assignments")
+                                let noView = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,UIScreen.mainScreen().bounds.size.height))
+                                noView.backgroundColor = UIColor(red: 0.0, green: 0.5019, blue: 0.2509, alpha: 1.0)
+                                let noLabel = UILabel(frame:CGRectMake(10,0, 240,21));
+                                noLabel.textAlignment = .Center;
+                                noLabel.text = "No Assignments :)";
+                                noLabel.textColor = UIColor.whiteColor()
+                                noLabel.center = noView.center;
+                                noView.addSubview(noLabel)
+                                noView.bringSubviewToFront(noLabel)
+                                self.tableView.backgroundView = noView;
+                            }
                             self.tableView.reloadData()
                             self.refreshControl?.endRefreshing()
                         }catch{

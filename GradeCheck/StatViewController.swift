@@ -149,6 +149,7 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if(segue.identifier == "StatSegue"){
             let view = segue.destinationViewController as! DetailStatViewController
             view.data = self.sortedArray[self.statTable.indexPathForSelectedRow!.row].dictionaryObject as NSDictionary
+            view.gradesArray = self.gradesArray
         }
     }
     

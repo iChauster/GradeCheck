@@ -14,6 +14,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var navigationBar : UINavigationBar!
     @IBOutlet weak var navItem : UINavigationItem!
     @IBOutlet weak var graph : LineChartView!
+    var gradesArray = NSArray()
     override func viewDidLoad() {
         super.viewDidLoad()
         print(data)
@@ -21,8 +22,9 @@ class DetailStatViewController: UIViewController, ChartViewDelegate {
         self.graph.delegate = self;
         self.graph.descriptionText = "Check out your class's grading curve.";
         self.graph.descriptionTextColor = UIColor.whiteColor();
+        self.graph.drawGridBackgroundEnabled = true;
         self.graph.gridBackgroundColor = UIColor.blackColor()
-
+        self.graph.animate(yAxisDuration: 3.0, easingOption: .EaseInOutQuart)
         self.graph.noDataText = "No Data Available";
         let arrayString = ["F","D","C","B","A"]
         let intString = [0.0, 5.0, 9.0, 12.0, 10.0];
@@ -46,26 +48,30 @@ class DetailStatViewController: UIViewController, ChartViewDelegate {
         lineChartDataSet.drawCircleHoleEnabled = true;
         lineChartDataSet.drawCubicEnabled = true;
         let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
+        
         lineChartData.setValueTextColor(UIColor.whiteColor())
         self.graph.data = lineChartData;
         self.graph.gridBackgroundColor = UIColor.blackColor()
 
     }
-
+    @IBAction func segueToGradeView(){
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
     }
-    */
+    
 
 }

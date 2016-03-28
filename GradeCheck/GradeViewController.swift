@@ -11,6 +11,7 @@ import UIKit
 class GradeViewController: UITabBarController {
     
     var grades : NSArray!
+    var selectedInd : Int!
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Load");
@@ -28,7 +29,9 @@ class GradeViewController: UITabBarController {
 
         // Do any additional setup after loading the view.
     }
-
+    override func viewDidAppear(animated: Bool) {
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

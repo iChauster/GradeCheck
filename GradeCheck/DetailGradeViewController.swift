@@ -131,8 +131,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         // Dispose of any resources that can be recreated.
     }
     @IBAction func segueBack(){
-        print("called")
-        self.performSegueWithIdentifier("segueBack", sender: self)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 
@@ -143,10 +142,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if(segue.identifier == "segueBack"){
-            let view = segue.destinationViewController as! GradeViewController
-            view.grades = self.whole;
-        }
+        
     }
     
 

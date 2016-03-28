@@ -249,7 +249,6 @@
                         <outlet property="assignmentTable" destination="xIJ-75-VEc" id="55w-BC-bw0"/>
                         <outlet property="navBar" destination="oZb-g2-jk1" id="gf8-YD-87h"/>
                         <outlet property="navItem" destination="ihJ-pa-G4J" id="DjF-C5-aq0"/>
-                        <segue destination="o1Z-0N-k4e" kind="show" identifier="segueBack" id="auv-CH-DOk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kNa-gC-N05" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -263,8 +262,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="152" sectionHeaderHeight="28" sectionFooterHeight="28" id="WbC-Ot-zUg">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.84272836539999996" green="0.84272836539999996" blue="0.84272836539999996" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="sectionIndexBackgroundColor" red="0.84272836539999996" green="0.84272836539999996" blue="0.84272836539999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.27450980390000002" green="0.63529411759999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AssignmentCell" rowHeight="152" id="bwr-Aj-Tfz" customClass="AssignmentsTableViewCell" customModule="GradeCheck" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="600" height="152"/>
@@ -512,6 +510,9 @@
                                             <navigationItem title="Class Title" id="A9a-SF-y5K">
                                                 <barButtonItem key="leftBarButtonItem" systemItem="stop" id="WVj-pa-fHi">
                                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="segueToGradeView" destination="TiS-D7-XZS" id="Hcg-Ir-wWa"/>
+                                                    </connections>
                                                 </barButtonItem>
                                             </navigationItem>
                                         </items>
@@ -546,7 +547,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QwE-8p-Mtp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="722" y="653"/>
+            <point key="canvasLocation" x="757" y="653"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="k7f-Wo-foN">
@@ -657,7 +658,4 @@
     <resources>
         <image name="calendar.png" width="128" height="128"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="auv-CH-DOk"/>
-    </inferredMetricsTieBreakers>
 </document>
