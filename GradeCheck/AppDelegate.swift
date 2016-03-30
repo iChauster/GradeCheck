@@ -42,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print(error.localizedDescription)
         print("push notifs failed")
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "PushNotifs");
     }

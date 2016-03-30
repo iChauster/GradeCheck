@@ -16,11 +16,12 @@ class AssignmentsTableViewController: UITableViewController {
     var id : String!
     var eventStore = EKEventStore()
     override func viewDidLoad() {
+        self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
         super.viewDidLoad()
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.backgroundColor = UIColor.blackColor()
         self.refreshControl!.tintColor = UIColor.whiteColor()
-        self.refreshControl!.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged);
+        self.refreshControl!.addTarget(self, action: #selector(AssignmentsTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged);
 
         let headers = [
             "cache-control": "no-cache",

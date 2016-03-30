@@ -70,7 +70,9 @@ app.post('/login', passport.authenticate('local'),function (req,res){
 				headers : {'cache-control':'no-cache'} };
 		request(second,function(error,response,body){
 			if (error) throw new Error(error);
+
 			cookie = response.headers['set-cookie'];
+      console.log(cookie);
 			var options = { method: 'POST',
  	 			url: 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
  	 			'rejectUnauthorized' : false,
@@ -86,9 +88,9 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   				console.log(response.headers);
   				console.log(response.statusCode);
   				var home = response.headers['location'];
-  				console.log("https://parents.mtsd.k12.nj.us"+home);
+  				console.log(home);
   				var hoptions = {method : 'POST',
-  					url : 'https://parents.mtsd.k12.nj.us' + home,
+  					url : "https://parents.mtsd.k12.nj.us" + home,
   					'rejectUnauthorized' : false,
   					headers : {'cache-control' : 'no-cache',
   					'content-type': 'application/x-www-form-urlencoded',
@@ -100,7 +102,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   					console.log(response.statusCode);
   					console.log(response.headers);
   					cookie = response.headers['set-cookie'];
-			
+			       
   					home = response.headers['location'];
   					console.log("https://parents.mtsd.k12.nj.us/genesis/"+home);
   					var ptions = {method : 'GET',
@@ -134,14 +136,13 @@ app.post('/login', passport.authenticate('local'),function (req,res){
 						}else{
 	  					var url = response.request.uri.query;
 	  					console.log(response.request.uri.query);
-	  					var name = "studentid";
+	  					/*var name = "studentid";
 	  					name = name.replace(/[\[\]]/g, "\\$&");
     					var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
        					results = regex.exec(url);
     					var student = decodeURIComponent(results[2].replace(/\+/g, " "));
-    					console.log(student);
+    					console.log(student);*/
     					var s = {};
-    					s["id"] = student;
     					s["cookie"] = cookie;
     					json.push(s);
   						var gradebook = {method: 'GET',
@@ -256,6 +257,8 @@ app.post('/listassignments',function(req,res){
 			headers:{'cache-control' : 'no-cache',
 			'Cookie' : req.body.cookie}
 		}
+    console.log('https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=' + req.body.id + 
+      '&action=form&dateRange=' + markingPeriod + '&date=' + dateString + "&courseAndSection=" + req.body.course +":"+ req.body.section);
 		request(adj,function(error,response,body){
 			if(response.headers["set-cookie"]){
 				console.log('needs login');
@@ -410,8 +413,12 @@ app.post('/classdata', function(req,res){
     User.find({},c,function(err,doc){
       for (var i = 0; i < doc.length; i ++){
         console.log(doc.length);
-        console.log(doc[i].grades[0].grade);
-        occurences.push(doc[i].grades[0].grade.slice(0, -1));
+        console.log(doc[i]);
+        if(doc[i].grades.length > 0){
+          console.log(doc[i].grades[0].grade);
+          occurences.push(doc[i].grades[0].grade.slice(0, -1));
+          console.log('We found something');
+        }
       }
       console.log(occurences)
       occurences.forEach(function(x){
@@ -424,10 +431,8 @@ app.post('/classdata', function(req,res){
         last.push(b);
       });
       console.log(last);
+      res.status(200).send(JSON.stringify(last));
     });
-    
-    res.status(200).end('Process "classdata" completed');
-
   }
 });
 

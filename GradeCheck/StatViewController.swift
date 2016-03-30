@@ -24,11 +24,13 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var statTable : UITableView!
     var gradesArray = NSArray();
     var sortedArray : [Grade] = [];
+    var cookie : String!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.gpaCircle.layer.cornerRadius = 0.5 * gpaCircle.bounds.size.width;
         self.statTable.dataSource = self;
         self.statTable.delegate = self;
+        self.statTable.layer.cornerRadius = 10;
         
         self.getGPA()
         // Do any additional setup after loading the view.
@@ -58,13 +60,14 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     override func viewDidAppear(animated: Bool) {
         self.getGPA()
+        
     }
     func getGPA(){
         var gradeTotal = 0.0;
         var classes = 0;
         var gpaTotal = 0.0;
         self.sortedArray = [];
-        for var i = 0; i < gradesArray.count; ++i{
+        for i in 0 ..< gradesArray.count{
             if(i == 0){
                 continue;
             }
@@ -91,7 +94,7 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     gradeInt = 100;
                 }
                 gpaTotal += Double(gradeInt);
-                ++classes;
+                classes += 1;
                 
             }else{
                 grade = a.objectForKey("grade") as! String
@@ -105,7 +108,7 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     gradeInt = 95;
                 }
                 gpaTotal += Double(gradeInt);
-                ++classes;
+                classes += 1;
             }
             
         }
@@ -150,6 +153,11 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let view = segue.destinationViewController as! DetailStatViewController
             view.data = self.sortedArray[self.statTable.indexPathForSelectedRow!.row].dictionaryObject as NSDictionary
             view.gradesArray = self.gradesArray
+            view.cookie = self.cookie;
+            let selectedObject = self.sortedArray[self.statTable.indexPathForSelectedRow!.row];
+            view.className = selectedObject.classTitle
+            self.statTable.deselectRowAtIndexPath(self.statTable.indexPathForSelectedRow!, animated: true)
+
         }
     }
     

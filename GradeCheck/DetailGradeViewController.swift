@@ -43,7 +43,8 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
             "content-type": "application/x-www-form-urlencoded"
         ]
         let cookieString = "cookie=" + self.cookie
-        let idString = "&id=" + self.id
+        let id : String = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String
+        let idString = "&id=" + id
         let courseString = "&course=" + course;
         let sectionString = "&section=" + section;
         let postData = NSMutableData(data: cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)

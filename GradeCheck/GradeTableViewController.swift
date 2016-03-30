@@ -18,7 +18,7 @@ class GradeTableViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.backgroundColor = UIColor.blackColor()
         self.refreshControl!.tintColor = UIColor.whiteColor()
-        self.refreshControl!.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged);
+        self.refreshControl!.addTarget(self, action: #selector(GradeTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged);
 
         
         // Uncomment the following line to preserve selection between presentations

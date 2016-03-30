@@ -25,8 +25,13 @@ class GradeViewController: UITabBarController {
         print(cookieID.objectForKey("id") as? String);
         let stats = self.viewControllers?[2] as! StatViewController
         stats.gradesArray = grades;
-
-
+        stats.cookie = cookieArray![0] as? String;
+        let leftSwipe = UISwipeGestureRecognizer.init(target: self, action: #selector(GradeViewController.swipeLeft))
+        leftSwipe.direction = .Left
+        self.tabBar.addGestureRecognizer(leftSwipe);
+        let rightSwipe = UISwipeGestureRecognizer.init(target: self, action: #selector(GradeViewController.swipeRight))
+        rightSwipe.direction = .Right
+        self.tabBar.addGestureRecognizer(rightSwipe)
         // Do any additional setup after loading the view.
     }
     override func viewDidAppear(animated: Bool) {
@@ -35,6 +40,24 @@ class GradeViewController: UITabBarController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    func swipeLeft(){
+        print("swipe left")
+        let a = self.selectedIndex
+        if (a < 2){
+            self.selectedIndex += 1
+        }else{
+            self.selectedIndex = 0;
+        }
+    }
+    func swipeRight(){
+        print("swipe right")
+        let a = self.selectedIndex
+        if (a > 0){
+            self.selectedIndex -= 1
+        }else{
+            self.selectedIndex = 2;
+        }
     }
     
 
