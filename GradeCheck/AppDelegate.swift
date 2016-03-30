@@ -29,7 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let settings = UIUserNotificationSettings(forTypes: types, categories: nil)
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
-       
+            let oneSignal = OneSignal(launchOptions: launchOptions, appId: "83f615e3-1eab-4055-92ef-cb5f498968c9", handleNotification: nil)
+        
+        OneSignal.defaultClient().enableInAppAlertNotification(true)
+        
         return true
     }
     

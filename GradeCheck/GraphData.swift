@@ -26,3 +26,6 @@ class RankView : UIView{
 class PercentileView : UIView{
     @IBOutlet weak var percentLabel : UILabel!;
 }
+class basicCircleView : UIView{
+    @IBOutlet weak var dataLabel : UILabel!;
+}

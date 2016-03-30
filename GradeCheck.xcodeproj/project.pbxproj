@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C918C4C1CAC8C6600C80299 /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C918C4B1CAC8C6600C80299 /* OneSignal.framework */; };
+		2C918C4E1CAC8CA300C80299 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */; };
 		2CD720AF1CAB140A00338CA7 /* GraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD720AE1CAB140900338CA7 /* GraphData.swift */; };
 		2CD720B41CAB524700338CA7 /* appIcon180.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD720B31CAB524700338CA7 /* appIcon180.png */; };
 		2CD720B61CAB52B800338CA7 /* appIcon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD720B51CAB52B800338CA7 /* appIcon120.png */; };
 		2CD720BB1CAB53BF00338CA7 /* appIcon80.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD720B81CAB53BF00338CA7 /* appIcon80.png */; };
 		2CD720BC1CAB53BF00338CA7 /* appIcon87.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD720B91CAB53BF00338CA7 /* appIcon87.png */; };
 		2CD720BE1CAB545300338CA7 /* appIcon58.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD720BD1CAB545300338CA7 /* appIcon58.png */; };
+		2CD720C11CAC5B2200338CA7 /* DetailStatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD720C01CAC5B2200338CA7 /* DetailStatTableViewCell.swift */; };
 		ED64DEA91CA3718D00B25150 /* DetailGradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64DEA81CA3718D00B25150 /* DetailGradeViewController.swift */; };
 		ED64DEAF1CA4677E00B25150 /* DetailGradeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64DEAE1CA4677E00B25150 /* DetailGradeTableViewCell.swift */; };
 		ED7AA2081C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7AA2071C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift */; };
@@ -100,12 +103,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C918C4B1CAC8C6600C80299 /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OneSignal.framework; path = GradeCheck/OneSignal.framework; sourceTree = "<group>"; };
+		2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2C918C4F1CAC8D8400C80299 /* GradeCheck-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GradeCheck-Bridging-Header.h"; sourceTree = "<group>"; };
 		2CD720AE1CAB140900338CA7 /* GraphData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphData.swift; sourceTree = "<group>"; };
 		2CD720B31CAB524700338CA7 /* appIcon180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon180.png; path = ../../../Downloads/appIcon180.png; sourceTree = "<group>"; };
 		2CD720B51CAB52B800338CA7 /* appIcon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon120.png; path = ../../../Downloads/appIcon120.png; sourceTree = "<group>"; };
 		2CD720B81CAB53BF00338CA7 /* appIcon80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon80.png; path = ../../../Downloads/appIcon80.png; sourceTree = "<group>"; };
 		2CD720B91CAB53BF00338CA7 /* appIcon87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon87.png; path = ../../../Downloads/appIcon87.png; sourceTree = "<group>"; };
 		2CD720BD1CAB545300338CA7 /* appIcon58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon58.png; path = ../../../Downloads/appIcon58.png; sourceTree = "<group>"; };
+		2CD720C01CAC5B2200338CA7 /* DetailStatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailStatTableViewCell.swift; sourceTree = "<group>"; };
 		ED64DEA81CA3718D00B25150 /* DetailGradeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailGradeViewController.swift; sourceTree = "<group>"; };
 		ED64DEAE1CA4677E00B25150 /* DetailGradeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailGradeTableViewCell.swift; sourceTree = "<group>"; };
 		ED7AA2071C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsTableViewCell.swift; sourceTree = "<group>"; };
@@ -141,7 +148,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C918C4E1CAC8CA300C80299 /* SystemConfiguration.framework in Frameworks */,
 				ED7AA2221C9F4F98001B2E68 /* Charts.framework in Frameworks */,
+				2C918C4C1CAC8C6600C80299 /* OneSignal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +193,7 @@
 				ED7AA2271CA0975B001B2E68 /* StatTableViewCell.swift */,
 				ED7AA2111C962171001B2E68 /* GPAView.swift */,
 				ED7AA2291CA0C0FC001B2E68 /* DetailStatViewController.swift */,
+				2CD720C01CAC5B2200338CA7 /* DetailStatTableViewCell.swift */,
 				2CD720AE1CAB140900338CA7 /* GraphData.swift */,
 			);
 			name = Stats;
@@ -203,6 +213,8 @@
 		EDBE85D31C78ED260031EE8B = {
 			isa = PBXGroup;
 			children = (
+				2C918C4B1CAC8C6600C80299 /* OneSignal.framework */,
+				2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */,
 				EDBE85DE1C78ED280031EE8B /* GradeCheck */,
 				EDBE85F31C78ED2A0031EE8B /* GradeCheckUITests */,
 				EDBE85DD1C78ED280031EE8B /* Products */,
@@ -235,6 +247,7 @@
 				EDBE85E61C78ED280031EE8B /* Assets.xcassets */,
 				EDBE85E81C78ED280031EE8B /* LaunchScreen.storyboard */,
 				EDBE85EB1C78ED290031EE8B /* Info.plist */,
+				2C918C4F1CAC8D8400C80299 /* GradeCheck-Bridging-Header.h */,
 			);
 			path = GradeCheck;
 			sourceTree = "<group>";
@@ -322,6 +335,11 @@
 				TargetAttributes = {
 					EDBE85DB1C78ED270031EE8B = {
 						CreatedOnToolsVersion = 7.2.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					EDBE85EF1C78ED290031EE8B = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -423,6 +441,7 @@
 				ED7AA2081C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift in Sources */,
 				ED7AA2281CA0975D001B2E68 /* StatTableViewCell.swift in Sources */,
 				ED64DEA91CA3718D00B25150 /* DetailGradeViewController.swift in Sources */,
+				2CD720C11CAC5B2200338CA7 /* DetailStatTableViewCell.swift in Sources */,
 				EDBE86121C7A9B230031EE8B /* AssignmentsTableViewController.swift in Sources */,
 				EDBE860D1C7A5BB60031EE8B /* GradeTableViewCell.swift in Sources */,
 				2CD720AF1CAB140A00338CA7 /* GraphData.swift in Sources */,
@@ -567,10 +586,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/GradeCheck",
+				);
 				INFOPLIST_FILE = GradeCheck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ichauster.GradeCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9c27c751-2587-4d9d-ad1d-bdc8570338c0";
+				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -579,10 +605,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/GradeCheck",
+				);
 				INFOPLIST_FILE = GradeCheck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ichauster.GradeCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9c27c751-2587-4d9d-ad1d-bdc8570338c0";
+				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
 			};
 			name = Release;
 		};

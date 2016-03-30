@@ -400,7 +400,7 @@ app.post('/assignments', function(req, res){
 });
 app.post('/classdata', function(req,res){
   if(req.body.className){
-    console.log(req.body.cookie + " " + req.body.id + " " + req.body.className);
+    console.log(req.body.className);
     var a = {};
     a["subject"] = req.body.className;
     var b = {};
@@ -432,6 +432,90 @@ app.post('/classdata', function(req,res){
       });
       console.log(last);
       res.status(200).send(JSON.stringify(last));
+    });
+  }
+});
+//https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=000958&action=form&courseCode=33500&courseSection=1&mp=MP3
+app.post('/classAverages', function(req,res){
+  console.log('classAverages requested for className :' + req.body.className)
+  if(req.body.cookie && req.body.id){
+    console.log(req.body.cookie + " " + req.body.id);
+    var gradebook = {method: 'GET',
+        url:'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=' + req.body.id + 
+      '&action=form&courseCode=' + req.body.course +"&courseSection="+ req.body.section + "&mp=" + markingPeriod,
+        'rejectUnauthorized' : false,
+        headers:{'cache-control' : 'no-cache',
+        'content-type': 'application/x-www-form-urlencoded',
+        'Cookie':req.body.cookie          
+        }
+    };
+    request(gradebook,function(error,response,body){
+      var results = [];
+      if(response.headers["set-cookie"]){
+        console.log('needs login');
+        var b ={};
+        b["set-cookie"] = response.headers["set-cookie"];
+        results.push(b);
+        res.status(440).send(JSON.stringify(results));
+      }else{
+        var $ = cheerio.load(body);
+        $('td.cellRight').each(function(i,element){
+          var assignment = $(this);
+          if(assignment.prev().attr('class') == "cellCenter"){
+            var value = {};
+            value["gradeMax"] = assignment.text().trim();
+            var percent = assignment.next().text();
+            value["percent"] = percent;
+            var grade = assignment.prev().prev();
+            var perc = grade.text();
+            perc = perc.trim();
+            value["grade"] = perc;
+            var cat = grade.prev().prev();
+            var actual = cat.contents().filter(function(i,el){
+              if( $(this).attr('class') == "boxShadow"){
+                return "";
+              }else{
+                return $(this).text().trim();
+              }
+            });
+          
+            value["category"] = actual.text().trim();
+            results.push(value);
+          }
+        });
+        var container = {};
+        results.forEach(function(item){
+          console.log(item);
+          if(!(item.category in container)){
+            if(item.percent != '' && !(isNaN(parseFloat(item.grade)))){
+              container[item.category] = {};
+              container[item.category].grades = [];
+              var lessPercent = item.percent.slice(0,-1)
+              container[item.category].grades.push(parseFloat(lessPercent));
+              container[item.category].gradeMax = parseFloat(item.gradeMax);
+              container[item.category].gradeAchieved = parseFloat(item.grade);
+            }
+          }else{
+            if(item.percent != '' && !(isNaN(parseFloat(item.grade)))){
+              var lessPercent = item.percent.slice(0,-1)
+              container[item.category].grades.push(parseFloat(lessPercent));
+              container[item.category].gradeMax += parseFloat(item.gradeMax);
+              container[item.category].gradeAchieved += parseFloat(item.grade);
+            }
+          }
+        });
+        console.log(container);
+        var finalGrades = [];
+        if(container.length != 0){
+          for (var k in container) {
+            var b = {};
+            b["category"] = k;
+            b["grades"] = container[k];
+            finalGrades.push(b)
+          } 
+        }
+        res.send(JSON.stringify(finalGrades));
+      }
     });
   }
 });
