@@ -188,10 +188,11 @@ setInterval(function(){
                     console.log(numberAffected);
                   });
                 }else{
+                  console.log(moment().get("hour");
+
                   var bool = true;
                   for(var i = 0; i < gradesArray.length; i ++){
                     var obj = gradesArray[i];
-                    console.log(moment().hour());
                     if(art[i].subject == gradesArray[i].subject && art[i].grade == gradesArray[i].grade){
                       
                     }else{
