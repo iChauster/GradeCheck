@@ -12,7 +12,7 @@ var passport = require('passport');
 var CryptoJS = require('crypto-js');
 var request = require('request');
 var cheerio = require('cheerio');
-var moment = require('moment');
+var moment = require('moment-timezone');
 
 var app = express();
 app.use(passport.initialize());
@@ -188,7 +188,7 @@ setInterval(function(){
                     console.log(numberAffected);
                   });
                 }else{
-                  console.log(moment().get("hour"));
+                  console.log(moment().tz("America/New_York").get("hour"));
 
                   var bool = true;
                   for(var i = 0; i < gradesArray.length; i ++){
