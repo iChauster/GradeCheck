@@ -13,6 +13,7 @@ class GradeTableViewController: UITableViewController {
     var gradeArray : NSArray!
     var cookie : String!
     var id : String!
+    let url = "http://wingster50.ddns.net:2800/"
     override func viewDidLoad() {
         super.viewDidLoad()
         self.refreshControl = UIRefreshControl()
@@ -62,7 +63,7 @@ class GradeTableViewController: UITableViewController {
         let postData = NSMutableData(data: cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/gradebook")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: url + "gradebook")!,
             cachePolicy: .UseProtocolCachePolicy,
             timeoutInterval: 10.0)
         request.HTTPMethod = "POST"

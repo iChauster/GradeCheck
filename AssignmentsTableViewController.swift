@@ -15,6 +15,8 @@ class AssignmentsTableViewController: UITableViewController {
     var cookie : String!
     var id : String!
     var eventStore = EKEventStore()
+    let url = "http://wingster50.ddns.net:2800/"
+
     override func viewDidLoad() {
         self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
         super.viewDidLoad()
@@ -32,7 +34,7 @@ class AssignmentsTableViewController: UITableViewController {
         let postData = NSMutableData(data: cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/assignments")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: url + "assignments")!,
             cachePolicy: .UseProtocolCachePolicy,
             timeoutInterval: 10.0)
         request.HTTPMethod = "POST"
@@ -96,7 +98,7 @@ class AssignmentsTableViewController: UITableViewController {
         let postData = NSMutableData(data: cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/assignments")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: url + "assignments")!,
             cachePolicy: .UseProtocolCachePolicy,
             timeoutInterval: 10.0)
         request.HTTPMethod = "POST"

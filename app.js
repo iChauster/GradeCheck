@@ -19,12 +19,7 @@ app.use(passport.session());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-// Twilio Credentials 
-var accountSid = 'AC8c54936619b5bd504963509d5d745dff'; 
-var authToken = '4510695a59ef9ea2ed60dfd4969a9036'; 
- 
-//require the Twilio module and create a REST client 
-var client = require('twilio')(accountSid, authToken); 
+
  
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -79,10 +74,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(process.env.PORT || 3000, function(){
+app.listen(process.env.PORT || 2800, function(){
   console.log("gradeCheck: port : %d in %s", this.address().port, app.settings.env);
 });
-var hour = 10*60*1000;
+var hour = 1*60*1000;
 setInterval(function(){
   console.log("Every Hour");
   User.find({},function(err,doc){
@@ -107,6 +102,7 @@ setInterval(function(){
         username = doc.username
         console.log('using Username');
       }
+      console.log(username + " " + a) 
       var second = {method : 'GET',
           url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
           'rejectUnauthorized' : false,
@@ -127,7 +123,7 @@ setInterval(function(){
         request(options, function (error, response, body) {
           if (error) throw new Error(error);
           var home = response.headers['location'];
-          console.log("https://parents.mtsd.k12.nj.us"+home);
+          console.log('http://parents.mtsd.k12.nj.us' + home);
           var hoptions = {method : 'POST',
             url : 'https://parents.mtsd.k12.nj.us' + home,
             'rejectUnauthorized' : false,
@@ -150,11 +146,11 @@ setInterval(function(){
             request(ptions, function(error, response,body){
               if(error)throw new Error(error);
               var url = response.request.uri.query;
-              var name = "studentid";
+              /*var name = "studentid";
               name = name.replace(/[\[\]]/g, "\\$&");
               var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
                 results = regex.exec(url);
-              var student = decodeURIComponent(results[2].replace(/\+/g, " "));
+              var student = decodeURIComponent(results[2].replace(/\+/g, " "));*/
               var gradebook = {method: 'GET',
                 url: 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=' + doc.username + '&action=form',
                 'rejectUnauthorized' : false,
@@ -207,15 +203,12 @@ setInterval(function(){
                         }
                         console.log(numberAffected);
                       });
-                      client.messages.create({ 
-                        to: doc.phoneNumber, 
-                        from: "+16466797855", 
-                        body: "Your grade in " + gradesArray[i].subject + " has changed from " + gradesArray[i].grade + " to " + art[i].grade,   
-                      }, function(err, message) { 
-                        console.log(message.sid); 
-                      });
-                      console.log("texted " + doc.username);
-                      
+                      var a = {
+                        "app_id" : "83f615e3-1eab-4055-92ef-cb5f498968c9",
+                        "contents" : {"en" : "Your grade in " + gradesArray[i].subject + " has changed from " + gradesArray[i].grade + " to " + art[i].grade},
+                        "include_player_ids" : [doc.deviceToken]
+                      }
+                      sendNotificationToUser(a);              
                     }
                   }
                   if(bool = true){
@@ -231,5 +224,17 @@ setInterval(function(){
     }
   });
 },hour);
+var sendNotificationToUser = function(message){
+  var send = {method: 'POST',
+    url: 'https://onesignal.com/api/v1/notifications',
+    headers:{'Content-Type' : 'application/json',
+    'Authorization':"Basic NTgxZTcyNzctM2NhMC00ZDUwLWE0MGItNDE3MzJmZTJhNWE1"
+    },
+    json : message
+  };
+  request(send, function(error,response,body){
+    console.log(response.headers);
+  });
+}
 
 module.exports = app;

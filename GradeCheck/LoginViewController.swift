@@ -17,6 +17,8 @@ class LoginViewController: UIViewController {
     var jsonDict : NSArray!
     var confirmationDict : NSArray!
     var loggedIn = false;
+    var phoneNumberOption : String?
+    let url = "http://wingster50.ddns.net:2800/"
     @IBAction func login(sender:UIButton!){
         NSLog("clicked");
         NSLog(usn!.text!);
@@ -39,6 +41,7 @@ class LoginViewController: UIViewController {
         NSLog(psw.text!);
         self.usn.resignFirstResponder()
         self.psw.resignFirstResponder()
+        
         if(self.usn.text == "" || self.psw.text == ""){
             let alert = UIAlertController(title: "funni", message: "Are you really?", preferredStyle: .Alert);
             let o = UIAlertAction(title: "srry", style: .Default, handler: nil);
@@ -46,48 +49,56 @@ class LoginViewController: UIViewController {
             self.presentViewController(alert, animated: true, completion: nil);
             return;
         }else{
-            let headers = [
-                "cache-control": "no-cache",
-                "content-type": "application/x-www-form-urlencoded"
-            ]
-            let usernameString = "username=" + usn!.text!
-            let passwordString = "&password=" + psw.text!
-            let postData = NSMutableData(data: usernameString.dataUsingEncoding(NSUTF8StringEncoding)!)
-            postData.appendData(passwordString.dataUsingEncoding(NSUTF8StringEncoding)!)
-            if(NSUserDefaults.standardUserDefaults().boolForKey("PushNotifs")){
-                let deviceTokenString = "&deviceToken=" + (NSUserDefaults.standardUserDefaults().objectForKey("deviceToken") as! String)
-                postData.appendData(deviceTokenString.dataUsingEncoding(NSUTF8StringEncoding)!)
-            }
-            
-            
-            let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/register")!,
-                cachePolicy: .UseProtocolCachePolicy,
-                timeoutInterval: 10.0)
-            request.HTTPMethod = "POST"
-            request.allHTTPHeaderFields = headers
-            request.HTTPBody = postData
-            
-            let session = NSURLSession.sharedSession()
-            let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-                if (error != nil) {
-                    print(error)
-                } else {
-                    let httpResponse = response as? NSHTTPURLResponse
-                    print(httpResponse)
-                    if(httpResponse?.statusCode == 200){
-                        dispatch_async(dispatch_get_main_queue(), {
-                                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasRegistered")
-                                NSUserDefaults.standardUserDefaults().synchronize()
-                                self.makeLoginRequestWithParams(self.usn!.text!, pass: self.psw.text!)
-                        })
-                    }
-                }
-            })
-            
-            dataTask.resume()
+            self.makeRegisterRequest()
         }
     }
+    func makeRegisterRequest(){
+        let headers = [
+            "cache-control": "no-cache",
+            "content-type": "application/x-www-form-urlencoded"
+        ]
+        let usernameString = "username=" + self.usn!.text!
+        let passwordString = "&password=" + self.psw.text!
+        let postData = NSMutableData(data: usernameString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        postData.appendData(passwordString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        if(NSUserDefaults.standardUserDefaults().boolForKey("PushNotifs")){
+            let deviceTokenString = "&deviceToken=" + (NSUserDefaults.standardUserDefaults().objectForKey("deviceToken") as! String)
+            postData.appendData(deviceTokenString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        }
+        if(NSUserDefaults.standardUserDefaults().objectForKey("userId") != nil){
+            let userIdString = "&deviceToken=" + (NSUserDefaults.standardUserDefaults().objectForKey("userId") as! String)
+            print(userIdString)
+            postData.appendData(userIdString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        }
+       
+        let request = NSMutableURLRequest(URL: NSURL(string: self.url + "register")!,
+                                          cachePolicy: .UseProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
+        request.HTTPMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.HTTPBody = postData
+        
+        let session = NSURLSession.sharedSession()
+        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print(error)
+            } else {
+                let httpResponse = response as? NSHTTPURLResponse
+                print(httpResponse)
+                if(httpResponse?.statusCode == 200){
+                    dispatch_async(dispatch_get_main_queue(), {
+                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasRegistered")
+                        NSUserDefaults.standardUserDefaults().synchronize()
+                        self.makeLoginRequestWithParams(self.usn!.text!, pass: self.psw.text!)
+                        
+                    })
+                }
+            }
+        })
+        
+        dataTask.resume()
 
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         UIGraphicsBeginImageContext(self.view.frame.size);
@@ -145,7 +156,7 @@ class LoginViewController: UIViewController {
             print("in")
         }
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/login")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: url + "login")!,
             cachePolicy: .UseProtocolCachePolicy,
             timeoutInterval: 10.0)
         request.HTTPMethod = "POST"
@@ -232,7 +243,7 @@ class LoginViewController: UIViewController {
         postData.appendData(id.dataUsingEncoding(NSUTF8StringEncoding)!);
         
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/update")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: url + "update")!,
             cachePolicy: .UseProtocolCachePolicy,
             timeoutInterval: 10.0)
         request.HTTPMethod = "POST"

@@ -19,6 +19,8 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     @IBOutlet weak var rankView : RankView!;
     @IBOutlet weak var percentileView : PercentileView!
     @IBOutlet weak var statisticsTable : UITableView!
+    let url = "http://wingster50.ddns.net:2800/"
+
     var gradesArray = NSArray()
     var cookie : String!
     var results : [GraphData] = [];
@@ -56,7 +58,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         let postData = NSMutableData(data: classNameString.dataUsingEncoding(NSUTF8StringEncoding)!)
         //postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/classdata")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: url + "classdata")!,
                                           cachePolicy: .UseProtocolCachePolicy,
                                           timeoutInterval: 10.0)
         request.HTTPMethod = "POST"
@@ -143,7 +145,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/classAverages")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: url + "classAverages")!,
                                           cachePolicy: .UseProtocolCachePolicy,
                                           timeoutInterval: 10.0)
         request.HTTPMethod = "POST"

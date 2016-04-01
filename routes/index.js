@@ -11,11 +11,11 @@ var app = express.Router();
 var markingPeriod = "MP3";
 /* GET home page. */
 app.get('/', function(req, res, next) {
-  
+  res.end('connection successful');
 });
 app.post('/register', function(req, res) {
 	var actual = CryptoJS.AES.encrypt(req.body.password,"LookDown"); //should switch to process.env for higher security reasons
-      User.register(new User({ username : req.body.username, phoneNumber : "",grades:[{subject:"", grade:""}], deviceToken: req.body.deviceToken, preference : actual, studId: ""}), req.body.password, function(err, account) {
+      User.register(new User({ username : req.body.username, phoneNumber : req.body.phoneNumber,grades:[{subject:"", grade:""}], deviceToken: req.body.deviceToken, preference : actual, studId: ""}), req.body.password, function(err, account) {
           if (err) {
           	console.log(err);
             return res.writeHead(400)

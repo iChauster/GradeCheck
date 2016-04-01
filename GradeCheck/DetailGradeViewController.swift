@@ -17,6 +17,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     var whole : NSArray!
     var color : UIColor!
     var classtitle : String!
+    let url = "http://wingster50.ddns.net:2800/"
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
     @IBOutlet weak var assignmentTable : UITableView!
@@ -53,7 +54,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         postData.appendData(sectionString.dataUsingEncoding(NSUTF8StringEncoding)!)
 
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:3000/listassignments")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: url + "listassignments")!,
             cachePolicy: .UseProtocolCachePolicy,
             timeoutInterval: 10.0)
         request.HTTPMethod = "POST"

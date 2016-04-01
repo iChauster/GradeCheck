@@ -30,18 +30,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
             let oneSignal = OneSignal(launchOptions: launchOptions, appId: "83f615e3-1eab-4055-92ef-cb5f498968c9", handleNotification: nil)
+        oneSignal.IdsAvailable({ (userId, pushToken) in
+            NSLog("UserId:%@", userId)
+            if (pushToken != nil) {
+                NSLog("pushToken:%@", pushToken)
+                NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userId");
+            }
+        })
         
         OneSignal.defaultClient().enableInAppAlertNotification(true)
         
         return true
     }
     
-    
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         print("ayy");
-        NSUserDefaults.standardUserDefaults().setBool(true,forKey:"PushNotifs");
-        NSUserDefaults.standardUserDefaults().setObject(deviceToken, forKey: "deviceToken");
-        print(deviceToken)
+        
         
     }
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
