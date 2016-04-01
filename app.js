@@ -188,7 +188,7 @@ setInterval(function(){
                     console.log(numberAffected);
                   });
                 }else{
-                  console.log(moment().get("hour");
+                  console.log(moment().get("hour"));
 
                   var bool = true;
                   for(var i = 0; i < gradesArray.length; i ++){
