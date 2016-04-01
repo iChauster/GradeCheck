@@ -19,7 +19,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     @IBOutlet weak var rankView : RankView!;
     @IBOutlet weak var percentileView : PercentileView!
     @IBOutlet weak var statisticsTable : UITableView!
-    let url = "http://wingster50.ddns.net:2800/"
+    let url = "https://gradecheck.herokuapp.com/"
 
     var gradesArray = NSArray()
     var cookie : String!
@@ -144,14 +144,14 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         postData.appendData(sectionString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        
+        //please stop looking at my fucking code you creep (ง •̀_•́)ง
         let request = NSMutableURLRequest(URL: NSURL(string: url + "classAverages")!,
                                           cachePolicy: .UseProtocolCachePolicy,
                                           timeoutInterval: 10.0)
         request.HTTPMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.HTTPBody = postData
-        
+        // < <> >
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {

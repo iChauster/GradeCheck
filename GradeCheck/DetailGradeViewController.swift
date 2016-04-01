@@ -17,7 +17,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     var whole : NSArray!
     var color : UIColor!
     var classtitle : String!
-    let url = "http://wingster50.ddns.net:2800/"
+    let url = "https://gradecheck.herokuapp.com/"
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
     @IBOutlet weak var assignmentTable : UITableView!

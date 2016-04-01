@@ -13,7 +13,7 @@ class GradeTableViewController: UITableViewController {
     var gradeArray : NSArray!
     var cookie : String!
     var id : String!
-    let url = "http://wingster50.ddns.net:2800/"
+    let url = "https://gradecheck.herokuapp.com/"
     override func viewDidLoad() {
         super.viewDidLoad()
         self.refreshControl = UIRefreshControl()

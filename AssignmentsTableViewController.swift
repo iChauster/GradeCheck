@@ -15,7 +15,7 @@ class AssignmentsTableViewController: UITableViewController {
     var cookie : String!
     var id : String!
     var eventStore = EKEventStore()
-    let url = "http://wingster50.ddns.net:2800/"
+    let url = "https://gradecheck.herokuapp.com/"
 
     override func viewDidLoad() {
         self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;

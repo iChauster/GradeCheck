@@ -12,6 +12,7 @@ var passport = require('passport');
 var CryptoJS = require('crypto-js');
 var request = require('request');
 var cheerio = require('cheerio');
+var moment = require('moment');
 
 var app = express();
 app.use(passport.initialize());
@@ -190,9 +191,11 @@ setInterval(function(){
                   var bool = true;
                   for(var i = 0; i < gradesArray.length; i ++){
                     var obj = gradesArray[i];
+                    console.log(moment().hour());
                     if(art[i].subject == gradesArray[i].subject && art[i].grade == gradesArray[i].grade){
                       
                     }else{
+                      bool = false;
                       var ol = gradesArray[i]
                       var ne = art[i]
                       console.log("Something changed : ============================================");
