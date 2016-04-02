@@ -188,8 +188,24 @@ setInterval(function(){
                     console.log(numberAffected);
                   });
                 }else{
-                  console.log(moment().tz("America/New_York").get("hour"));
-
+                  var currentHour = moment().tz("America/New_York").get("hour");
+                  if(currentHour < 23){
+                    var re = {method : 'GET',
+                    url : 'https://gradecheck.herokuapp.com/',
+                    headers:{
+                      'cache-control' : 'no-cache'
+                    }
+                    };
+                    request(re, function (error,response,body){
+                      if(error){
+                        console.log(error);
+                      }else{
+                        console.log('keep alive');
+                      }
+                    });
+                  }else{
+                    console.log('taking a break. Be back in 6 hours ~');
+                  }
                   var bool = true;
                   for(var i = 0; i < gradesArray.length; i ++){
                     var obj = gradesArray[i];

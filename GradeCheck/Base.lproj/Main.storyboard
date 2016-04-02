@@ -816,23 +816,43 @@
                                     <action selector="register:" destination="cxU-dv-avE" eventType="touchUpInside" id="wn6-BI-dXO"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="sl4-Qz-gAE">
+                                <rect key="frame" x="282" y="513" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTQ-p5-Pp0">
+                                <rect key="frame" x="20" y="484" width="560" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="pyH-yu-96Q"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="rXT-8y-o3x" firstAttribute="top" secondItem="BDq-Lb-XEz" secondAttribute="bottom" constant="82" id="3CV-ag-7mC"/>
                             <constraint firstItem="iEv-Ud-orb" firstAttribute="top" secondItem="BDq-Lb-XEz" secondAttribute="bottom" constant="82" id="5Sz-Kp-Ng1"/>
+                            <constraint firstItem="gTQ-p5-Pp0" firstAttribute="trailing" secondItem="fxt-fX-RxC" secondAttribute="trailingMargin" id="A3L-QE-mcw"/>
+                            <constraint firstItem="sl4-Qz-gAE" firstAttribute="top" secondItem="gTQ-p5-Pp0" secondAttribute="bottom" constant="8" id="CHI-uj-I0t"/>
                             <constraint firstItem="sxV-Gt-h1f" firstAttribute="top" secondItem="Cd2-Xg-hQc" secondAttribute="bottom" constant="162" id="Chh-HL-9xi"/>
                             <constraint firstItem="BDq-Lb-XEz" firstAttribute="centerX" secondItem="fxt-fX-RxC" secondAttribute="centerX" id="Dlo-54-I0h"/>
                             <constraint firstItem="iEv-Ud-orb" firstAttribute="centerX" secondItem="fxt-fX-RxC" secondAttribute="centerX" id="H9w-Yw-RGT"/>
+                            <constraint firstItem="sl4-Qz-gAE" firstAttribute="centerX" secondItem="fxt-fX-RxC" secondAttribute="centerX" id="OLy-30-cQb"/>
+                            <constraint firstItem="gTQ-p5-Pp0" firstAttribute="centerX" secondItem="fxt-fX-RxC" secondAttribute="centerX" id="V6R-Bc-GQX"/>
                             <constraint firstItem="BDq-Lb-XEz" firstAttribute="top" secondItem="sxV-Gt-h1f" secondAttribute="bottom" constant="35" id="c8Q-a9-u8Z"/>
+                            <constraint firstItem="qcI-24-Raa" firstAttribute="top" secondItem="sl4-Qz-gAE" secondAttribute="bottom" constant="50" id="gas-mF-nRA"/>
+                            <constraint firstItem="gTQ-p5-Pp0" firstAttribute="leading" secondItem="fxt-fX-RxC" secondAttribute="leadingMargin" id="ofI-Rl-5Sc"/>
                             <constraint firstItem="rXT-8y-o3x" firstAttribute="centerX" secondItem="fxt-fX-RxC" secondAttribute="centerX" id="tNH-g2-wu0"/>
                             <constraint firstItem="sxV-Gt-h1f" firstAttribute="centerX" secondItem="fxt-fX-RxC" secondAttribute="centerX" id="uHD-gU-ubL"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activity" destination="sl4-Qz-gAE" id="amJ-13-wtf"/>
                         <outlet property="login" destination="rXT-8y-o3x" id="xfp-Lv-O7G"/>
                         <outlet property="psw" destination="BDq-Lb-XEz" id="0Y1-Mr-GMa"/>
                         <outlet property="regist" destination="iEv-Ud-orb" id="7In-xs-rrw"/>
+                        <outlet property="statusLabel" destination="gTQ-p5-Pp0" id="4Dh-Cc-f7I"/>
                         <outlet property="usn" destination="sxV-Gt-h1f" id="E0Q-vs-5Be"/>
                         <segue destination="o1Z-0N-k4e" kind="show" identifier="LoginSegue" id="R1P-sP-GLm"/>
                     </connections>

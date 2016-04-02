@@ -13,6 +13,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var psw : UITextField!
     @IBOutlet weak var login : UIButton!
     @IBOutlet weak var regist : UIButton!
+    @IBOutlet weak var activity : UIActivityIndicatorView!
+    @IBOutlet weak var statusLabel : UILabel!
     let keychain = Keychain()
     var jsonDict : NSArray!
     var confirmationDict : NSArray!
@@ -32,6 +34,10 @@ class LoginViewController: UIViewController {
             self.presentViewController(alert, animated: true, completion: nil);
             return;
         }else{
+            self.activity.hidden = false
+            self.activity.startAnimating()
+            self.statusLabel.hidden = false;
+            self.statusLabel.text = "Logging In...";
             self.makeLoginRequestWithParams(self.usn.text!, pass: self.psw.text!);
         }
     }
@@ -49,6 +55,10 @@ class LoginViewController: UIViewController {
             self.presentViewController(alert, animated: true, completion: nil);
             return;
         }else{
+            self.activity.hidden = false
+            self.activity.startAnimating()
+            self.statusLabel.hidden = false;
+            self.statusLabel.text = "Registering...";
             self.makeRegisterRequest()
         }
     }
@@ -90,7 +100,8 @@ class LoginViewController: UIViewController {
                         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasRegistered")
                         NSUserDefaults.standardUserDefaults().synchronize()
                         self.makeLoginRequestWithParams(self.usn!.text!, pass: self.psw.text!)
-                        
+                        self.statusLabel.hidden = false;
+                        self.statusLabel.text = "Logging in..."
                     })
                 }
             }
@@ -106,6 +117,7 @@ class LoginViewController: UIViewController {
         image?.drawInRect(self.view.bounds)
         UIGraphicsEndImageContext()
         self.view.backgroundColor = UIColor(patternImage: image!)
+        self.statusLabel.hidden = true;
         if(!NSUserDefaults.standardUserDefaults().boolForKey("HasRegistered")){
             self.login.hidden = true
             self.regist.hidden = false
@@ -118,10 +130,18 @@ class LoginViewController: UIViewController {
                 if(self.keychain.getPasscode("GCEmail") == ""){
                     print(self.keychain.getPasscode("GCEmail"))
                     makeLoginRequestWithParams(self.keychain.getPasscode("GCUsername")! as String, pass: self.keychain.getPasscode("GCPassword")! as String);
+                    self.activity.hidden = false
+                    self.activity.startAnimating()
                     print(self.keychain.getPasscode("GCUsername"))
                     print(self.keychain.getPasscode("GCPassword"))
+                    self.statusLabel.hidden = false;
+                    self.statusLabel.text = "Loggin in..."
                 }else{
                     makeLoginRequestWithParams(self.keychain.getPasscode("GCUsername")as! String, pass: self.keychain.getPasscode("GCPassword")as! String)
+                    self.activity.hidden = false
+                    self.activity.startAnimating()
+                    self.statusLabel.hidden = false
+                    self.statusLabel.text = "Logging in..."
                 }
             }
             // This could also be another view, connected with an outlet
@@ -179,9 +199,12 @@ class LoginViewController: UIViewController {
                                 self.keychain.setPasscode("GCUsername", passcode: user)
                             }
                             if (self.loggedIn == false){
+                                self.activity.stopAnimating()
                                 self.performSegueWithIdentifier("LoginSegue", sender: self)
                                 // use anyObj here
                                 self.loggedIn = true;
+                                self.statusLabel.hidden = true;
+                                self.statusLabel.text = "";
                             }else{
                                 
                             }
@@ -231,6 +254,8 @@ class LoginViewController: UIViewController {
     }
     
     func updateUser(field : String, value : String){
+        self.statusLabel.hidden = false;
+        self.statusLabel.text = "Updating User..."
         print(field + " " + value);
         let headers = [
             "cache-control": "no-cache",
@@ -262,6 +287,8 @@ class LoginViewController: UIViewController {
                         if(field == "username"){
                             self.keychain.setPasscode("GCEmail", passcode: self.keychain.getPasscode("GCUsername") as! String)
                             self.keychain.setPasscode("GCUsername", passcode: value);
+                            self.statusLabel.hidden = true;
+                            self.statusLabel.text = "";
                             
                         }
                     })
