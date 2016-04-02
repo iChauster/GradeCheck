@@ -189,7 +189,7 @@ setInterval(function(){
                   });
                 }else{
                   var currentHour = moment().tz("America/New_York").get("hour");
-                  if(currentHour < 23){
+                  if(currentHour < 23 && currentHour > 5){
                     var re = {method : 'GET',
                     url : 'https://gradecheck.herokuapp.com/',
                     headers:{
