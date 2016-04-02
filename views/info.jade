@@ -1,0 +1,23 @@
+doctype html
+html(lang = 'en')
+	head
+		title Montgomery Grade Check
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+		link(rel='stylesheet', href='stylesheets/info.css')
+		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+		script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+		script(src='js/typed.js')
+	body
+		.container
+			.text-vertical-center
+				h1.center Montgomery Grade Check
+	script.
+		$(document).ready(function(){
+		$(".center").typed({
+		strings:['see your grades', 'see where you stand', 'be alerted', 'focus on assignments','focus on classes', 'statistics and more', 'GradeCheck : Montgomery'],
+		typeSpeed:0,
+		backDelay : 300,
+		showCursor: false
+		});
+		});

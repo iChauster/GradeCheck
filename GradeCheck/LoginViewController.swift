@@ -222,7 +222,12 @@ class LoginViewController: UIViewController {
                                 self.keychain.setPasscode("GCUsername", passcode: user)
                             }
                             print(self.confirmationDict);
-                            let alert = UIAlertController(title: "Who are you?", message: "You've got siblings, so pick who you are.", preferredStyle: .Alert);
+                            var alert = UIAlertController();
+                            if(self.confirmationDict.count == 1 ){
+                                alert = UIAlertController(title: "Is this you?", message: "", preferredStyle: .Alert)
+                            }else{
+                                alert = UIAlertController(title: "Who are you?", message: "You've got siblings, so pick who you are.", preferredStyle: .Alert);
+                            }
                             for object in self.confirmationDict {
                                 if((object.objectForKey("username")) != nil){
                                     

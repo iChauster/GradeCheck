@@ -11,7 +11,7 @@ var app = express.Router();
 var markingPeriod = "MP3";
 /* GET home page. */
 app.get('/', function(req, res, next) {
-  res.end('connection successful');
+  res.render('info');
 });
 app.post('/register', function(req, res) {
 	var actual = CryptoJS.AES.encrypt(req.body.password,"LookDown"); //should switch to process.env for higher security reasons
