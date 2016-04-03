@@ -39,6 +39,7 @@ class LoginViewController: UIViewController {
             self.statusLabel.hidden = false;
             self.statusLabel.text = "Logging In...";
             self.makeLoginRequestWithParams(self.usn.text!, pass: self.psw.text!);
+            NSUserDefaults.standardUserDefaults().setObject(self.usn!.text, forKey: "id");
         }
     }
     @IBAction func register(sender:UIButton!){
