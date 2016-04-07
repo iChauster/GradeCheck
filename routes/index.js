@@ -60,7 +60,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
     if(req.body.email){
       username = req.body.email;
       console.log(username + "email found");
-    }else if (req.user){
+    }else if (req.user && req.user.studId != ""){
       console.log(req.user);
       username = req.user.studId;
       console.log('dataBase EMAIL');
