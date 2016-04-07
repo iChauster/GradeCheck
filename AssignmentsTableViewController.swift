@@ -193,12 +193,15 @@ class AssignmentsTableViewController: UITableViewController {
         }else{
             cell.grade.backgroundColor = UIColor.blackColor()
         }
+        cell.backgroundColor = cell.backgroundColor;
 
         return cell
     }
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let realCell = cell as! AssignmentsTableViewCell
         realCell.move()
+        realCell.backgroundColor = realCell.contentView.backgroundColor;
+
     }
     
 

@@ -145,6 +145,7 @@ class GradeTableViewController: UITableViewController {
             cell.views.backgroundColor = UIColor.blackColor()
             cell.color = UIColor.blackColor()
         }
+        cell.backgroundColor = cell.backgroundColor;
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor(red: 0.3647, green: 0.8431, blue: 0.3176, alpha: 1.0);
         backgroundView.alpha = 0.0;
@@ -153,6 +154,7 @@ class GradeTableViewController: UITableViewController {
     }
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         CellAnimation.animate(cell);
+        cell.backgroundColor = cell.contentView.backgroundColor;
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.performSegueWithIdentifier("GradeSegue", sender: self);

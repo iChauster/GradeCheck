@@ -120,6 +120,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         }else{
             cell.grade.backgroundColor = UIColor.blackColor()
         }
+        cell.backgroundColor = cell.backgroundColor;
 
         
         return cell;
@@ -127,6 +128,8 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let actualCell = cell as! DetailGradeTableViewCell
         actualCell.move()
+        actualCell.backgroundColor = actualCell.contentView.backgroundColor;
+
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

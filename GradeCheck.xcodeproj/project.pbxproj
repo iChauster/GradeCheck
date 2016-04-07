@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2C5895021CAF320400F0876D /* fire.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C5895011CAF320400F0876D /* fire.jpg */; };
+		2C8650581CB48DE80039B1A9 /* appIcon76.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650571CB48DE80039B1A9 /* appIcon76.png */; };
+		2C86505B1CB4930F0039B1A9 /* appIcon152.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650591CB4930F0039B1A9 /* appIcon152.png */; };
+		2C86505C1CB4930F0039B1A9 /* appIcon167.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C86505A1CB4930F0039B1A9 /* appIcon167.png */; };
 		2C918C4C1CAC8C6600C80299 /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C918C4B1CAC8C6600C80299 /* OneSignal.framework */; };
 		2C918C4E1CAC8CA300C80299 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */; };
 		2CD720AF1CAB140A00338CA7 /* GraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD720AE1CAB140900338CA7 /* GraphData.swift */; };
@@ -105,6 +108,9 @@
 
 /* Begin PBXFileReference section */
 		2C5895011CAF320400F0876D /* fire.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = fire.jpg; path = ../../../Downloads/fire.jpg; sourceTree = "<group>"; };
+		2C8650571CB48DE80039B1A9 /* appIcon76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon76.png; path = ../../../Downloads/appIcon76.png; sourceTree = "<group>"; };
+		2C8650591CB4930F0039B1A9 /* appIcon152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon152.png; path = ../../../Downloads/appIcon152.png; sourceTree = "<group>"; };
+		2C86505A1CB4930F0039B1A9 /* appIcon167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon167.png; path = ../../../Downloads/appIcon167.png; sourceTree = "<group>"; };
 		2C918C4B1CAC8C6600C80299 /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OneSignal.framework; path = GradeCheck/OneSignal.framework; sourceTree = "<group>"; };
 		2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2C918C4F1CAC8D8400C80299 /* GradeCheck-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GradeCheck-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -169,6 +175,9 @@
 		2CD720BF1CAB546900338CA7 /* appIcon */ = {
 			isa = PBXGroup;
 			children = (
+				2C8650591CB4930F0039B1A9 /* appIcon152.png */,
+				2C86505A1CB4930F0039B1A9 /* appIcon167.png */,
+				2C8650571CB48DE80039B1A9 /* appIcon76.png */,
 				2CD720BD1CAB545300338CA7 /* appIcon58.png */,
 				2CD720B51CAB52B800338CA7 /* appIcon120.png */,
 				2CD720B81CAB53BF00338CA7 /* appIcon80.png */,
@@ -415,10 +424,13 @@
 				ED7AA20B1C83986D001B2E68 /* calendar.png in Resources */,
 				2CD720BB1CAB53BF00338CA7 /* appIcon80.png in Resources */,
 				EDBE86071C7A46B10031EE8B /* back1.png in Resources */,
+				2C8650581CB48DE80039B1A9 /* appIcon76.png in Resources */,
 				2CD720BE1CAB545300338CA7 /* appIcon58.png in Resources */,
 				EDBE86051C7A2F870031EE8B /* appicon.png in Resources */,
 				EDBE85EA1C78ED280031EE8B /* LaunchScreen.storyboard in Resources */,
+				2C86505B1CB4930F0039B1A9 /* appIcon152.png in Resources */,
 				2CD720B41CAB524700338CA7 /* appIcon180.png in Resources */,
+				2C86505C1CB4930F0039B1A9 /* appIcon167.png in Resources */,
 				EDBE86021C7A2D460031EE8B /* background.png in Resources */,
 				2CD720B61CAB52B800338CA7 /* appIcon120.png in Resources */,
 				2CD720BC1CAB53BF00338CA7 /* appIcon87.png in Resources */,
@@ -604,6 +616,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9c27c751-2587-4d9d-ad1d-bdc8570338c0";
 				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -625,6 +638,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9c27c751-2587-4d9d-ad1d-bdc8570338c0";
 				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

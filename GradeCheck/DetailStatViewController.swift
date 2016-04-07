@@ -52,7 +52,14 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         ]
         //let cookieString = "cookie=" + self.cookie
         //let idString = "&id=" + (NSUserDefaults.standardUserDefaults().objectForKey("id") as! String);
-        self.getClassData();
+        if((self.data["grade"]as! String) != "No Grades"){
+            self.getClassData();
+        }else{
+            let alert = UIAlertController(title: "No Data!", message: "Grades are not in for the quarter yet!", preferredStyle: .Alert);
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alert.addAction(okAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
         let classNameString = "className=" + self.className;
         print("className=" + self.className)
         let postData = NSMutableData(data: classNameString.dataUsingEncoding(NSUTF8StringEncoding)!)
@@ -85,7 +92,16 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
                                 self.results.append(graphDataObject)
                             }
                             print(self.results)
+                            if((self.data["grade"]as! String) != "No Grades"){
+
                             self.getGraphData(self.results)
+                            
+                            }else{
+                                let alert = UIAlertController(title: "No Data!", message: "Grades are not in for the quarter yet!", preferredStyle: .Alert);
+                                let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                                alert.addAction(okAction)
+                                self.presentViewController(alert, animated: true, completion: nil)
+                            }
                             CellAnimation.growAndShrink(self.meanView)
                             CellAnimation.growAndShrink(self.rankView)
                             CellAnimation.growAndShrink(self.percentileView)
@@ -207,13 +223,6 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
             data.append(entry)
             gradeSum += element.grade;
             gradeArray.append(element.grade);
-            let entr = ChartDataEntry(value: 3.0, xIndex: 84);
-            let ent = ChartDataEntry(value: 2.0, xIndex: 78);
-            let en = ChartDataEntry(value: 1.0, xIndex: 62);
-            data.append(entr)
-            data.append(ent)
-            data.append(en)
-
         }
         gradeArray.sortInPlace()
         print(gradeArray)
@@ -363,11 +372,14 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
             let a = UIAlertController(title: "Something Got MESSED UP", message: "Whoops.", preferredStyle: .Alert)
             self.presentViewController(a, animated: true, completion: nil);
         }
+        cell.backgroundColor = cell.backgroundColor;
         return cell
     }
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let actualCell = cell as! DetailStatTableViewCell
         CellAnimation.growAndShrink(actualCell.dataView)
+        actualCell.backgroundColor = actualCell.contentView.backgroundColor;
+
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.dataArray.count;

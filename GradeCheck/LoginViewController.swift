@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var regist : UIButton!
     @IBOutlet weak var activity : UIActivityIndicatorView!
     @IBOutlet weak var statusLabel : UILabel!
+    @IBOutlet weak var manualLogin : UIButton!
     let keychain = Keychain()
     var jsonDict : NSArray!
     var confirmationDict : NSArray!
@@ -38,8 +39,8 @@ class LoginViewController: UIViewController {
             self.activity.startAnimating()
             self.statusLabel.hidden = false;
             self.statusLabel.text = "Logging In...";
-            self.makeLoginRequestWithParams(self.usn.text!, pass: self.psw.text!);
             NSUserDefaults.standardUserDefaults().setObject(self.usn!.text, forKey: "id");
+            self.makeLoginRequestWithParams(self.usn.text!, pass: self.psw.text!);
         }
     }
     @IBAction func register(sender:UIButton!){
@@ -104,6 +105,11 @@ class LoginViewController: UIViewController {
                         self.statusLabel.hidden = false;
                         self.statusLabel.text = "Logging in..."
                     })
+                }else{
+                    let alert = UIAlertController(title: "An Error Occurred from the Server.", message: "Please try logging in manually.", preferredStyle: .Alert);
+                    let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    alert.addAction(alertAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
             }
         })
@@ -123,9 +129,11 @@ class LoginViewController: UIViewController {
             self.login.hidden = true
             self.regist.hidden = false
             self.regist.layer.cornerRadius = 0.5 * self.regist.bounds.size.width;
+            self.manualLogin.hidden = false;
+            self.manualLogin.layer.cornerRadius = 0.5 * self.manualLogin.bounds.size.width;
         }else{
             self.regist.hidden = true
-            
+            self.manualLogin.hidden = true;
             self.login.layer.cornerRadius = 0.5 * login.bounds.size.width
             if(self.keychain.getPasscode("GCUsername")! != "" && self.keychain.getPasscode("GCPassword")! != ""){
                 if(self.keychain.getPasscode("GCEmail") == ""){
@@ -252,6 +260,20 @@ class LoginViewController: UIViewController {
                         }
                     })
 
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), {
+
+                    let alert = UIAlertController(title: "Connection Error:", message: "Incorrect login or server idle. Please try again. Status Code :" +
+                        String(httpResponse!.statusCode), preferredStyle: .Alert);
+                    let action = UIAlertAction(title: "OK", style: .Default, handler: { (alert) in
+                        self.activity.stopAnimating();
+                        self.activity.hidden = true;
+                        self.statusLabel.text = "";
+                    })
+                    alert.addAction(action)
+                    self.presentViewController(alert, animated: true, completion: nil);
+                    
+                    });
                 }
             }
         })
