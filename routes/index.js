@@ -8,13 +8,14 @@ var ObjectID = require('mongodb').ObjectID;
 var app = express.Router();
 
 
-var markingPeriod = "MP3";
+var markingPeriod = "MP4";
 /* GET home page. */
 app.get('/', function(req, res, next) {
   res.render('info');
 });
 app.post('/register', function(req, res) {
 	var actual = CryptoJS.AES.encrypt(req.body.password,"LookDown"); //should switch to process.env for higher security reasons
+
       User.register(new User({ username : req.body.username, phoneNumber : req.body.phoneNumber,grades:[{subject:"", grade:""}], deviceToken: req.body.deviceToken, preference : actual, studId: ""}), req.body.password, function(err, account) {
           if (err) {
           	console.log(err);
@@ -33,12 +34,29 @@ app.post('/update', function(req,res){
 		User.findById(ObjectID(req.body.id), function(err, user) {
 			if(err){console.log(err)}
         	if (user) {
-            	     
+            	    if(req.body.username){
+                    console.log(req.body.username);
+                    var a = {};
+                    a["username"] = req.body.username;
+                    User.find(a,function(err,user){
+                      if(err){
+                        console.log(err);
+                      }
+                      if(user.length != 0){
+                        console.log(user.id);
+                        console.log("TAKEN");
+                        return res.status(1738).end("you ain't brendon, ho");
+                      }else{
+                        user.username = req.body.username ? req.body.username : user.username;
+                        user.save();
+                      }
+                    });
+                  } 
                 	user.email = req.body.email ? req.body.email : user.email;
                 	user.phoneNumber = req.body.phoneNumber ? req.body.phoneNumber : user.phoneNumber;
                 	user.deviceToken = req.body.deviceToken ? req.body.deviceToken : user.deviceToken;
                 	user.studId = req.body.studId ? req.body.studId : user.studId;
-                  user.username = req.body.username ? req.body.username : user.username;
+                  
 
                 	user.save();
                 	return res.status(200).end("Process successful");

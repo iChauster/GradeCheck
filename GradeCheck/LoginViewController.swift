@@ -21,7 +21,7 @@ class LoginViewController: UIViewController {
     var confirmationDict : NSArray!
     var loggedIn = false;
     var phoneNumberOption : String?
-    let url = "https://gradecheck.herokuapp.com/"
+    let url = "http://gradecheck.herokuapp.com/"
     @IBAction func login(sender:UIButton!){
         NSLog("clicked");
         NSLog(usn!.text!);
