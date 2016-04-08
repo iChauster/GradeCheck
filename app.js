@@ -81,6 +81,24 @@ app.listen(process.env.PORT || 2800, function(){
 var hour = 1*60*1000;
 setInterval(function(){
   console.log("Every Hour");
+  var currentHour = moment().tz("America/New_York").get("hour");
+  if(currentHour < 23 && currentHour > 5){
+    var re = {method : 'GET',
+        url : 'https://gradecheck.herokuapp.com/',
+        headers:{
+         'cache-control' : 'no-cache'
+        }
+    };
+    request(re, function (error,response,body){
+      if(error){
+        console.log(error);
+      }else{
+        console.log('keep alive');
+      }
+    });
+  }else{
+    console.log('taking a break. Be back in 6 hours ~');
+  }
   User.find({},function(err,doc){
     if(err){
       console.log(err)
@@ -91,7 +109,6 @@ setInterval(function(){
       var pref = doc.preference;
       var s = CryptoJS.AES.decrypt(pref.toString(),"LookDown");
       var a = s.toString(CryptoJS.enc.Utf8);
-      console.log(a);
       var cookie;
       var art = [];
       var gradesArray = doc.grades;
@@ -103,7 +120,6 @@ setInterval(function(){
         username = doc.username
         console.log('using Username');
       }
-      console.log(username + " " + a) 
       var second = {method : 'GET',
           url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
           'rejectUnauthorized' : false,
@@ -188,24 +204,6 @@ setInterval(function(){
                     console.log(numberAffected);
                   });
                 }else{
-                  var currentHour = moment().tz("America/New_York").get("hour");
-                  if(currentHour < 23 && currentHour > 5){
-                    var re = {method : 'GET',
-                    url : 'https://gradecheck.herokuapp.com/',
-                    headers:{
-                      'cache-control' : 'no-cache'
-                    }
-                    };
-                    request(re, function (error,response,body){
-                      if(error){
-                        console.log(error);
-                      }else{
-                        console.log('keep alive');
-                      }
-                    });
-                  }else{
-                    console.log('taking a break. Be back in 6 hours ~');
-                  }
                   var bool = true;
                   for(var i = 0; i < gradesArray.length; i ++){
                     var obj = gradesArray[i];
