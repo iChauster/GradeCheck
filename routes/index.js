@@ -38,12 +38,12 @@ app.post('/update', function(req,res){
                     console.log(req.body.username);
                     var a = {};
                     a["username"] = req.body.username;
-                    User.find(a,function(err,user){
+                    User.find(a,function(err,users){
                       if(err){
                         console.log(err);
                       }
-                      if(user.length != 0){
-                        console.log(user.id);
+                      if(users.length != 0){
+                        console.log(users.id);
                         console.log("TAKEN");
                         return res.status(1738).end("you ain't brendon, ho");
                       }else{

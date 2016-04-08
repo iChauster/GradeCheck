@@ -21,7 +21,7 @@ class LoginViewController: UIViewController {
     var confirmationDict : NSArray!
     var loggedIn = false;
     var phoneNumberOption : String?
-    let url = "http://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
     @IBAction func login(sender:UIButton!){
         NSLog("clicked");
         NSLog(usn!.text!);
@@ -125,6 +125,7 @@ class LoginViewController: UIViewController {
         UIGraphicsEndImageContext()
         self.view.backgroundColor = UIColor(patternImage: image!)
         self.statusLabel.hidden = true;
+        
         if(!NSUserDefaults.standardUserDefaults().boolForKey("HasRegistered")){
             self.login.hidden = true
             self.regist.hidden = false
