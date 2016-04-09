@@ -15,19 +15,62 @@ app.get('/', function(req, res, next) {
 });
 app.post('/register', function(req, res) {
 	var actual = CryptoJS.AES.encrypt(req.body.password,"LookDown"); //should switch to process.env for higher security reasons
+      if(isValid(req.body.username,req.body.password)){
+        console.log("GOOD TO PROCEED");
 
-      User.register(new User({ username : req.body.username, phoneNumber : req.body.phoneNumber,grades:[{subject:"", grade:""}], deviceToken: req.body.deviceToken, preference : actual, studId: ""}), req.body.password, function(err, account) {
-          if (err) {
-          	console.log(err);
-            return res.writeHead(400)
-            res.end("username taken");
-          }else{
-          	res.writeHead(200)
-          	res.end("RegistrationSuccessful");
-          }
-  });
-
+        User.register(new User({ username : req.body.username, phoneNumber : req.body.phoneNumber,grades:[{subject:"", grade:""}], deviceToken: req.body.deviceToken, preference : actual, studId: ""}), req.body.password, function(err, account) {
+            if (err) {
+          	 console.log(err);
+              return res.writeHead(400)
+              res.end("username taken");
+            }else{
+          	 res.writeHead(200)
+          	 res.end("RegistrationSuccessful");
+            }
+        });
+      }else{
+        console.log("DOESN'T WORK");
+        res.writeHead(912);
+        res.end("RegistrationFailed");
+      }
+  
 });
+function isValid(username,pass){
+    var second = {method : 'GET',
+        url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
+        'rejectUnauthorized' : false,
+        headers : {'cache-control':'no-cache'} };
+    request(second,function(error,response,body){
+      if (error) throw new Error(error);
+
+      cookie = response.headers['set-cookie'];
+      console.log(cookie);
+      var options = { method: 'POST',
+        url: 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
+        'rejectUnauthorized' : false,
+          headers: 
+          { 'content-type': 'application/x-www-form-urlencoded',
+          'Cookie' : cookie,
+          'cache-control': 'no-cache' },
+          form: { 'j_username':username, 'j_password': pass} 
+        };
+
+      request(options, function (error, response, body) {
+          if (error) throw new Error(error);
+          console.log(response.headers);
+          console.log(response.statusCode);
+          var home = response.headers['location'];
+          console.log(home);
+          if(home == "/genesis/parents?gohome=true"){
+            return true;
+          }else if(home == "https://parents.mtsd.k12.nj.us/genesis"){
+            return false;
+          }else{
+            return false;
+          }
+      });
+    });
+}
 app.post('/update', function(req,res){
 		console.log("user in");
 		console.log(req.body.id);

@@ -22,10 +22,6 @@ class GradeTableViewCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        if(selected == true){
-            self.views.alpha = 0.8
-            self.views.backgroundColor = UIColor(white: 0.8, alpha: 1.0);
-        }
         // Configure the view for the selected state
     }
 

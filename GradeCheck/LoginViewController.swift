@@ -21,7 +21,7 @@ class LoginViewController: UIViewController {
     var confirmationDict : NSArray!
     var loggedIn = false;
     var phoneNumberOption : String?
-    let url = "http://localhost:2800/"
+    let url = "https://gradecheck.herokuapp.com/"
     @IBAction func login(sender:UIButton!){
         NSLog("clicked");
         NSLog(usn!.text!);
@@ -105,11 +105,25 @@ class LoginViewController: UIViewController {
                         self.statusLabel.hidden = false;
                         self.statusLabel.text = "Logging in..."
                     })
+                }else if(httpResponse?.statusCode == 912){
+                    dispatch_async(dispatch_get_main_queue(), {
+                        print("Authentication incorrect");
+                        let alert = UIAlertController(title:"Authentication Error", message:"Please check that your genesis information is correct and register again.", preferredStyle: .Alert)
+                        let action = UIAlertAction(title: "K", style: .Default, handler: nil)
+                        alert.addAction(action)
+                        self.presentViewController(alert, animated: true, completion: nil);
+                        self.statusLabel.text = "";
+                        self.statusLabel.hidden = true;
+                        self.activity.stopAnimating();
+                        self.activity.hidden = true;
+                    });
                 }else{
-                    let alert = UIAlertController(title: "An Error Occurred from the Server.", message: "Please try logging in manually.", preferredStyle: .Alert);
-                    let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                    alert.addAction(alertAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    dispatch_async(dispatch_get_main_queue(),{
+                        let alert = UIAlertController(title: "An Error Occurred from the Server.", message: "Please try logging in manually, or wait.", preferredStyle: .Alert);
+                        let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                        alert.addAction(alertAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    })
                 }
             }
         })
@@ -320,6 +334,13 @@ class LoginViewController: UIViewController {
                             self.statusLabel.text = "";
                             
                         }
+                    })
+                }else if (httpResponse?.statusCode == 1738){
+                    dispatch_async(dispatch_get_main_queue(), {
+                      let alert = UIAlertController(title: "Username Taken.", message: "It seems like you've logged on before. Please login with your student id and genesis password to regain access. Thanks!", preferredStyle: .Alert)
+                        let action = UIAlertAction(title: "10/10", style: .Default, handler: nil)
+                        alert.addAction(action);
+                        self.presentViewController(alert, animated: true, completion: nil)
                     })
                 }
             }
