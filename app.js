@@ -255,6 +255,7 @@ var sendNotificationToUser = function(message){
     if(error){
       console.log(error);
     }
+    console.log(body);
     console.log(response.headers);
   });
 }
