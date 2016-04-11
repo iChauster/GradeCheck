@@ -226,6 +226,7 @@ setInterval(function(){
                         "contents" : {"en" : "Your grade in " + gradesArray[i].subject + " has changed from " + gradesArray[i].grade + " to " + art[i].grade},
                         "include_player_ids" : [doc.deviceToken]
                       }
+                      console.log(a);
                       sendNotificationToUser(a);              
                     }
                   }
@@ -251,6 +252,9 @@ var sendNotificationToUser = function(message){
     json : message
   };
   request(send, function(error,response,body){
+    if(error){
+      console.log(error);
+    }
     console.log(response.headers);
   });
 }

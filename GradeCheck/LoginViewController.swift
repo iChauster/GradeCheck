@@ -232,6 +232,9 @@ class LoginViewController: UIViewController {
                             }else{
                                 
                             }
+                            if(NSUserDefaults.standardUserDefaults().boolForKey("HasRegistered") == false){
+                                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasRegistered")
+                            }
                         }catch{
                             
                         }

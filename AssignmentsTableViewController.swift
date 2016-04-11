@@ -24,6 +24,12 @@ class AssignmentsTableViewController: UITableViewController {
         self.refreshControl!.backgroundColor = UIColor.blackColor()
         self.refreshControl!.tintColor = UIColor.whiteColor()
         self.refreshControl!.addTarget(self, action: #selector(AssignmentsTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged);
+        let leftSwipe = UISwipeGestureRecognizer(target: self.tabBarController, action: #selector(GradeViewController.swipeLeft))
+        leftSwipe.direction = .Left
+        self.tableView.addGestureRecognizer(leftSwipe)
+        let rightSwipe = UISwipeGestureRecognizer(target: self.tabBarController, action: #selector(GradeViewController.swipeRight))
+        rightSwipe.direction = .Right;
+        self.tableView.addGestureRecognizer(rightSwipe)
 
         let headers = [
             "cache-control": "no-cache",
@@ -203,6 +209,7 @@ class AssignmentsTableViewController: UITableViewController {
         realCell.backgroundColor = realCell.contentView.backgroundColor;
 
     }
+    
     
 
     /*

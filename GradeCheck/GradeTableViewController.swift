@@ -20,7 +20,11 @@ class GradeTableViewController: UITableViewController {
         self.refreshControl!.backgroundColor = UIColor.blackColor()
         self.refreshControl!.tintColor = UIColor.whiteColor()
         self.refreshControl!.addTarget(self, action: #selector(GradeTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged);
-
+        let leftSwipe = UISwipeGestureRecognizer.init(target: self.tabBarController, action: #selector(GradeViewController.swipeLeft))
+        leftSwipe.direction = .Left
+        self.tableView.addGestureRecognizer(leftSwipe);
+        let rightSwipe = UISwipeGestureRecognizer.init(target:self.tabBarController, action: #selector(GradeViewController.swipeRight))
+        self.tableView.addGestureRecognizer(rightSwipe)
         self.tableView.contentInset = UIEdgeInsetsMake(20, 0,0, 0)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -176,7 +180,7 @@ class GradeTableViewController: UITableViewController {
             viewcontroller.classtitle = selectedCell.classg.text! + " - " + selectedCell.grade.text!;
         }
     }
-    
+ 
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

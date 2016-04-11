@@ -313,6 +313,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         let cell = tableView.dequeueReusableCellWithIdentifier("DetailStatCell", forIndexPath: indexPath) as! DetailStatTableViewCell
         let given = self.dataArray[indexPath.section] as! NSDictionary;
         print(given)
+        cell.backgroundColor = UIColor(red: 55.0/255, green: 127.0/255, blue: 58.0/255, alpha: 1.0);
         let grades = given["grades"] as! NSDictionary
         var arrayOfGrades = grades["grades"] as! [Double];
         arrayOfGrades.sortInPlace();

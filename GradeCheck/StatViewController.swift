@@ -31,6 +31,14 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.statTable.dataSource = self;
         self.statTable.delegate = self;
         self.statTable.layer.cornerRadius = 10;
+        let leftSwipe = UISwipeGestureRecognizer(target: self.tabBarController, action: #selector(GradeViewController.swipeLeft))
+        leftSwipe.direction = .Left
+        self.view.addGestureRecognizer(leftSwipe)
+        let rightSwipe = UISwipeGestureRecognizer(target: self.tabBarController, action: #selector(GradeViewController.swipeRight))
+        rightSwipe.direction = .Right;
+        self.view.addGestureRecognizer(rightSwipe)
+        
+
         
         self.getGPA()
         // Do any additional setup after loading the view.

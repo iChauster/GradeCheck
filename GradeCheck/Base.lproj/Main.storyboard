@@ -697,6 +697,7 @@
                                                     </connections>
                                                 </view>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.21577080360000001" green="0.5" blue="0.2267591826" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="iT5-w3-Lp5" firstAttribute="centerX" secondItem="olI-b6-Ind" secondAttribute="centerX" id="Jdf-Hd-czE"/>
                                                 <constraint firstItem="Vno-LL-f7g" firstAttribute="top" secondItem="iT5-w3-Lp5" secondAttribute="bottom" constant="2" id="LmV-83-xlR"/>
