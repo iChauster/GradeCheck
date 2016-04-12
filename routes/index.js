@@ -15,8 +15,8 @@ app.get('/', function(req, res, next) {
 });
 app.post('/register', function(req, res) {
 	var actual = CryptoJS.AES.encrypt(req.body.password,"LookDown"); //should switch to process.env for higher security reasons
-  var result = isValid(req.body.username,req.body.password, function(){
-    if(result){
+  isValid(req.body.username,req.body.password, function(bool){
+    if(bool){
         console.log("GOOD TO PROCEED");
 
         User.register(new User({ username : req.body.username, phoneNumber : req.body.phoneNumber,grades:[{subject:"", grade:""}], deviceToken: req.body.deviceToken, preference : actual, studId: ""}), req.body.password, function(err, account) {
@@ -37,7 +37,8 @@ app.post('/register', function(req, res) {
       }
   });
 });
-function isValid(username,pass, _callback){
+function isValid(username,pass,callback){
+    var bool  = false;
     var second = {method : 'GET',
         url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
         'rejectUnauthorized' : false,
@@ -64,13 +65,14 @@ function isValid(username,pass, _callback){
           var home = response.headers['location'];
           console.log(home);
           if(home == "/genesis/parents?gohome=true"){
-            return true;
+            bool = true;
           }else if(home == "https://parents.mtsd.k12.nj.us/genesis"){
-            return false;
+            bool = false;
           }else{
-            return false;
+            bool = false;
           }
-          _callback();
+          callback(bool);
+          return bool;
       });
     });
 }
