@@ -15,7 +15,7 @@ app.get('/', function(req, res, next) {
 });
 app.post('/register', function(req, res) {
 	var actual = CryptoJS.AES.encrypt(req.body.password,"LookDown"); //should switch to process.env for higher security reasons
-  var result = isValied(req.body.username,req.body.password);
+  var result = isValid(req.body.username,req.body.password);
       if(result){
         console.log("GOOD TO PROCEED");
 
