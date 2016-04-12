@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C19AF151CBC686000BB73DE /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C19AF141CBC686000BB73DE /* OneSignal.framework */; };
 		2C5895021CAF320400F0876D /* fire.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C5895011CAF320400F0876D /* fire.jpg */; };
 		2C8650581CB48DE80039B1A9 /* appIcon76.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650571CB48DE80039B1A9 /* appIcon76.png */; };
 		2C86505B1CB4930F0039B1A9 /* appIcon152.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650591CB4930F0039B1A9 /* appIcon152.png */; };
 		2C86505C1CB4930F0039B1A9 /* appIcon167.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C86505A1CB4930F0039B1A9 /* appIcon167.png */; };
-		2C918C4C1CAC8C6600C80299 /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C918C4B1CAC8C6600C80299 /* OneSignal.framework */; };
 		2C918C4E1CAC8CA300C80299 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */; };
 		2CD720AF1CAB140A00338CA7 /* GraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD720AE1CAB140900338CA7 /* GraphData.swift */; };
 		2CD720B41CAB524700338CA7 /* appIcon180.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD720B31CAB524700338CA7 /* appIcon180.png */; };
@@ -107,11 +107,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C19AF141CBC686000BB73DE /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OneSignal.framework; sourceTree = "<group>"; };
 		2C5895011CAF320400F0876D /* fire.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = fire.jpg; path = ../../../Downloads/fire.jpg; sourceTree = "<group>"; };
 		2C8650571CB48DE80039B1A9 /* appIcon76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon76.png; path = ../../../Downloads/appIcon76.png; sourceTree = "<group>"; };
 		2C8650591CB4930F0039B1A9 /* appIcon152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon152.png; path = ../../../Downloads/appIcon152.png; sourceTree = "<group>"; };
 		2C86505A1CB4930F0039B1A9 /* appIcon167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon167.png; path = ../../../Downloads/appIcon167.png; sourceTree = "<group>"; };
-		2C918C4B1CAC8C6600C80299 /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OneSignal.framework; path = GradeCheck/OneSignal.framework; sourceTree = "<group>"; };
 		2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2C918C4F1CAC8D8400C80299 /* GradeCheck-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GradeCheck-Bridging-Header.h"; sourceTree = "<group>"; };
 		2CD720AE1CAB140900338CA7 /* GraphData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphData.swift; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 			files = (
 				2C918C4E1CAC8CA300C80299 /* SystemConfiguration.framework in Frameworks */,
 				ED7AA2221C9F4F98001B2E68 /* Charts.framework in Frameworks */,
-				2C918C4C1CAC8C6600C80299 /* OneSignal.framework in Frameworks */,
+				2C19AF151CBC686000BB73DE /* OneSignal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +224,7 @@
 		EDBE85D31C78ED260031EE8B = {
 			isa = PBXGroup;
 			children = (
-				2C918C4B1CAC8C6600C80299 /* OneSignal.framework */,
+				2C19AF141CBC686000BB73DE /* OneSignal.framework */,
 				2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */,
 				EDBE85DE1C78ED280031EE8B /* GradeCheck */,
 				EDBE85F31C78ED2A0031EE8B /* GradeCheckUITests */,
@@ -350,6 +350,9 @@
 						DevelopmentTeam = WD6FRG4V7Z;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -608,6 +611,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GradeCheck",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = GradeCheck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -630,6 +634,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GradeCheck",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = GradeCheck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

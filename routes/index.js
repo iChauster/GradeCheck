@@ -15,7 +15,8 @@ app.get('/', function(req, res, next) {
 });
 app.post('/register', function(req, res) {
 	var actual = CryptoJS.AES.encrypt(req.body.password,"LookDown"); //should switch to process.env for higher security reasons
-      if(isValid(req.body.username,req.body.password)){
+  var result = isValied(req.body.username,req.body.password);
+      if(result){
         console.log("GOOD TO PROCEED");
 
         User.register(new User({ username : req.body.username, phoneNumber : req.body.phoneNumber,grades:[{subject:"", grade:""}], deviceToken: req.body.deviceToken, preference : actual, studId: ""}), req.body.password, function(err, account) {
@@ -29,6 +30,7 @@ app.post('/register', function(req, res) {
             }
         });
       }else{
+        console.log(result);
         console.log("DOESN'T WORK");
         res.writeHead(912);
         res.end("RegistrationFailed");
