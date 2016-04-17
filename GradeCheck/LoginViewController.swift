@@ -139,7 +139,9 @@ class LoginViewController: UIViewController {
         UIGraphicsEndImageContext()
         self.view.backgroundColor = UIColor(patternImage: image!)
         self.statusLabel.hidden = true;
-        
+        let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(LoginViewController.dismissKeyboard))
+        downSwipe.direction = .Down;
+        self.view.addGestureRecognizer(downSwipe);
         if(!NSUserDefaults.standardUserDefaults().boolForKey("HasRegistered")){
             self.login.hidden = true
             self.regist.hidden = false
@@ -173,7 +175,12 @@ class LoginViewController: UIViewController {
             // Do any additional setup after loading the view.
         }
     }
-
+    func dismissKeyboard(){
+        if(self.usn.isFirstResponder() || self.psw.isFirstResponder()){
+            self.usn.resignFirstResponder()
+            self.psw.resignFirstResponder();
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

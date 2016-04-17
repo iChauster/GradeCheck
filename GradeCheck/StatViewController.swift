@@ -68,7 +68,11 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     override func viewDidAppear(animated: Bool) {
         self.getGPA()
-        
+    }
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let realCell = cell as! StatTableViewCell;
+        realCell.backgroundColor = realCell.backgroundColor;
+        CellAnimation.slide(realCell)
     }
     func getGPA(){
         var gradeTotal = 0.0;

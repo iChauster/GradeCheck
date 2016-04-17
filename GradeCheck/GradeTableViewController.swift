@@ -13,9 +13,13 @@ class GradeTableViewController: UITableViewController {
     var gradeArray : NSArray!
     var cookie : String!
     var id : String!
-    let url = "https://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Should display " + (NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String))
+        if(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") != nil){
+            self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+        }
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.backgroundColor = UIColor.blackColor()
         self.refreshControl!.tintColor = UIColor.whiteColor()
@@ -26,6 +30,8 @@ class GradeTableViewController: UITableViewController {
         let rightSwipe = UISwipeGestureRecognizer.init(target:self.tabBarController, action: #selector(GradeViewController.swipeRight))
         self.tableView.addGestureRecognizer(rightSwipe)
         self.tableView.contentInset = UIEdgeInsetsMake(20, 0,0, 0)
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(GradeTableViewController.markingPeriodSwitch))
+        self.tableView.addGestureRecognizer(longPress)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -33,7 +39,46 @@ class GradeTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
     }
+    func markingPeriodSwitch(sender:UILongPressGestureRecognizer){
+        print("longPress:",sender.state.rawValue);
+        if(sender.state == .Began){
+            let alert = UIAlertController(title: "MP?", message: "What marking period would you like to view?", preferredStyle: .Alert)
+            let mp1 = UIAlertAction(title: "Marking Period 1", style: .Default) { (alert:UIAlertAction!) in
+                print("mp1 clicked");
+                NSUserDefaults.standardUserDefaults().setObject("MP1", forKey: "GradeTableMP")
+                self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+            }
+            let mp2 = UIAlertAction(title: "Marking Period 2", style: .Default) { (alert:UIAlertAction!) in
+                print("mp1 clicked");
+                NSUserDefaults.standardUserDefaults().setObject("MP2", forKey: "GradeTableMP")
+                self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
 
+            }
+            let mp3 = UIAlertAction(title: "Marking Period 3", style: .Default) { (alert:UIAlertAction!) in
+                print("mp1 clicked");
+                NSUserDefaults.standardUserDefaults().setObject("MP3", forKey: "GradeTableMP")
+                self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+
+            }
+            let mp4 = UIAlertAction(title: "Marking Period 4", style: .Default) { (alert:UIAlertAction!) in
+                print("mp1 clicked");
+                NSUserDefaults.standardUserDefaults().setObject("MP4", forKey: "GradeTableMP")
+                self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+            }
+            let cancel = UIAlertAction(title:"Cancel", style: .Cancel){(alert:UIAlertAction!) in
+                print("cancelled");
+            }
+            alert.addAction(mp1);
+            alert.addAction(mp2);
+            alert.addAction(mp3);
+            alert.addAction(mp4);
+            alert.addAction(cancel);
+            self.presentViewController(alert, animated: true, completion: nil);
+        }else{
+            print("n/a")
+        }
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -50,7 +95,70 @@ class GradeTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return gradeArray.count - 1;
     }
-
+    func gradebookWithMarkingPeriod(mp : String){
+        let cookieID = gradeArray[0] as! NSDictionary
+        let cookieArray = cookieID.objectForKey("cookie") as? NSArray
+        self.cookie = cookieArray![0] as? String;
+        self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
+        let headers = [
+            "cache-control": "no-cache",
+            "content-type": "application/x-www-form-urlencoded"
+        ]
+        let cookieString = "cookie=" + self.cookie
+        let idString = "&id=" + self.id
+        let mpString = "&mp=" + mp;
+        let postData = NSMutableData(data: cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        postData.appendData(mpString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: url + "gradebook")!,
+                                          cachePolicy: .UseProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
+        request.HTTPMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.HTTPBody = postData
+        
+        let session = NSURLSession.sharedSession()
+        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print(error)
+            } else {
+                let httpResponse = response as? NSHTTPURLResponse
+                print(httpResponse)
+                if(httpResponse?.statusCode == 200){
+                    dispatch_async(dispatch_get_main_queue(), {
+                        do{
+                            self.gradeArray = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            self.tableView.reloadData()
+                            self.refreshControl?.endRefreshing()
+                        }catch{
+                            
+                        }
+                    })
+                    
+                }else if(httpResponse?.statusCode == 440){
+                    dispatch_async(dispatch_get_main_queue(), {
+                        do{
+                            let cookie = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            print(cookie);
+                            let cooke = cookie[0] as! NSDictionary
+                            let hafl = cooke.objectForKey("set-cookie") as! NSArray;
+                            self.cookie = hafl[0] as! String;
+                            print(self.cookie);
+                            self.refresh();
+                            
+                            self.refreshControl?.endRefreshing()
+                        }catch{
+                            
+                        }
+                    })
+                    
+                }
+            }
+        })
+        
+        dataTask.resume()
+    }
     func refresh(){
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
         print("refreshing....")
@@ -178,6 +286,7 @@ class GradeTableViewController: UITableViewController {
             viewcontroller.cookieData = self.gradeArray[0] as! NSDictionary
             viewcontroller.whole = self.gradeArray;
             viewcontroller.classtitle = selectedCell.classg.text! + " - " + selectedCell.grade.text!;
+            viewcontroller.markingPeriod = NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as? String
         }
     }
  

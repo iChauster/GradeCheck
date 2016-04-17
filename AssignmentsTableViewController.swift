@@ -18,6 +18,7 @@ class AssignmentsTableViewController: UITableViewController {
     let url = "https://gradecheck.herokuapp.com/"
 
     override func viewDidLoad() {
+        self.tableView.contentInset = UIEdgeInsetsMake(20, 0,0, 0)
         self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
         super.viewDidLoad()
         self.refreshControl = UIRefreshControl()

@@ -14,6 +14,15 @@ class GradeViewController: UITabBarController {
     var selectedInd : Int!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBar.tintColor = UIColor(red: 55/255, green: 127/255, blue: 58/255, alpha: 1.0);
+        let items = self.tabBar.items
+        for item in items! {
+            let unselectedItem: NSDictionary = [NSForegroundColorAttributeName: UIColor(red: 55/255, green: 127/255, blue: 58/255, alpha: 1.0)]
+            let selectedItem: NSDictionary = [NSForegroundColorAttributeName: UIColor(red: 91/255, green: 208/255, blue: 98/255, alpha: 1.0)]
+            item.setTitleTextAttributes(unselectedItem as? [String : AnyObject], forState: .Normal)
+            item.setTitleTextAttributes(selectedItem as? [String : AnyObject], forState: .Selected)
+        }
+        
         print("Load");
         let table = self.viewControllers?.first as! GradeTableViewController
         table.gradeArray = grades;

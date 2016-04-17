@@ -21,6 +21,11 @@ let CellAnimationStartTransform:CATransform3D = {
     
     return startTransform
 }()
+let CellAnimationStartSlide:CATransform3D = {
+    var startTransform = CATransform3DIdentity
+    startTransform = CATransform3DTranslate(startTransform,0,50,0);
+    return startTransform
+}()
 let grow:CATransform3D = {
     var grow = CATransform3DIdentity;
     grow = CATransform3DScale(grow,1.2,1.2,1.2);
@@ -67,6 +72,16 @@ class CellAnimation {
         UIView.animateWithDuration(0.4) {
             view.layer.transform = CATransform3DIdentity
             view.layer.opacity = 1
+        }
+    }
+    class func slide(cell:UITableViewCell){
+        let view = cell.contentView;
+        view.layer.transform = CellAnimationStartSlide
+        view.layer.opacity = 0.8;
+        
+        UIView.animateWithDuration(0.4) { 
+            view.layer.transform = CATransform3DIdentity
+            view.layer.opacity = 1;
         }
     }
     class func growAndShrink(view:UIView){

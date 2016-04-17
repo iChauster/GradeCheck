@@ -259,8 +259,13 @@ app.post('/gradebook', function(req,res){
 		console.log(req.body.cookie);
 		console.log(req.body.id);
 		var rep = [];
+    var url = 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=' + req.body.id + '&action=form';
+    if(req.body.mp){
+      url += "&mpToView=" + req.body.mp;
+      console.log(url);
+    }
 		var go = {method:'GET',
-			url : 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=' + req.body.id + '&action=form',
+			url : url,
 			'rejectUnauthorized' : false,
 			headers:{'cache-control' : 'no-cache',
 			'content-type' : 'application/x-www-form-urlencoded',
@@ -300,9 +305,6 @@ app.post('/gradebook', function(req,res){
   				console.log(rep);
 				res.send(JSON.stringify(rep));
   			}
-  			
-			
-
 		});
 	}
 });
@@ -311,6 +313,12 @@ app.post('/listassignments',function(req,res){
 	var dd = today.getDate();
 	var mm = today.getMonth() + 1;
 	var yyyy = today.getFullYear();
+  var mp;
+  if(req.body.mp){
+    mp = req.body.mp;
+  }else{
+    mp = markingPeriod
+  }
 	if(dd < 10){
 		dd = "0" + dd;
 	}
@@ -322,13 +330,13 @@ app.post('/listassignments',function(req,res){
 		var results = [];
 		var adj = {method:'GET',
 			url : 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=' + req.body.id + 
-			'&action=form&dateRange=' + markingPeriod + '&date=' + dateString + "&courseAndSection=" + req.body.course +":"+ req.body.section,
+			'&action=form&dateRange=' + mp + '&date=' + dateString + "&courseAndSection=" + req.body.course +":"+ req.body.section,
 			'rejectUnauthorized' : false,
 			headers:{'cache-control' : 'no-cache',
 			'Cookie' : req.body.cookie}
 		}
     console.log('https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=' + req.body.id + 
-      '&action=form&dateRange=' + markingPeriod + '&date=' + dateString + "&courseAndSection=" + req.body.course +":"+ req.body.section);
+      '&action=form&dateRange=' + mp + '&date=' + dateString + "&courseAndSection=" + req.body.course +":"+ req.body.section);
 		request(adj,function(error,response,body){
 			if(response.headers["set-cookie"]){
 				console.log('needs login');

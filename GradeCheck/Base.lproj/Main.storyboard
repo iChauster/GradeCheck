@@ -12,7 +12,7 @@
             <objects>
                 <tableViewController id="6fu-cA-IVZ" customClass="GradeTableViewController" customModule="GradeCheck" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="82" sectionHeaderHeight="28" sectionFooterHeight="28" id="AxP-hZ-Ud9">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.36490355920000001" green="0.84272836539999996" blue="0.31673147709999999" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
@@ -86,7 +86,8 @@
                             <outlet property="delegate" destination="6fu-cA-IVZ" id="Sb7-i2-fza"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Grades" id="7Yu-A9-Pbf"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <tabBarItem key="tabBarItem" title="Grades" image="grades-icon3.png" selectedImage="grades-icon3.png" id="7Yu-A9-Pbf"/>
                     <connections>
                         <segue destination="3Yi-Rg-pY3" kind="show" identifier="GradeSegue" id="aNx-I8-rNM"/>
                     </connections>
@@ -258,7 +259,7 @@
             <objects>
                 <tableViewController id="cG8-Je-1Ox" customClass="AssignmentsTableViewController" customModule="GradeCheck" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="124" sectionHeaderHeight="28" sectionFooterHeight="28" id="WbC-Ot-zUg">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.27450980390000002" green="0.63529411759999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
@@ -378,7 +379,8 @@
                             <outlet property="delegate" destination="cG8-Je-1Ox" id="mUT-h8-Gtn"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Assignments" id="2c5-mD-Hib"/>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <tabBarItem key="tabBarItem" title="Assignments" image="assign.png" selectedImage="assign.png" id="2c5-mD-Hib"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MyK-r2-21b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -473,7 +475,7 @@
                             <constraint firstItem="uDy-By-tld" firstAttribute="leading" secondItem="JhX-GK-YBm" secondAttribute="leadingMargin" id="pEP-Xm-I3h"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Stats" id="ATP-wU-deC"/>
+                    <tabBarItem key="tabBarItem" title="Stats" image="statistics.png" selectedImage="statistics.png" id="ATP-wU-deC"/>
                     <connections>
                         <outlet property="gpaCircle" destination="LKm-5h-CX3" id="VNz-T9-Y2E"/>
                         <outlet property="statTable" destination="uDy-By-tld" id="VMk-g5-wc0"/>
@@ -885,6 +887,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.35490958814967344" green="0.81696714743589749" blue="0.38332664806059963" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="selectedImageTintColor" red="0.21577080360000001" green="0.5" blue="0.2267591826" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="6fu-cA-IVZ" kind="relationship" relationship="viewControllers" id="7fA-UM-o6g"/>
@@ -898,6 +903,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="assign.png" width="30" height="30"/>
         <image name="calendar.png" width="128" height="128"/>
+        <image name="grades-icon3.png" width="30" height="30"/>
+        <image name="statistics.png" width="30" height="30"/>
     </resources>
 </document>

@@ -17,7 +17,8 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     var whole : NSArray!
     var color : UIColor!
     var classtitle : String!
-    let url = "https://gradecheck.herokuapp.com/"
+    var markingPeriod : String?
+    let url = "http://localhost:2800/"
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
     @IBOutlet weak var assignmentTable : UITableView!
@@ -52,8 +53,10 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(courseString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(sectionString.dataUsingEncoding(NSUTF8StringEncoding)!)
-
-        
+        if(markingPeriod != nil){
+            let mpString = "&mp=" + self.markingPeriod!;
+            postData.appendData(mpString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        }
         let request = NSMutableURLRequest(URL: NSURL(string: url + "listassignments")!,
             cachePolicy: .UseProtocolCachePolicy,
             timeoutInterval: 10.0)

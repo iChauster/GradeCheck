@@ -40,7 +40,8 @@ class AssignmentsTableViewCell: UITableViewCell {
                 event.endDate = (date1?.dateByAddingTimeInterval(60*60))!;
                 event.notes = self.detail.text!
                 event.calendar = eventStore.defaultCalendarForNewEvents
-                
+                let alarm : EKAlarm = EKAlarm(relativeOffset: -60*60*24)
+                event.alarms = [alarm]
                 var event_id = ""
                 do{
                     try eventStore.saveEvent(event, span: .ThisEvent)
