@@ -35,6 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if (pushToken != nil) {
                 NSLog("pushToken:%@", pushToken)
                 NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userId");
+                if(NSUserDefaults.standardUserDefaults().boolForKey("PushNotifs") == false){
+                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "shouldUpdateUserToken");
+                }
             }
         })
         
@@ -45,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         print("ayy");
-        
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "PushNotifs");
         
     }
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

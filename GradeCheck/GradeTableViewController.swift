@@ -145,8 +145,7 @@ class GradeTableViewController: UITableViewController {
                             let hafl = cooke.objectForKey("set-cookie") as! NSArray;
                             self.cookie = hafl[0] as! String;
                             print(self.cookie);
-                            self.refresh();
-                            
+                            self.tabBarController?.performSelector(#selector(GradeViewController.refreshAndLogin), withObject: self.cookie)
                             self.refreshControl?.endRefreshing()
                         }catch{
                             
@@ -159,6 +158,7 @@ class GradeTableViewController: UITableViewController {
         
         dataTask.resume()
     }
+    
     func refresh(){
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
         print("refreshing....")
@@ -209,8 +209,7 @@ class GradeTableViewController: UITableViewController {
                             let hafl = cooke.objectForKey("set-cookie") as! NSArray;
                             self.cookie = hafl[0] as! String;
                             print(self.cookie);
-                            self.refresh();
-                            
+                            self.tabBarController?.performSelector(#selector(GradeViewController.refreshAndLogin), withObject: self.cookie)
                             self.refreshControl?.endRefreshing()
                         }catch{
                             

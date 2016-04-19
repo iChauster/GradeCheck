@@ -888,7 +888,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.35490958814967344" green="0.81696714743589749" blue="0.38332664806059963" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="selectedImageTintColor" red="0.21577080360000001" green="0.5" blue="0.2267591826" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>

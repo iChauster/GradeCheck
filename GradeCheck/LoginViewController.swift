@@ -18,7 +18,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var manualLogin : UIButton!
     let keychain = Keychain()
     var jsonDict : NSArray!
-    var confirmationDict : NSArray!
+    var confirmationDict : NSArray?
     var loggedIn = false;
     var phoneNumberOption : String?
     let url = "https://gradecheck.herokuapp.com/"
@@ -169,6 +169,10 @@ class LoginViewController: UIViewController {
                     self.statusLabel.hidden = false
                     self.statusLabel.text = "Logging in..."
                 }
+                if(NSUserDefaults.standardUserDefaults().boolForKey("shouldUpdateUserToken")){
+                    print("should update User Token");
+                    self.updateUser("deviceToken", value: (NSUserDefaults.standardUserDefaults().objectForKey("userId") as! String))
+                }
             }
             // This could also be another view, connected with an outlet
             
@@ -250,19 +254,19 @@ class LoginViewController: UIViewController {
                     dispatch_async(dispatch_get_main_queue(), {
                         print("Fetty Wap was here");
                         do{
-                            self.confirmationDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            self.confirmationDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? NSArray;
                             if(self.keychain.getPasscode("GCPassword") == "" || self.keychain.getPasscode("GCUsername") == ""){
                                 self.keychain.setPasscode("GCPassword", passcode: pass)
                                 self.keychain.setPasscode("GCUsername", passcode: user)
                             }
                             print(self.confirmationDict);
                             var alert = UIAlertController();
-                            if(self.confirmationDict.count == 1 ){
+                            if(self.confirmationDict!.count == 1 ){
                                 alert = UIAlertController(title: "Is this you?", message: "", preferredStyle: .Alert)
                             }else{
                                 alert = UIAlertController(title: "Who are you?", message: "You've got siblings, so pick who you are.", preferredStyle: .Alert);
                             }
-                            for object in self.confirmationDict {
+                            for object in self.confirmationDict! {
                                 if((object.objectForKey("username")) != nil){
                                     
                                 }else{
@@ -316,9 +320,12 @@ class LoginViewController: UIViewController {
         ]
         let string = field + "=" + value;
         print(string)
-        let id = "&id=" + (self.confirmationDict[0].objectForKey("_id") as! String)
+        
         let postData = NSMutableData(data: string.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(id.dataUsingEncoding(NSUTF8StringEncoding)!);
+        if(self.confirmationDict != nil){
+            let id = "&id=" + (self.confirmationDict![0].objectForKey("_id") as! String)
+            postData.appendData(id.dataUsingEncoding(NSUTF8StringEncoding)!);
+        }
         
         
         let request = NSMutableURLRequest(URL: NSURL(string: url + "update")!,
@@ -342,7 +349,8 @@ class LoginViewController: UIViewController {
                             self.keychain.setPasscode("GCUsername", passcode: value);
                             self.statusLabel.hidden = true;
                             self.statusLabel.text = "";
-                            
+                        }else if (field == "deviceToken"){
+                            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "PushNotifs");
                         }
                     })
                 }else if (httpResponse?.statusCode == 1738){

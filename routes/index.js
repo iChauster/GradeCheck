@@ -115,7 +115,58 @@ app.post('/update', function(req,res){
     	});
 	
 });
-
+app.post('/relogin', passport.authenticate('local'), function (req,res){
+  if(req.body.username && req.body.password && req.body.cookie){
+    var js = [];
+    var username, password;
+    var cookie = req.body.cookie;
+    if(req.body.email){
+      username = req.body.email;
+      console.log('refresh going through EMAIL');
+    } else if (req.user && req.user.studId != ""){
+      username = req.user.studId;
+      console.log('refresh going through dataBase Email');
+    } else{
+      username = req.body.username;
+      console.log(username + " no email, refresh with username ");
+    }
+    var poster = { method: "POST",
+        url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
+        'rejectUnauthorized' : false,
+        headers : {'content-type':'application/x-www-form-urlencoded',
+          'Cookie' : cookie,
+          'cache-control' : 'no-cache'},
+          form : { 'j_username' : username, 'j_password' : req.body.password}
+    };
+    request(poster, function (error, response, body){
+      if (error) throw new Error(error);
+      console.log(response.headers);
+      console.log(response.statusCode);
+      var home = response.headers['location'];
+      var se = {method : "POST",
+        url : "https://parents.mtsd.k12.nj.us" + home,
+        'rejectUnauthorized' : false,
+        headers : {
+          'cache-control' : 'no-cache',
+          'content-type' : 'application/x-www-form-urlencoded',
+          'Cookie' : cookie
+        },
+        form : {'j_username' : username, 'j_password' : req.body.password}
+      }
+      request(se, function (error,response,body){
+        if(error)throw new Error(error);
+        console.log(response.statusCode);
+        console.log(response.headers);
+        cookie = response.headers['set-cookie'];
+        var cookieObject = {};
+        cookieObject["cookie"] = cookie;
+        js.push(cookieObject);
+        console.log(js);
+        res.send(JSON.stringify(js));
+      });
+    });
+  }
+})
 app.post('/login', passport.authenticate('local'),function (req,res){
 
 	if(req.body.username && req.body.password){
@@ -277,7 +328,7 @@ app.post('/gradebook', function(req,res){
 				var b = {};
 				b["set-cookie"] = response.headers["set-cookie"];
 				rep.push(b);
-				
+				console.log(response.headers)
 				res.status(440).send(JSON.stringify(rep));
 			}else{
 				var $ = cheerio.load(body);
