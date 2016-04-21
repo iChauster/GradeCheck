@@ -9,6 +9,7 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    
     @IBOutlet weak var usn : UITextField!
     @IBOutlet weak var psw : UITextField!
     @IBOutlet weak var login : UIButton!
@@ -16,11 +17,13 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var activity : UIActivityIndicatorView!
     @IBOutlet weak var statusLabel : UILabel!
     @IBOutlet weak var manualLogin : UIButton!
+       
     let keychain = Keychain()
     var jsonDict : NSArray!
     var confirmationDict : NSArray?
     var loggedIn = false;
     var phoneNumberOption : String?
+    var selectedIndex : Int?
     let url = "https://gradecheck.herokuapp.com/"
     @IBAction func login(sender:UIButton!){
         NSLog("clicked");
@@ -377,6 +380,9 @@ class LoginViewController: UIViewController {
         if(segue.identifier == "LoginSegue"){
             let viewcontroller = segue.destinationViewController as! GradeViewController
             viewcontroller.grades = self.jsonDict;
+            if(self.selectedIndex != nil){
+                viewcontroller.selectedIndex = self.selectedIndex!;
+            }
             
         }
     }

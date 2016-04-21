@@ -43,6 +43,9 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.getGPA()
         // Do any additional setup after loading the view.
     }
+    func touched(){
+        print("called")
+    }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("StatClassCell", forIndexPath: indexPath) as! StatTableViewCell;
         let element = self.sortedArray[indexPath.row] ;
@@ -125,9 +128,8 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         }
         
-        let average = gradeTotal/Double(classes);
-        print(average);
-        print(round(average))
+        var average = gradeTotal/Double(classes);
+        average = round(average*100.0)/100.0;
         let gpaAvg = gpaTotal/Double(classes);
         print(gpaAvg);
         print(round(gpaAvg))

@@ -12,7 +12,7 @@ class GradeViewController: UITabBarController {
     
     var grades : NSArray!
     var selectedInd : Int!
-    let url = "https://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
     let keychain = Keychain()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +85,15 @@ class GradeViewController: UITabBarController {
                         do{
                             let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
                             print(jsonDict);
+                            let dict = jsonDict[0] as! NSDictionary
+                            let hafl = dict.objectForKey("cookie") as! NSArray;
+                            print(hafl);
+                            let table = self.viewControllers?.first as! GradeTableViewController
+                            table.cookie = hafl[0] as! String;
+                            let assignments = self.viewControllers?[1] as! AssignmentsTableViewController
+                            assignments.cookie = hafl[0] as! String;
+                            let stats = self.viewControllers?[2] as! StatViewController
+                            stats.cookie = hafl[0] as! String;
                         }catch{
                             
                         }

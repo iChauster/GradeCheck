@@ -22,12 +22,14 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
     @IBOutlet weak var assignmentTable : UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navBar.barTintColor = color;
         self.navItem.title = self.classtitle;
         self.assignmentTable.dataSource = self;
-        self.assignmentTable.delegate = self;
+        self.assignmentTable.delegate = self; 
         let cookieArray = self.cookieData.objectForKey("cookie") as? NSArray;
         self.cookie = cookieArray![0] as? String;
         self.id = self.cookieData.objectForKey("id") as? String;

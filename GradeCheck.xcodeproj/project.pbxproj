@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		2C19AF151CBC686000BB73DE /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C19AF141CBC686000BB73DE /* OneSignal.framework */; };
 		2C5895021CAF320400F0876D /* fire.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C5895011CAF320400F0876D /* fire.jpg */; };
+		2C6D37451CC82BAF0077F4A9 /* PercentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */; };
+		2C6D374A1CC855890077F4A9 /* montgomery-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6D37491CC855890077F4A9 /* montgomery-logo.png */; };
 		2C8650581CB48DE80039B1A9 /* appIcon76.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650571CB48DE80039B1A9 /* appIcon76.png */; };
 		2C86505B1CB4930F0039B1A9 /* appIcon152.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650591CB4930F0039B1A9 /* appIcon152.png */; };
 		2C86505C1CB4930F0039B1A9 /* appIcon167.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C86505A1CB4930F0039B1A9 /* appIcon167.png */; };
 		2C918C4E1CAC8CA300C80299 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */; };
+		2CA5B1511CC70E30005F80CE /* ExpandAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA5B1501CC70E30005F80CE /* ExpandAnimator.swift */; };
 		2CD720AF1CAB140A00338CA7 /* GraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD720AE1CAB140900338CA7 /* GraphData.swift */; };
 		2CD720B41CAB524700338CA7 /* appIcon180.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD720B31CAB524700338CA7 /* appIcon180.png */; };
 		2CD720B61CAB52B800338CA7 /* appIcon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD720B51CAB52B800338CA7 /* appIcon120.png */; };
@@ -115,11 +118,14 @@
 /* Begin PBXFileReference section */
 		2C19AF141CBC686000BB73DE /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OneSignal.framework; sourceTree = "<group>"; };
 		2C5895011CAF320400F0876D /* fire.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = fire.jpg; path = ../../../Downloads/fire.jpg; sourceTree = "<group>"; };
+		2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercentLabel.swift; sourceTree = "<group>"; };
+		2C6D37491CC855890077F4A9 /* montgomery-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "montgomery-logo.png"; sourceTree = "<group>"; };
 		2C8650571CB48DE80039B1A9 /* appIcon76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon76.png; path = ../../../Downloads/appIcon76.png; sourceTree = "<group>"; };
 		2C8650591CB4930F0039B1A9 /* appIcon152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon152.png; path = ../../../Downloads/appIcon152.png; sourceTree = "<group>"; };
 		2C86505A1CB4930F0039B1A9 /* appIcon167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon167.png; path = ../../../Downloads/appIcon167.png; sourceTree = "<group>"; };
 		2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2C918C4F1CAC8D8400C80299 /* GradeCheck-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GradeCheck-Bridging-Header.h"; sourceTree = "<group>"; };
+		2CA5B1501CC70E30005F80CE /* ExpandAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandAnimator.swift; sourceTree = "<group>"; };
 		2CD720AE1CAB140900338CA7 /* GraphData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphData.swift; sourceTree = "<group>"; };
 		2CD720B31CAB524700338CA7 /* appIcon180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon180.png; path = ../../../Downloads/appIcon180.png; sourceTree = "<group>"; };
 		2CD720B51CAB52B800338CA7 /* appIcon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon120.png; path = ../../../Downloads/appIcon120.png; sourceTree = "<group>"; };
@@ -263,6 +269,7 @@
 				EDBE860F1C7A5F2B0031EE8B /* GradeViewController.swift */,
 				EDBE85FF1C7A2A150031EE8B /* LoginViewController.swift */,
 				EDBE86081C7A4B9A0031EE8B /* Keychain.swift */,
+				2CA5B1501CC70E30005F80CE /* ExpandAnimator.swift */,
 				ED7AA20C1C84E9CF001B2E68 /* CellAnimation.swift */,
 				EDBE85E31C78ED280031EE8B /* Main.storyboard */,
 				ED7AA2131C9F4E26001B2E68 /* Charts.xcodeproj */,
@@ -287,6 +294,7 @@
 		EDBE86031C7A2D5D0031EE8B /* art */ = {
 			isa = PBXGroup;
 			children = (
+				2C6D37491CC855890077F4A9 /* montgomery-logo.png */,
 				2CEC13271CC40B1A00678AA8 /* assign.png */,
 				2CEC13231CC4098300678AA8 /* statistics@2x.png */,
 				2CEC131F1CC2835E00678AA8 /* statistics.png */,
@@ -309,6 +317,7 @@
 				EDBE860C1C7A5BB60031EE8B /* GradeTableViewCell.swift */,
 				ED64DEA81CA3718D00B25150 /* DetailGradeViewController.swift */,
 				ED64DEAE1CA4677E00B25150 /* DetailGradeTableViewCell.swift */,
+				2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */,
 			);
 			name = GradeTable;
 			sourceTree = "<group>";
@@ -459,6 +468,7 @@
 				2C86505C1CB4930F0039B1A9 /* appIcon167.png in Resources */,
 				EDBE86021C7A2D460031EE8B /* background.png in Resources */,
 				2CD720B61CAB52B800338CA7 /* appIcon120.png in Resources */,
+				2C6D374A1CC855890077F4A9 /* montgomery-logo.png in Resources */,
 				2CD720BC1CAB53BF00338CA7 /* appIcon87.png in Resources */,
 				EDBE85E71C78ED280031EE8B /* Assets.xcassets in Resources */,
 				2C5895021CAF320400F0876D /* fire.jpg in Resources */,
@@ -481,6 +491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C6D37451CC82BAF0077F4A9 /* PercentLabel.swift in Sources */,
 				ED7AA22A1CA0C0FC001B2E68 /* DetailStatViewController.swift in Sources */,
 				ED7AA2081C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift in Sources */,
 				ED7AA2281CA0975D001B2E68 /* StatTableViewCell.swift in Sources */,
@@ -489,6 +500,7 @@
 				EDBE86121C7A9B230031EE8B /* AssignmentsTableViewController.swift in Sources */,
 				EDBE860D1C7A5BB60031EE8B /* GradeTableViewCell.swift in Sources */,
 				2CD720AF1CAB140A00338CA7 /* GraphData.swift in Sources */,
+				2CA5B1511CC70E30005F80CE /* ExpandAnimator.swift in Sources */,
 				EDBE86001C7A2A150031EE8B /* LoginViewController.swift in Sources */,
 				ED64DEAF1CA4677E00B25150 /* DetailGradeTableViewCell.swift in Sources */,
 				EDBE85E01C78ED280031EE8B /* AppDelegate.swift in Sources */,

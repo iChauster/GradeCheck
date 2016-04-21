@@ -13,7 +13,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    enum Shortcut : String {
+        case grades = "CheckGrades"
+        case assignments = "CheckAssignments"
+        case statistics = "Statistics"
+    }
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         if (!NSUserDefaults.standardUserDefaults().boolForKey("HasLaunchedOnce")){
@@ -40,7 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         })
-        
         OneSignal.defaultClient().enableInAppAlertNotification(true)
         
         return true
@@ -56,7 +59,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("push notifs failed")
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "PushNotifs");
     }
-    
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem : UIApplicationShortcutItem, completionHandler: (Bool) -> Void){
+        
+        //Handle quick Actions
+        completionHandler(handleQuickAction(shortcutItem))
+    }
+    func handleQuickAction(shortcutItem: UIApplicationShortcutItem) -> Bool {
+        
+        var quickActionHandled = false;
+        let type = shortcutItem.type.componentsSeparatedByString(".").last!
+        let loginView = self.window?.rootViewController as! LoginViewController
+        if let shortcutType = Shortcut.init(rawValue: type) {
+            switch shortcutType {
+            case .grades :
+                loginView.selectedIndex = 0;
+                quickActionHandled = true
+                break;
+            case .assignments :
+                loginView.selectedIndex = 1;
+                quickActionHandled = true
+                break;
+            case .statistics :
+                loginView.selectedIndex = 2;
+                quickActionHandled = true
+                break;
+            }
+        }
+        return quickActionHandled
+        
+    }
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

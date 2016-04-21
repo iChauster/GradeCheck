@@ -8,16 +8,16 @@
 
 import UIKit
 
-class GradeTableViewController: UITableViewController {
+class GradeTableViewController: UITableViewController, UIViewControllerTransitioningDelegate {
     
     var gradeArray : NSArray!
-    var cookie : String!
+    var cookie : String! = "";
     var id : String!
     let url = "http://localhost:2800/"
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Should display " + (NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String))
-        if(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") != nil){
+        if(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") != nil && NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String != "MP4"){
             self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
         }
         self.refreshControl = UIRefreshControl()
@@ -39,34 +39,59 @@ class GradeTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
     }
+    var openingFrame : CGRect?
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let presentationAnimator = ExpandAnimator.animator
+        presentationAnimator.openingFrame = openingFrame!
+        presentationAnimator.transitionMode = .Present;
+        return presentationAnimator
+    }
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let presentationAnimator = ExpandAnimator.animator
+        presentationAnimator.openingFrame = openingFrame!
+        presentationAnimator.transitionMode = .Dismiss;
+        return presentationAnimator
+    }
     func markingPeriodSwitch(sender:UILongPressGestureRecognizer){
         print("longPress:",sender.state.rawValue);
         if(sender.state == .Began){
+            let blurEffect = UIBlurEffect(style: .Light)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            blurEffectView.frame = self.view.bounds;
+            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            
+            self.view.addSubview(blurEffectView)
             let alert = UIAlertController(title: "MP?", message: "What marking period would you like to view?", preferredStyle: .Alert)
             let mp1 = UIAlertAction(title: "Marking Period 1", style: .Default) { (alert:UIAlertAction!) in
                 print("mp1 clicked");
                 NSUserDefaults.standardUserDefaults().setObject("MP1", forKey: "GradeTableMP")
                 self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+                blurEffectView.removeFromSuperview();
             }
             let mp2 = UIAlertAction(title: "Marking Period 2", style: .Default) { (alert:UIAlertAction!) in
                 print("mp1 clicked");
                 NSUserDefaults.standardUserDefaults().setObject("MP2", forKey: "GradeTableMP")
                 self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+                blurEffectView.removeFromSuperview();
 
             }
             let mp3 = UIAlertAction(title: "Marking Period 3", style: .Default) { (alert:UIAlertAction!) in
                 print("mp1 clicked");
                 NSUserDefaults.standardUserDefaults().setObject("MP3", forKey: "GradeTableMP")
                 self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+                blurEffectView.removeFromSuperview();
 
             }
             let mp4 = UIAlertAction(title: "Marking Period 4", style: .Default) { (alert:UIAlertAction!) in
                 print("mp1 clicked");
                 NSUserDefaults.standardUserDefaults().setObject("MP4", forKey: "GradeTableMP")
                 self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+                blurEffectView.removeFromSuperview();
             }
             let cancel = UIAlertAction(title:"Cancel", style: .Cancel){(alert:UIAlertAction!) in
                 print("cancelled");
+                blurEffectView.removeFromSuperview();
             }
             alert.addAction(mp1);
             alert.addAction(mp2);
@@ -74,6 +99,7 @@ class GradeTableViewController: UITableViewController {
             alert.addAction(mp4);
             alert.addAction(cancel);
             self.presentViewController(alert, animated: true, completion: nil);
+            
         }else{
             print("n/a")
         }
@@ -96,9 +122,11 @@ class GradeTableViewController: UITableViewController {
         return gradeArray.count - 1;
     }
     func gradebookWithMarkingPeriod(mp : String){
-        let cookieID = gradeArray[0] as! NSDictionary
-        let cookieArray = cookieID.objectForKey("cookie") as? NSArray
-        self.cookie = cookieArray![0] as? String;
+        if(self.cookie == ""){
+            let cookieID = gradeArray[0] as! NSDictionary
+            let cookieArray = cookieID.objectForKey("cookie") as? NSArray
+            self.cookie = cookieArray![0] as? String;
+        }
         self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
         let headers = [
             "cache-control": "no-cache",
@@ -162,9 +190,14 @@ class GradeTableViewController: UITableViewController {
     func refresh(){
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
         print("refreshing....")
-        let cookieID = gradeArray[0] as! NSDictionary;
-        let cookieArray = cookieID.objectForKey("cookie") as? NSArray;
-        self.cookie = cookieArray![0] as? String;
+        if(self.cookie == ""){
+            let cookieID = gradeArray[0] as! NSDictionary;
+            let cookieArray = cookieID.objectForKey("cookie") as? NSArray;
+            self.cookie = cookieArray![0] as? String;
+            print("No cookie, finding from array")
+        }else{
+            print("Cookie, it's " + self.cookie);
+        }
         self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
         let headers = [
             "cache-control": "no-cache",
@@ -238,23 +271,28 @@ class GradeTableViewController: UITableViewController {
             case 0..<50:
                 cell.views.backgroundColor = UIColor.blackColor()
                 cell.color = UIColor.blackColor()
+                cell.percent = Int(g);
             case 51..<75 :
-                cell.views.backgroundColor = UIColor.redColor()
+                cell.views.backgroundColor = UIColor.blackColor()
                 cell.color = UIColor.redColor()
+                cell.percent = Int(g);
             case 76..<85 :
-                cell.views.backgroundColor = UIColor.yellowColor()
+                cell.views.backgroundColor = UIColor.blackColor()
                 cell.color = UIColor.yellowColor()
+                cell.percent = Int(g);
             case 86..<110 :
-                cell.views.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
+                cell.views.backgroundColor = UIColor.blackColor()
                 cell.color = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
-
+                cell.percent = Int(g);
             default :
-                cell.views.backgroundColor = UIColor.purpleColor()
+                cell.views.backgroundColor = UIColor.blackColor()
                 cell.color = UIColor.purpleColor()
+                cell.percent = Int(g)
             }
         }else{
             cell.views.backgroundColor = UIColor.blackColor()
             cell.color = UIColor.blackColor()
+            cell.percent = -1;
         }
         cell.backgroundColor = cell.backgroundColor;
         let backgroundView = UIView()
@@ -263,13 +301,46 @@ class GradeTableViewController: UITableViewController {
         cell.selectedBackgroundView = backgroundView
         return cell
     }
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        CellAnimation.animate(cell);
-        cell.backgroundColor = cell.contentView.backgroundColor;
-    }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("GradeSegue", sender: self);
+        let attributesFrame = tableView.cellForRowAtIndexPath(indexPath);
+        let attribute = attributesFrame?.frame;
+        let frameToOpenFrame = tableView.convertRect(attribute!, toView: tableView.superview)
+        openingFrame = frameToOpenFrame
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let expandedvc = storyboard.instantiateViewControllerWithIdentifier("DetailGradeViewController") as! DetailGradeViewController
+        expandedvc.transitioningDelegate = self
+        expandedvc.modalPresentationStyle = .Custom
+
+        let selectedCell = self.tableView.cellForRowAtIndexPath(self.tableView.indexPathForSelectedRow!) as! GradeTableViewCell
+        expandedvc.data = self.gradeArray[(self.tableView.indexPathForSelectedRow?.row)! + 1] as! NSDictionary
+        expandedvc.color = selectedCell.color;
+        expandedvc.cookieData = self.gradeArray[0] as! NSDictionary
+        expandedvc.whole = self.gradeArray;
+        expandedvc.classtitle = selectedCell.classg.text! + " - " + selectedCell.grade.text!;
+        expandedvc.markingPeriod = NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as? String
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        presentViewController(expandedvc, animated: true, completion: nil)
+        
     }
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let actualCell = cell as! GradeTableViewCell
+        CellAnimation.animate(actualCell);
+        if(actualCell.percent != -1){
+            actualCell.grade.animationCurve = PercentLabelAnimationCurve.EaseInOut
+            actualCell.grade.count(from: 0, to: CGFloat(actualCell.percent), duration: 1.0)
+        }
+        actualCell.backgroundColor = actualCell.contentView.backgroundColor;
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            actualCell.views.backgroundColor = actualCell.color
+            }) { (complete) in
+                
+        }
+    }
+    /*override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("GradeSegue", sender: self);
+    }*/
     
     // MARK: - Navigation
     

@@ -10,10 +10,11 @@ import UIKit
 
 class GradeTableViewCell: UITableViewCell {
     @IBOutlet weak var classg : UILabel!
-    @IBOutlet weak var grade : UILabel!
+    @IBOutlet weak var grade : PercentLabel!
     @IBOutlet weak var teacher : UILabel!
     @IBOutlet weak var views : UIView!
     var color : UIColor!
+    var percent : Int!
     override func awakeFromNib() {
         super.awakeFromNib()
         self.views.layer.cornerRadius = 10;
