@@ -17,11 +17,17 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var activity : UIActivityIndicatorView!
     @IBOutlet weak var statusLabel : UILabel!
     @IBOutlet weak var manualLogin : UIButton!
-       
+    @IBOutlet weak var montgomery : UIImageView!
+    @IBOutlet weak var mainView : UIView!
+    @IBOutlet weak var loginView : UIView!
+    @IBOutlet weak var overlay : UIView!
+    
+    var mask : CALayer!
+    var animation : CABasicAnimation!
     let keychain = Keychain()
     var jsonDict : NSArray!
     var confirmationDict : NSArray?
-    var loggedIn = false;
+    var loggedIn : Bool = false;
     var phoneNumberOption : String?
     var selectedIndex : Int?
     let url = "https://gradecheck.herokuapp.com/"
@@ -44,6 +50,7 @@ class LoginViewController: UIViewController {
             self.statusLabel.text = "Logging In...";
             NSUserDefaults.standardUserDefaults().setObject(self.usn!.text, forKey: "id");
             self.makeLoginRequestWithParams(self.usn.text!, pass: self.psw.text!);
+
         }
     }
     @IBAction func register(sender:UIButton!){
@@ -76,10 +83,6 @@ class LoginViewController: UIViewController {
         let passwordString = "&password=" + self.psw.text!
         let postData = NSMutableData(data: usernameString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(passwordString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        if(NSUserDefaults.standardUserDefaults().boolForKey("PushNotifs")){
-            let deviceTokenString = "&deviceToken=" + (NSUserDefaults.standardUserDefaults().objectForKey("deviceToken") as! String)
-            postData.appendData(deviceTokenString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        }
         if(NSUserDefaults.standardUserDefaults().objectForKey("userId") != nil){
             let userIdString = "&deviceToken=" + (NSUserDefaults.standardUserDefaults().objectForKey("userId") as! String)
             print(userIdString)
@@ -122,7 +125,7 @@ class LoginViewController: UIViewController {
                     });
                 }else{
                     dispatch_async(dispatch_get_main_queue(),{
-                        let alert = UIAlertController(title: "An Error Occurred from the Server.", message: "Please try logging in manually, or wait.", preferredStyle: .Alert);
+                        let alert = UIAlertController(title: "An Error Occurred from the Server.", message: "Please try logging in manually, or wait. Status Code :" + String(httpResponse?.statusCode), preferredStyle: .Alert);
                         let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                         alert.addAction(alertAction)
                         self.presentViewController(alert, animated: true, completion: nil)
@@ -140,12 +143,15 @@ class LoginViewController: UIViewController {
         let image = UIImage(named: "back1.png")
         image?.drawInRect(self.view.bounds)
         UIGraphicsEndImageContext()
-        self.view.backgroundColor = UIColor(patternImage: image!)
+        self.loginView.backgroundColor = UIColor(patternImage: image!)
+        self.montgomery.image! = (self.montgomery.image?.imageWithRenderingMode(.AlwaysTemplate))!
+        self.montgomery.tintColor = UIColor(red: 41/255.0, green: 39/255.0, blue: 39/255.0, alpha: 1.0)
         self.statusLabel.hidden = true;
         let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(LoginViewController.dismissKeyboard))
         downSwipe.direction = .Down;
         self.view.addGestureRecognizer(downSwipe);
         if(!NSUserDefaults.standardUserDefaults().boolForKey("HasRegistered")){
+            self.overlay.alpha = 0;
             self.login.hidden = true
             self.regist.hidden = false
             self.regist.layer.cornerRadius = 0.5 * self.regist.bounds.size.width;
@@ -156,6 +162,7 @@ class LoginViewController: UIViewController {
             self.manualLogin.hidden = true;
             self.login.layer.cornerRadius = 0.5 * login.bounds.size.width
             if(self.keychain.getPasscode("GCUsername")! != "" && self.keychain.getPasscode("GCPassword")! != ""){
+                self.animateLaunch(UIImage(named:"whitespace-montgomery-logo")!, bgColor: UIColor(red: 0.0, green: 0.5019, blue: 0.1529, alpha: 1.0))
                 if(self.keychain.getPasscode("GCEmail") == ""){
                     print(self.keychain.getPasscode("GCEmail"))
                     makeLoginRequestWithParams(self.keychain.getPasscode("GCUsername")! as String, pass: self.keychain.getPasscode("GCPassword")! as String);
@@ -186,6 +193,62 @@ class LoginViewController: UIViewController {
         if(self.usn.isFirstResponder() || self.psw.isFirstResponder()){
             self.usn.resignFirstResponder()
             self.psw.resignFirstResponder();
+        }
+    }
+    func animateLaunch(image : UIImage, bgColor : UIColor){
+        self.view.backgroundColor = bgColor
+        mask = CALayer()
+        mask.contents = image.CGImage
+        mask.bounds = CGRect(x: 0, y: 0, width: 150, height: 150)
+        mask.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        mask.position = CGPoint(x:self.view.frame.width/2.0, y:self.view.frame.height/2.0)
+        mainView.layer.mask = mask;
+        
+    }
+    func animateDecreaseSize(){
+        if(mask == nil){
+            self.performSegueWithIdentifier("LoginSegue", sender: self)
+        }else{
+        let decreaseSize = CABasicAnimation(keyPath:"bounds")
+        decreaseSize.delegate = self
+        decreaseSize.duration = 0.2
+        decreaseSize.fromValue = NSValue(CGRect : mask!.bounds)
+        decreaseSize.toValue = NSValue(CGRect: CGRect(x: 0, y: 0, width: 80, height: 80))
+        
+        decreaseSize.fillMode = kCAFillModeForwards
+        decreaseSize.removedOnCompletion = false
+        mask.addAnimation(decreaseSize, forKey: "bounds")
+        }
+    }
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        if(self.loggedIn){
+            animateIncreaseSize()
+        }else{
+        }
+    }
+  
+
+    func animateIncreaseSize(){
+        animation = CABasicAnimation(keyPath:"bounds")
+        animation.duration = 2.0
+        animation.fromValue = NSValue(CGRect:mask!.bounds)
+        animation.toValue = NSValue(CGRect : CGRect(x: 0, y: 0, width: 2000, height: 2000))
+        
+        animation.fillMode = kCAFillModeForwards
+        animation.removedOnCompletion = false
+        
+        mask.addAnimation(animation, forKey: "bounds")
+        
+        UIView.animateWithDuration(1.0, animations: {
+            self.overlay.alpha = 0;
+            self.mask.opacity = 0.0
+            self.mainView.alpha = 0.0
+            }) { (complete) in
+                UIView.animateWithDuration(0.75, animations: {
+                    self.performSegueWithIdentifier("LoginSegue", sender: self)
+                    /*self.mainView.layer.mask = nil
+                    self.mainView.alpha = 1;*/
+                })
         }
     }
     override func didReceiveMemoryWarning() {
@@ -238,9 +301,9 @@ class LoginViewController: UIViewController {
                             }
                             if (self.loggedIn == false){
                                 self.activity.stopAnimating()
-                                self.performSegueWithIdentifier("LoginSegue", sender: self)
                                 // use anyObj here
                                 self.loggedIn = true;
+                                self.animateDecreaseSize()
                                 self.statusLabel.hidden = true;
                                 self.statusLabel.text = "";
                             }else{
@@ -294,8 +357,10 @@ class LoginViewController: UIViewController {
 
                 }else{
                     dispatch_async(dispatch_get_main_queue(), {
-
-                    let alert = UIAlertController(title: "Connection Error:", message: "Incorrect login or server idle. Please try again. Status Code :" +
+                    if(NSUserDefaults.standardUserDefaults().boolForKey("HasRegistered") == false){
+                        NSUserDefaults.standardUserDefaults().setObject("", forKey: "id")
+                    }
+                    let alert = UIAlertController(title: "Connection Error:", message: "Incorrect login or server idle. Make sure you have regsitered before. Please try again! Status Code :" +
                         String(httpResponse!.statusCode), preferredStyle: .Alert);
                     let action = UIAlertAction(title: "OK", style: .Default, handler: { (alert) in
                         self.activity.stopAnimating();

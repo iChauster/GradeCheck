@@ -3,8 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -19,43 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="gradecheck beta v1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u2n-cu-RsN">
-                                <rect key="frame" x="20" y="150" width="560" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="Orw-0f-n5H"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Made with ❤️ in Montgomery" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzd-Rc-G99">
-                                <rect key="frame" x="20" y="559" width="560" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="ELg-Cm-Uk6"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fire.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="oBj-Ft-5Q0">
-                                <rect key="frame" x="150" y="200" width="300" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="oBj-Ft-5Q0" secondAttribute="height" multiplier="3:2" id="Vh2-jR-pjr"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitespace-montgomery-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="hqP-pU-lEE">
+                                <rect key="frame" x="225" y="225" width="150" height="150"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.50196078431372548" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="u2n-cu-RsN" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="2ug-of-kJK"/>
-                            <constraint firstItem="oBj-Ft-5Q0" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="130" id="Btx-uD-CZO"/>
-                            <constraint firstItem="oBj-Ft-5Q0" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="MTr-ER-u1F"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="oBj-Ft-5Q0" secondAttribute="trailing" constant="130" id="YIB-Kb-AoX"/>
-                            <constraint firstItem="wzd-Rc-G99" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="e76-QR-gjl"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="wzd-Rc-G99" secondAttribute="bottom" constant="20" id="iHn-Ko-bEI"/>
-                            <constraint firstItem="oBj-Ft-5Q0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="icb-jl-pjQ"/>
-                            <constraint firstItem="wzd-Rc-G99" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="qEz-xh-cbo"/>
-                            <constraint firstItem="u2n-cu-RsN" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="tlb-6t-mnb"/>
-                            <constraint firstItem="u2n-cu-RsN" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="130" id="ymI-Xy-6Yd"/>
+                            <constraint firstItem="hqP-pU-lEE" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Slu-dg-uj3"/>
+                            <constraint firstItem="hqP-pU-lEE" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="et6-CW-SSL"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -65,6 +34,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="fire.jpg" width="6000" height="4000"/>
+        <image name="whitespace-montgomery-logo.png" width="150" height="150"/>
     </resources>
 </document>

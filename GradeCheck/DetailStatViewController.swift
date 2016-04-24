@@ -19,7 +19,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     @IBOutlet weak var rankView : RankView!;
     @IBOutlet weak var percentileView : PercentileView!
     @IBOutlet weak var statisticsTable : UITableView!
-    let url = "https://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
 
     var gradesArray = NSArray()
     var cookie : String!
@@ -131,6 +131,9 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         
         dataTask.resume()
     
+    }
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     func getClassData(){
         print("getClassDataCalled")

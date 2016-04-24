@@ -18,11 +18,17 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     var color : UIColor!
     var classtitle : String!
     var markingPeriod : String?
-    let url = "http://localhost:2800/"
+    var cours : String!
+    var sectio : String!
+    let url = "https://gradecheck.herokuapp.com/"
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
     @IBOutlet weak var assignmentTable : UITableView!
+    var blurEffectView = UIVisualEffectView()
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true;
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +39,8 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         let cookieArray = self.cookieData.objectForKey("cookie") as? NSArray;
         self.cookie = cookieArray![0] as? String;
         self.id = self.cookieData.objectForKey("id") as? String;
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(DetailGradeViewController.handleLongPress))
+        self.view.addGestureRecognizer(longPress)
         let delimiter = " -"
         let classString = data.objectForKey("class");
         let token = classString?.componentsSeparatedByString(delimiter)
@@ -41,7 +49,9 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         let secondDemiliter = "/";
         let tok = final.componentsSeparatedByString(secondDemiliter);
         let course = tok[0]
+        self.cours = course;
         let section = tok[1];
+        self.sectio = section
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"
@@ -93,13 +103,36 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
 
         // Do any additional setup after loading the view.
     }
+    func handleLongPress(sender:UILongPressGestureRecognizer){
+        if(sender.state == .Began){
+            let press = sender.locationInView(self.view)
+            if let indexPath = self.assignmentTable.indexPathForRowAtPoint(press){
+                let cell = self.assignmentTable.cellForRowAtIndexPath(indexPath) as! DetailGradeTableViewCell
+                let blurEffect = UIBlurEffect(style: .Light)
+                self.blurEffectView = UIVisualEffectView(effect: blurEffect)
+                blurEffectView.frame = self.view.bounds;
+                blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+                self.assignmentTable.addSubview(blurEffectView)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                let detailvc = storyboard.instantiateViewControllerWithIdentifier("AssignmentDetail") as! AssignmentDetailModalViewController
+                var assignment = NSDictionary()
+                assignment = assignments[indexPath.row] as! NSDictionary
+                detailvc.calendarReady = cell.calendarReady
+                detailvc.assignment = assignment
+                detailvc.assignorNo = true;
+                self.assignmentTable.deselectRowAtIndexPath(indexPath, animated: true)
+                presentViewController(detailvc, animated: true, completion: nil)
+            }
+        }
+    }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.assignments.count;
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("OverviewCell", forIndexPath: indexPath) as! DetailGradeTableViewCell;
         let object = assignments[indexPath.row];
-        
+        cell.assignment = object as! NSDictionary
         let assignDictionary = object.objectForKey("assignment") as! NSDictionary
         cell.assignmentTitle.text = assignDictionary.objectForKey("title") as? String
         cell.detail.text = assignDictionary.objectForKey("details") as? String;
@@ -107,23 +140,36 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         var g = object.objectForKey("percent") as! String;
         cell.grade.grade.text = g
         cell.date.text = object.objectForKey("stringDate") as? String;
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "M/d/yyyy"
+        let dat = dateFormatter.dateFromString(cell.date.text!)
+        if(dat!.compare(NSDate()) == .OrderedAscending){
+            cell.calendarReady = false;
+        }else{
+            cell.calendarReady = true;
+        }
         if(g.containsString("%")){
             g = String(g.characters.dropLast());
             switch Double(g)!{
             case 0..<50:
                 cell.grade.backgroundColor = UIColor.blackColor()
+                cell.color = UIColor.blackColor()
             case 51..<75 :
                 cell.grade.backgroundColor = UIColor.redColor()
+                cell.color = UIColor.redColor()
             case 76..<85 :
                 cell.grade.backgroundColor = UIColor.yellowColor()
+                cell.color = UIColor.yellowColor()
             case 86..<110 :
                 cell.grade.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
-                
+                cell.color = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
             default :
                 cell.grade.backgroundColor = UIColor.purpleColor()
+                cell.color = UIColor.purpleColor()
             }
         }else{
             cell.grade.backgroundColor = UIColor.blackColor()
+            cell.color = UIColor.blackColor()
         }
         cell.backgroundColor = cell.backgroundColor;
 
@@ -143,6 +189,12 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     @IBAction func segueBack(){
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("ProjectionSegue", sender: self)
+    }
+    func ridOfBlur(){
+        self.blurEffectView.removeFromSuperview()  
+    }
     
 
     
@@ -152,6 +204,20 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if(segue.identifier == "ProjectionSegue"){
+            let projectionvc = segue.destinationViewController as! ProjectionGradeViewController
+            let selectedIndexPath = self.assignmentTable.indexPathForSelectedRow
+            let selectedCell = self.assignmentTable.cellForRowAtIndexPath(selectedIndexPath!) as! DetailGradeTableViewCell
+            self.assignmentTable.deselectRowAtIndexPath(selectedIndexPath!, animated: true)
+            projectionvc.cookie = self.cookie
+            projectionvc.course = self.cours
+            projectionvc.section = self.sectio
+            projectionvc.assignment = selectedCell.assignment
+            projectionvc.markingPeriod = self.markingPeriod
+            projectionvc.otherAssignments = self.assignments
+            projectionvc.color = selectedCell.color
+            projectionvc.calendarReady = selectedCell.calendarReady
+        }
         
     }
     

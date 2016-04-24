@@ -12,7 +12,7 @@ class GradeViewController: UITabBarController {
     
     var grades : NSArray!
     var selectedInd : Int!
-    let url = "http://localhost:2800/"
+    let url = "https://gradecheck.herokuapp.com/"
     let keychain = Keychain()
     override func viewDidLoad() {
         super.viewDidLoad()

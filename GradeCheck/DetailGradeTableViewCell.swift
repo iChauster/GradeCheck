@@ -15,6 +15,9 @@ class DetailGradeTableViewCell: UITableViewCell {
     @IBOutlet weak var detail : UILabel!
     @IBOutlet weak var date : UILabel!
     @IBOutlet weak var views : UIView!
+    var assignment : NSDictionary!
+    var calendarReady : Bool = true
+    var color : UIColor!
     override func awakeFromNib() {
         super.awakeFromNib()
         self.grade.layer.cornerRadius = 0.5 * self.grade.bounds.size.width;

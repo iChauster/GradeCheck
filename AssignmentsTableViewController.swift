@@ -11,16 +11,21 @@ import EventKit
 
 class AssignmentsTableViewController: UITableViewController {
     
-    var assignments = NSArray()
+    var assignments = NSMutableArray()
     var cookie : String!
     var id : String!
     var eventStore = EKEventStore()
     let url = "https://gradecheck.herokuapp.com/"
-
+    var newAssignments = NSMutableArray()
+    var blurEffectView = UIVisualEffectView()
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
     override func viewDidLoad() {
-        self.tableView.contentInset = UIEdgeInsetsMake(20, 0,0, 0)
-        self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
         super.viewDidLoad()
+        let nib = UINib(nibName: "TableSectionHeader", bundle: nil)
+        tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
+        self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.backgroundColor = UIColor.blackColor()
         self.refreshControl!.tintColor = UIColor.whiteColor()
@@ -31,7 +36,8 @@ class AssignmentsTableViewController: UITableViewController {
         let rightSwipe = UISwipeGestureRecognizer(target: self.tabBarController, action: #selector(GradeViewController.swipeRight))
         rightSwipe.direction = .Right;
         self.tableView.addGestureRecognizer(rightSwipe)
-
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(AssignmentsTableViewController.handleLongPress))
+        self.view.addGestureRecognizer(longPress)
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"
@@ -58,9 +64,22 @@ class AssignmentsTableViewController: UITableViewController {
                 if(httpResponse?.statusCode == 200){
                     dispatch_async(dispatch_get_main_queue(), {
                         do{
-                            self.assignments = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            let array = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            self.assignments = NSMutableArray(array: array)
+                            for obj in self.assignments {
+                                let dateFormatter = NSDateFormatter()
+                                dateFormatter.dateFormat = "M/d/yyyy"
+                                let strDate = obj.objectForKey("stringDate") as! String
+                                let date = dateFormatter.dateFromString(strDate)
+                                if(date!.compare(NSDate()) == .OrderedAscending){
+                                    print("past");
+                                }else{
+                                    self.assignments.removeObject(obj)
+                                    self.newAssignments.addObject(obj)
+                                }
+                            }
                             print(self.assignments)
-                            if(self.assignments.count == 0){
+                            if(self.assignments.count == 0 && self.newAssignments == 0){
                                 print("No Assignments")
                                 let noView = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,UIScreen.mainScreen().bounds.size.height))
                                 noView.backgroundColor = UIColor(red: 0.0, green: 0.5019, blue: 0.2509, alpha: 1.0)
@@ -80,6 +99,22 @@ class AssignmentsTableViewController: UITableViewController {
                         }
                     })
 
+                }else if(httpResponse?.statusCode == 440){
+                    dispatch_async(dispatch_get_main_queue(), {
+                        do{
+                            let cookie = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            print(cookie);
+                            let cooke = cookie[0] as! NSDictionary
+                            let hafl = cooke.objectForKey("set-cookie") as! NSArray;
+                            self.cookie = hafl[0] as! String;
+                            print(self.cookie);
+                            self.tabBarController?.performSelector(#selector(GradeViewController.refreshAndLogin), withObject: self.cookie)
+                            self.refreshControl?.endRefreshing()
+                        }catch{
+                            
+                        }
+                    })
+
                 }
             }
         })
@@ -93,6 +128,33 @@ class AssignmentsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+    }
+    func handleLongPress(sender: UILongPressGestureRecognizer){
+        if (sender.state == .Began){
+            let touchPoint = sender.locationInView(self.view)
+            if let indexPath = self.tableView.indexPathForRowAtPoint(touchPoint){
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! AssignmentsTableViewCell
+                let blurEffect = UIBlurEffect(style: .Light)
+                self.blurEffectView = UIVisualEffectView(effect: blurEffect)
+                blurEffectView.frame = self.view.bounds;
+                blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+                self.tableView.addSubview(blurEffectView)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                let detailvc = storyboard.instantiateViewControllerWithIdentifier("AssignmentDetail") as! AssignmentDetailModalViewController
+                var assignment = NSDictionary()
+                if(indexPath.section == 0){
+                    assignment = self.newAssignments[indexPath.row] as! NSDictionary
+                }else{
+                    assignment = self.assignments[indexPath.row] as! NSDictionary
+                }
+                detailvc.assignment = assignment
+                detailvc.calendarReady = cell.calendarReady
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                presentViewController(detailvc, animated: true, completion: nil)
+
+            }
+        }
     }
     func refresh(){
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
@@ -122,10 +184,22 @@ class AssignmentsTableViewController: UITableViewController {
                 if(httpResponse?.statusCode == 200){
                     dispatch_async(dispatch_get_main_queue(), {
                         do{
-                            self.assignments = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
-                            print(self.assignments)
-                            print(self.assignments.count)
-                            if(self.assignments.count == 0){
+                            let array = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            self.assignments = NSMutableArray(array:array)
+                            self.newAssignments = [];
+                            for obj in self.assignments {
+                                let dateFormatter = NSDateFormatter()
+                                dateFormatter.dateFormat = "M/d/yyyy"
+                                let strDate = obj.objectForKey("stringDate") as! String
+                                let date = dateFormatter.dateFromString(strDate)
+                                if(date!.compare(NSDate()) == .OrderedAscending){
+                                    print("past");
+                                }else{
+                                    self.assignments.removeObject(obj)
+                                    self.newAssignments.addObject(obj)
+                                }
+                            }
+                            if(self.assignments.count == 0 && self.newAssignments.count == 0){
                                 print("No Assignments")
                                 let noView = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,UIScreen.mainScreen().bounds.size.height))
                                 noView.backgroundColor = UIColor(red: 0.0, green: 0.5019, blue: 0.2509, alpha: 1.0)
@@ -145,6 +219,22 @@ class AssignmentsTableViewController: UITableViewController {
                         }
                     })
                     
+                }else if(httpResponse?.statusCode == 440){
+                    dispatch_async(dispatch_get_main_queue(), {
+                        do{
+                            let cookie = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            print(cookie);
+                            let cooke = cookie[0] as! NSDictionary
+                            let hafl = cooke.objectForKey("set-cookie") as! NSArray;
+                            self.cookie = hafl[0] as! String;
+                            print(self.cookie);
+                            self.tabBarController?.performSelector(#selector(GradeViewController.refreshAndLogin), withObject: self.cookie)
+                            self.refreshControl?.endRefreshing()
+                        }catch{
+                            
+                        }
+                    })
+
                 }
             }
         })
@@ -162,18 +252,37 @@ class AssignmentsTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1;
+        return 2;
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return assignments.count;
+            if(section == 0){
+                return newAssignments.count
+            }else{
+                return assignments.count;
+            }
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("AssignmentCell", forIndexPath: indexPath) as! AssignmentsTableViewCell
-        let given = self.assignments[indexPath.row] as! NSDictionary;
+        var given : NSDictionary = NSDictionary();
+        print(self.newAssignments)
+        print(self.assignments)
+        if(indexPath.section == 0){
+            given = self.newAssignments[indexPath.row] as! NSDictionary;
+            cell.calendarReady = true;
+            let calendarImage = UIImage(named:"calendar.png")
+            cell.calendarButton.setImage(calendarImage, forState: .Normal)
+        }else{
+            given = self.assignments[indexPath.row] as! NSDictionary;
+            cell.calendarReady = false;
+            let checkImage = UIImage(named:"check.png")
+            cell.calendarButton.setImage(checkImage, forState: .Normal);
+            cell.calendarButton.setImage(checkImage, forState: .Selected);
+
+
+        }
         let assign = given["assignment"]!
         cell.title.text = assign.objectForKey("title") as? String;
         cell.detail.text = assign.objectForKey("details") as? String;
@@ -201,18 +310,30 @@ class AssignmentsTableViewController: UITableViewController {
             cell.grade.backgroundColor = UIColor.blackColor()
         }
         cell.backgroundColor = cell.backgroundColor;
-
+        let backgroundView = UIView();
+        backgroundView.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
+        backgroundView.alpha = 0.8;
+        cell.selectedBackgroundView = backgroundView;
         return cell
     }
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let realCell = cell as! AssignmentsTableViewCell
         realCell.move()
         realCell.backgroundColor = realCell.contentView.backgroundColor;
-
     }
-    
-    
-
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = self.tableView.dequeueReusableHeaderFooterViewWithIdentifier("TableSectionHeader")
+        let header = cell as! TableSectionHeader
+        if(section == 0){
+            header.title.text = "UPCOMING"
+        }else{
+            header.title.text = "DONE"
+        }
+        return cell;
+    }
+    func ridOfBlur() {
+        self.blurEffectView.removeFromSuperview()
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -248,7 +369,7 @@ class AssignmentsTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -256,6 +377,6 @@ class AssignmentsTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+    
 
 }
