@@ -93,6 +93,13 @@ app.post('/update', function(req,res){
                       if(users.length != 0){
                         console.log(users.id);
                         console.log("TAKEN");
+                        User.remove({_id : ObjectID(req.body.id)}, function (err){
+                          if(err){
+                            console.log(err);
+                          }else{
+                            console.log("removal of user without name, attempting to replicate :" + users.id);
+                          }
+                        })
                         return res.status(1738).end("you ain't brendon, ho");
                       }else{
                         user.username = req.body.username ? req.body.username : user.username;
@@ -265,6 +272,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
     					console.log(student);*/
     					var s = {};
     					s["cookie"] = cookie;
+              s["objectID"] = [req.user["_id"]]; 
     					json.push(s);
   						var gradebook = {method: 'GET',
   							url: 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=' + req.body.id + '&action=form',

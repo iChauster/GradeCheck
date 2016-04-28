@@ -1232,7 +1232,7 @@
                                             </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitespace-montgomery-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="CVG-kh-sgo">
                                                 <rect key="frame" x="225" y="50" width="150" height="150"/>
-                                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ift-c6-dds">
                                                 <rect key="frame" x="185" y="271" width="229" height="30"/>

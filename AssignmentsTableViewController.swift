@@ -136,7 +136,7 @@ class AssignmentsTableViewController: UITableViewController {
                 let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! AssignmentsTableViewCell
                 let blurEffect = UIBlurEffect(style: .Light)
                 self.blurEffectView = UIVisualEffectView(effect: blurEffect)
-                blurEffectView.frame = self.view.bounds;
+                blurEffectView.frame = self.tableView.bounds;
                 blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
                 self.tableView.addSubview(blurEffectView)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)

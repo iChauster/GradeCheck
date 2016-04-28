@@ -30,7 +30,7 @@ class ProjectionGradeViewController: UIViewController {
     var markingPeriod : String?
     var data : NSArray!
     var otherAssignments : NSArray!
-    let url = "http://localhost:2800/"
+    let url = "https://gradecheck.herokuapp.com/"
     var final : NSMutableDictionary! = NSMutableDictionary()
     var weights : NSMutableArray! = NSMutableArray()
     var originalMin : NSDictionary! = NSDictionary()
@@ -195,9 +195,10 @@ class ProjectionGradeViewController: UIViewController {
         print(originalMin)
         let minimumScore = self.sliderPercentView.currentValue * 0.01 * Double(self.maxScore.text!)!
         self.achievedScore.text = String(format:"%.2f",minimumScore)
-        let minDoubs = self.originalMin[self.category]![0] as! Double
+        var arr = self.originalMin[self.category] as! [Double]
+        let minDoubs = arr[0]
         let newMin = minDoubs + minimumScore
-        let maxDoubs = self.originalMin[self.category]![1] as! Double
+        let maxDoubs = arr[1]
         let newMax = maxDoubs + Double(self.assignment["gradeMax"] as! String)!
         let array = [newMin, newMax]
         self.final[self.category] = array
@@ -246,8 +247,9 @@ class ProjectionGradeViewController: UIViewController {
             var gradeMax = 0.0
             var gradeAchieved = 0.0
             for (_,values) in final {
-                gradeAchieved += values[0] as! Double
-                gradeMax += values[1] as! Double
+                let arr : [Double] = values as! [Double]
+                gradeAchieved += arr[0]
+                gradeMax += arr[1]
             }
             let percentage = gradeAchieved / gradeMax * 100
             self.newGradeView.score.text = String(format: "%.2f",percentage)
@@ -278,19 +280,46 @@ class ProjectionGradeViewController: UIViewController {
                     print("error \(error)")
                     
                     let event = EKEvent(eventStore: eventStore)
-                    
+                    var localSource : EKSource = EKSource()
+                    for source in eventStore.sources {
+                        if (source.sourceType == .Local){
+                            localSource = source
+                            break;
+                        }
+                    }
+                    var calendar : EKCalendar
+                    if (NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") == nil){
+                        calendar = EKCalendar(forEntityType: EKEntityType.Event, eventStore: eventStore)
+                        calendar.title = "GradeCheck"
+                        calendar.CGColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0).CGColor
+                        calendar.source = localSource
+                        do{
+                            try eventStore.saveCalendar(calendar, commit: true)
+                        }catch let error as NSError{
+                            let failureAlert = UIAlertController(title: "Error", message: "Failed to create calendar." + error.localizedDescription, preferredStyle: .Alert)
+                            let action = UIAlertAction(title: "Darn.", style: .Default, handler: nil)
+                            failureAlert.addAction(action)
+                            self.presentViewController(failureAlert, animated: true, completion: nil)
+                        }
+                        NSUserDefaults.standardUserDefaults().setObject(calendar.calendarIdentifier, forKey: "calendarIdentifier")
+                    }else{
+                        calendar = eventStore.calendarWithIdentifier(NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") as! String)!
+                    }
+
                     event.title = self.navItem.title!
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd/yy")
                     let date1 = dateFormatter.dateFromString(self.dateLabel.text!);
+                    let cal: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+                    let startDate = cal.dateBySettingHour(7, minute: 20, second: 0, ofDate: date1!, options: .MatchFirst)
                     
-                    
-                    event.startDate = date1!
-                    event.endDate = (date1?.dateByAddingTimeInterval(60*60))!;
+                    event.startDate = startDate!
+                    event.endDate = (startDate?.dateByAddingTimeInterval(60*60))!;
+                    event.calendar = calendar
+                    let alarm : EKAlarm = EKAlarm(relativeOffset: -60*60*15)
+                    let secondAlarm : EKAlarm = EKAlarm(relativeOffset: -60*60*39)
                     event.notes = self.descriptionTitle.text!
-                    event.calendar = eventStore.defaultCalendarForNewEvents
-                    let alarm : EKAlarm = EKAlarm(relativeOffset: -60*60*24)
-                    event.alarms = [alarm]
+                    event.alarms = [alarm, secondAlarm]
                     var event_id = ""
                     do{
                         try eventStore.saveEvent(event, span: .ThisEvent)
@@ -316,8 +345,7 @@ class ProjectionGradeViewController: UIViewController {
             })
         }
     }
-
-
+   
     /*
     // MARK: - Navigation
 

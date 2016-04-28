@@ -105,12 +105,12 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     }
     func handleLongPress(sender:UILongPressGestureRecognizer){
         if(sender.state == .Began){
-            let press = sender.locationInView(self.view)
+            let press = sender.locationInView(self.assignmentTable)
             if let indexPath = self.assignmentTable.indexPathForRowAtPoint(press){
                 let cell = self.assignmentTable.cellForRowAtIndexPath(indexPath) as! DetailGradeTableViewCell
                 let blurEffect = UIBlurEffect(style: .Light)
                 self.blurEffectView = UIVisualEffectView(effect: blurEffect)
-                blurEffectView.frame = self.view.bounds;
+                blurEffectView.frame = self.assignmentTable.bounds;
                 blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
                 self.assignmentTable.addSubview(blurEffectView)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)

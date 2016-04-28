@@ -110,21 +110,48 @@ class AssignmentDetailModalViewController: UIViewController {
                 if (granted) && (error == nil) {
                     print("granted \(granted)")
                     print("error \(error)")
-                    
+                    var localSource : EKSource = EKSource()
+                    for source in eventStore.sources {
+                        if (source.sourceType == .Local){
+                            localSource = source
+                            break;
+                        }
+                    }
+                    var calendar : EKCalendar;
+                    if (NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") == nil){
+                        calendar = EKCalendar(forEntityType: EKEntityType.Event, eventStore: eventStore)
+                        calendar.title = "GradeCheck"
+                        calendar.CGColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0).CGColor
+                        calendar.source = localSource
+                        do{
+                            try eventStore.saveCalendar(calendar, commit: true)
+                        }catch let error as NSError{
+                            let failureAlert = UIAlertController(title: "Error", message: "Failed to create calendar." + error.localizedDescription, preferredStyle: .Alert)
+                            let action = UIAlertAction(title: "Darn.", style: .Default, handler: nil)
+                            failureAlert.addAction(action)
+                            self.presentViewController(failureAlert, animated: true, completion: nil)
+                        }
+                        NSUserDefaults.standardUserDefaults().setObject(calendar.calendarIdentifier, forKey: "calendarIdentifier")
+                    }else{
+                        calendar = eventStore.calendarWithIdentifier(NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") as! String)!
+                    }
+
                     let event = EKEvent(eventStore: eventStore)
                     
                     event.title = self.assignmentTitle.text!
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd/yy")
                     let date1 = dateFormatter.dateFromString(self.dueDate.text!);
-                    
-                    
-                    event.startDate = date1!
-                    event.endDate = (date1?.dateByAddingTimeInterval(60*60))!;
+                    let cal: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+                    let startDate = cal.dateBySettingHour(7, minute: 20, second: 0, ofDate: date1!, options: .MatchFirst)
+                    event.startDate = startDate!
+                    event.endDate = (startDate?.dateByAddingTimeInterval(60*60))!;
                     event.notes = self.detailTitle!.text!
-                    event.calendar = eventStore.defaultCalendarForNewEvents
-                    let alarm : EKAlarm = EKAlarm(relativeOffset: -60*60*24)
-                    event.alarms = [alarm]
+                    event.calendar = calendar
+                    let alarm : EKAlarm = EKAlarm(relativeOffset: -60*60*15)
+                    let secondAlarm : EKAlarm = EKAlarm(relativeOffset: -60*60*39)
+                    event.alarms = [alarm, secondAlarm]
+
                     var event_id = ""
                     do{
                         try eventStore.saveEvent(event, span: .ThisEvent)

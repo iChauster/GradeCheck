@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
     var loggedIn : Bool = false;
     var phoneNumberOption : String?
     var selectedIndex : Int?
-    let url = "https://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
     @IBAction func login(sender:UIButton!){
         NSLog("clicked");
         NSLog(usn!.text!);
@@ -49,7 +49,9 @@ class LoginViewController: UIViewController {
             self.statusLabel.hidden = false;
             self.statusLabel.text = "Logging In...";
             NSUserDefaults.standardUserDefaults().setObject(self.usn!.text, forKey: "id");
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "shouldUpdateUserToken")
             self.makeLoginRequestWithParams(self.usn.text!, pass: self.psw.text!);
+    
 
         }
     }
@@ -309,6 +311,9 @@ class LoginViewController: UIViewController {
                             }else{
                                 
                             }
+                            if(NSUserDefaults.standardUserDefaults().boolForKey("shouldUpdateUserToken")){
+                                self.updateUser("deviceToken", value: (NSUserDefaults.standardUserDefaults().objectForKey("userId") as! String))
+                            }
                             if(NSUserDefaults.standardUserDefaults().boolForKey("HasRegistered") == false){
                                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasRegistered")
                             }
@@ -393,7 +398,11 @@ class LoginViewController: UIViewController {
         if(self.confirmationDict != nil){
             let id = "&id=" + (self.confirmationDict![0].objectForKey("_id") as! String)
             postData.appendData(id.dataUsingEncoding(NSUTF8StringEncoding)!);
+        }else{
+            let id = "&id=" + (self.jsonDict[0]["objectID"] as! String)
+            postData.appendData(id.dataUsingEncoding(NSUTF8StringEncoding)!);
         }
+        
         
         
         let request = NSMutableURLRequest(URL: NSURL(string: url + "update")!,

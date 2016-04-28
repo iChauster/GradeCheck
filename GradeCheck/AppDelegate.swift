@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
             let oneSignal = OneSignal(launchOptions: launchOptions, appId: "83f615e3-1eab-4055-92ef-cb5f498968c9", handleNotification: nil)
+
         oneSignal.IdsAvailable({ (userId, pushToken) in
             NSLog("UserId:%@", userId)
             if (pushToken != nil) {
@@ -45,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
         OneSignal.defaultClient().enableInAppAlertNotification(true)
-        
         return true
     }
     
