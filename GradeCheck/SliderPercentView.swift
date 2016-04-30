@@ -57,24 +57,29 @@ class SliderPercentView: UIView {
                     if(!(self.backgroundColor!.isEqual(UIColor.blackColor()))){
                         UIView.animateWithDuration(1.0, animations: {
                             self.backgroundColor = UIColor.blackColor()
+                            self.percentLabel.textColor = UIColor.whiteColor()
                         })
                     }
                 case 50..<75 :
                     if(!(self.backgroundColor!.isEqual(UIColor.redColor()))){
                         UIView.animateWithDuration(1.0, animations: {
                             self.backgroundColor = UIColor.redColor()
+                            self.percentLabel.textColor = UIColor.whiteColor()
+
                         })
                     }
                 case 75..<85 :
                     if(!(self.backgroundColor!.isEqual(UIColor.yellowColor()))){
                         UIView.animateWithDuration(1.0, animations: {
                             self.backgroundColor = UIColor.yellowColor()
+                            self.percentLabel.textColor = UIColor.blackColor()
                         })
                     }
                 case 85..<110 :
                     if(!(self.backgroundColor!.isEqual(UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)))){
                         UIView.animateWithDuration(1.0, animations: {
                             self.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
+                            self.percentLabel.textColor = UIColor.whiteColor()
                         })
                     }
                 default :

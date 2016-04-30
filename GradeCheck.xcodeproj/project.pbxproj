@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C031C651CD2FD0D00390BC7 /* ForceTouchAssignmentsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C031C641CD2FD0D00390BC7 /* ForceTouchAssignmentsDetailViewController.swift */; };
 		2C04CDDA1CC9951B008B9FF4 /* TableSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C04CDD91CC9951B008B9FF4 /* TableSectionHeader.swift */; };
 		2C04CDE31CC997E6008B9FF4 /* TableSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C04CDE21CC997E6008B9FF4 /* TableSectionHeader.xib */; };
 		2C04CDEB1CC9B2FC008B9FF4 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C04CDEA1CC9B2FC008B9FF4 /* check.png */; };
@@ -124,6 +125,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C031C641CD2FD0D00390BC7 /* ForceTouchAssignmentsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForceTouchAssignmentsDetailViewController.swift; sourceTree = "<group>"; };
 		2C04CDD91CC9951B008B9FF4 /* TableSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionHeader.swift; sourceTree = "<group>"; };
 		2C04CDE21CC997E6008B9FF4 /* TableSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableSectionHeader.xib; sourceTree = "<group>"; };
 		2C04CDEA1CC9B2FC008B9FF4 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				ED7AA2071C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift */,
 				2C04CDD91CC9951B008B9FF4 /* TableSectionHeader.swift */,
 				2C04CDEC1CCAFD8E008B9FF4 /* AssignmentDetailModalViewController.swift */,
+				2C031C641CD2FD0D00390BC7 /* ForceTouchAssignmentsDetailViewController.swift */,
 				2C04CDF01CCB362E008B9FF4 /* AssignmentScoreView.swift */,
 				2C04CDE21CC997E6008B9FF4 /* TableSectionHeader.xib */,
 			);
@@ -524,6 +527,7 @@
 				2CFE269E1CCBEC54001B7AAE /* ProjectionGradeViewController.swift in Sources */,
 				ED7AA2081C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift in Sources */,
 				ED7AA2281CA0975D001B2E68 /* StatTableViewCell.swift in Sources */,
+				2C031C651CD2FD0D00390BC7 /* ForceTouchAssignmentsDetailViewController.swift in Sources */,
 				ED64DEA91CA3718D00B25150 /* DetailGradeViewController.swift in Sources */,
 				2CD720C11CAC5B2200338CA7 /* DetailStatTableViewCell.swift in Sources */,
 				EDBE86121C7A9B230031EE8B /* AssignmentsTableViewController.swift in Sources */,
@@ -686,7 +690,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ichauster.gradeCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "34e2ee95-8c30-4d98-b776-bf240c6a5adc";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -709,7 +713,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ichauster.gradeCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "34e2ee95-8c30-4d98-b776-bf240c6a5adc";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

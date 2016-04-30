@@ -34,6 +34,8 @@
 			<string>Check Grades</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).CheckGrades</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>grades</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemSubtitle</key>
@@ -42,6 +44,8 @@
 			<string>Assignments</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).CheckAssignments</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>assignments</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemSubtitle</key>
@@ -50,6 +54,8 @@
 			<string>Statistics</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Statistics</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>statistics</string>
 		</dict>
 	</array>
 	<key>UIBackgroundModes</key>

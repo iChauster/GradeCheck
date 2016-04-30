@@ -37,6 +37,7 @@ class ProjectionGradeViewController: UIViewController {
     var color : UIColor!
     var calendarReady : Bool = true;
     var categoryConversion : Bool = true;
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.newGradeView.score.text = ""
@@ -167,11 +168,15 @@ class ProjectionGradeViewController: UIViewController {
                         let array = val as! NSMutableArray
                         var min = array[0] as! Double
                         var max = array[1] as! Double
-                        min += Double(dict["grade"] as! String)!
-                        max += Double(dict["gradeMax"] as! String)!
-                        array[0] = min;
-                        array[1] = max;
-                    }else{
+                        if let dou = Double(dict["grade"] as! String){
+                            min += dou
+                            max += Double(dict["gradeMax"] as! String)!
+                            array[0] = min;
+                            array[1] = max;
+                        }else{
+                            
+                        }
+                        }else{
                         let array = NSMutableArray()
                         let minString = dict["grade"] as! String
                         let maxString = dict["gradeMax"] as! String
@@ -192,8 +197,8 @@ class ProjectionGradeViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     func adjustMin(){
-        print(originalMin)
-        let minimumScore = self.sliderPercentView.currentValue * 0.01 * Double(self.maxScore.text!)!
+        if let a = Double(self.maxScore.text!) {
+        let minimumScore = self.sliderPercentView.currentValue * 0.01 * a
         self.achievedScore.text = String(format:"%.2f",minimumScore)
         var arr = self.originalMin[self.category] as! [Double]
         let minDoubs = arr[0]
@@ -203,6 +208,14 @@ class ProjectionGradeViewController: UIViewController {
         let array = [newMin, newMax]
         self.final[self.category] = array
         self.findFinalGrade()
+        }else{
+            let alert = UIAlertController(title: "Grade Error", message: "Grade cannot be read.", preferredStyle: .Alert)
+            let action = UIAlertAction(title: "Aw.", style: .Default, handler: { (alert : UIAlertAction) in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            alert.addAction(action)
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
     func findFinalGrade(){
         if(categoryConversion == true){
@@ -231,16 +244,40 @@ class ProjectionGradeViewController: UIViewController {
             self.newGradeView.score.text = String(format: "%.2f", finalGrade) + "%"
             switch(Int(finalGrade)){
             case 0..<50:
-                self.newGradeView.backgroundColor = UIColor.blackColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.blackColor()))){
+                    UIView.animateWithDuration(1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.blackColor()
+                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                    })
+                }
             case 50..<75 :
-                self.newGradeView.backgroundColor = UIColor.redColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.redColor()))){
+                    UIView.animateWithDuration(1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.redColor()
+                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                    })
+                }
             case 75..<85 :
-                self.newGradeView.backgroundColor = UIColor.yellowColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.yellowColor()))){
+                    UIView.animateWithDuration(1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.yellowColor()
+                        self.newGradeView.score.textColor = UIColor.blackColor()
+                    })
+                }
             case 85..<110 :
-                self.newGradeView.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)))){
+                    UIView.animateWithDuration(1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
+                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                    })
+                }
             default :
-                self.newGradeView.backgroundColor = UIColor.blackColor()
-
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.blackColor()))){
+                    UIView.animateWithDuration(1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.blackColor()
+                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                    })
+                }
             }
         }else{
             print(final)
@@ -252,19 +289,43 @@ class ProjectionGradeViewController: UIViewController {
                 gradeMax += arr[1]
             }
             let percentage = gradeAchieved / gradeMax * 100
-            self.newGradeView.score.text = String(format: "%.2f",percentage)
+            self.newGradeView.score.text = String(format: "%.2f",percentage) + "%"
             switch(Int(percentage)){
             case 0..<50:
-                self.newGradeView.backgroundColor = UIColor.blackColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.blackColor()))){
+                    UIView.animateWithDuration(1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.blackColor()
+                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                    })
+                }
             case 50..<75 :
-                self.newGradeView.backgroundColor = UIColor.redColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.redColor()))){
+                    UIView.animateWithDuration(1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.redColor()
+                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                    })
+                }
             case 75..<85 :
-                self.newGradeView.backgroundColor = UIColor.yellowColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.yellowColor()))){
+                    UIView.animateWithDuration(1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.yellowColor()
+                        self.newGradeView.score.textColor = UIColor.blackColor()
+                    })
+                }
             case 85..<110 :
-                self.newGradeView.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)))){
+                    UIView.animateWithDuration(1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
+                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                    })
+                }
             default :
-                self.newGradeView.backgroundColor = UIColor.blackColor()
-                
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.blackColor()))){
+                    UIView.animateWithDuration(1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.blackColor()
+                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                    })
+                }
             }
 
         }

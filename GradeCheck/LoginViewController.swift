@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
     var loggedIn : Bool = false;
     var phoneNumberOption : String?
     var selectedIndex : Int?
-    let url = "http://localhost:2800/"
+    let url = "https://gradecheck.herokuapp.com/"
     @IBAction func login(sender:UIButton!){
         NSLog("clicked");
         NSLog(usn!.text!);
@@ -181,10 +181,10 @@ class LoginViewController: UIViewController {
                     self.statusLabel.hidden = false
                     self.statusLabel.text = "Logging in..."
                 }
-                if(NSUserDefaults.standardUserDefaults().boolForKey("shouldUpdateUserToken")){
+                /*if(NSUserDefaults.standardUserDefaults().boolForKey("shouldUpdateUserToken")){
                     print("should update User Token");
                     self.updateUser("deviceToken", value: (NSUserDefaults.standardUserDefaults().objectForKey("userId") as! String))
-                }
+                }*/
             }
             // This could also be another view, connected with an outlet
             
@@ -312,7 +312,9 @@ class LoginViewController: UIViewController {
                                 
                             }
                             if(NSUserDefaults.standardUserDefaults().boolForKey("shouldUpdateUserToken")){
-                                self.updateUser("deviceToken", value: (NSUserDefaults.standardUserDefaults().objectForKey("userId") as! String))
+                                if(NSUserDefaults.standardUserDefaults().objectForKey("userId") != nil){
+                                    self.updateUser("deviceToken", value: (NSUserDefaults.standardUserDefaults().objectForKey("userId") as! String))
+                                }
                             }
                             if(NSUserDefaults.standardUserDefaults().boolForKey("HasRegistered") == false){
                                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasRegistered")
@@ -399,7 +401,8 @@ class LoginViewController: UIViewController {
             let id = "&id=" + (self.confirmationDict![0].objectForKey("_id") as! String)
             postData.appendData(id.dataUsingEncoding(NSUTF8StringEncoding)!);
         }else{
-            let id = "&id=" + (self.jsonDict[0]["objectID"] as! String)
+            let objectIDArray = (self.jsonDict[0]["objectID"] as! [String])
+            let id = "&id=" + (objectIDArray[0])
             postData.appendData(id.dataUsingEncoding(NSUTF8StringEncoding)!);
         }
         
@@ -427,7 +430,8 @@ class LoginViewController: UIViewController {
                             self.statusLabel.hidden = true;
                             self.statusLabel.text = "";
                         }else if (field == "deviceToken"){
-                            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "PushNotifs");
+                            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "PushNotifs")
+                            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "shouldUpdateUserToken")
                         }
                     })
                 }else if (httpResponse?.statusCode == 1738){

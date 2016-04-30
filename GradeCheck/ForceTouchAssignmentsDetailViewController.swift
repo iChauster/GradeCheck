@@ -1,15 +1,15 @@
 //
-//  AssignmentDetailModalViewController.swift
+//  ForceTouchAssignmentsDetailViewController.swift
 //  GradeCheck
 //
-//  Created by Ivan Chau on 4/22/16.
+//  Created by Ivan Chau on 4/28/16.
 //  Copyright © 2016 Ivan Chau. All rights reserved.
 //
 
 import UIKit
 import EventKit
+class ForceTouchAssignmentsDetailViewController: UIViewController {
 
-class AssignmentDetailModalViewController: UIViewController {
     @IBOutlet weak var assignmentTitle : UILabel!
     @IBOutlet weak var detailTitle : UILabel?
     @IBOutlet weak var categoryTitle : UILabel!
@@ -21,7 +21,6 @@ class AssignmentDetailModalViewController: UIViewController {
     @IBOutlet weak var teacherName : UILabel!
     @IBOutlet weak var close : UIButton!
     @IBOutlet weak var calendar : UIButton!
-    @IBOutlet weak var modalView : UIView!
     var assignment : NSDictionary!
     var calendarReady : Bool = true;
     var assignorNo : Bool = false;
@@ -32,15 +31,6 @@ class AssignmentDetailModalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(assignment)
-        let image = UIImage(named: "close.png")?.imageWithRenderingMode(.AlwaysTemplate)
-        self.close.setImage(image, forState: .Normal)
-        self.close.setImage(image, forState: .Selected)
-        self.close.tintColor = UIColor(red: 250/255.0, green: 251/255.0, blue: 250/255.0, alpha: 1.0)
-        self.modalView.layer.cornerRadius = 10;
-        self.modalView.layer.shadowColor = UIColor.blackColor().CGColor
-        self.modalView.layer.shadowOpacity = 0.6
-        self.modalView.layer.shadowRadius = 15;
-        self.modalView.layer.shadowOffset = CGSize(width: 5, height: 5)
         if(calendarReady){
             let cal = UIImage(named: "calendar.png")?.imageWithRenderingMode(.AlwaysTemplate)
             self.calendar.setImage(cal, forState: .Normal)
@@ -84,7 +74,7 @@ class AssignmentDetailModalViewController: UIViewController {
         }
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -100,11 +90,11 @@ class AssignmentDetailModalViewController: UIViewController {
             let av = vc.selectedViewController as! AssignmentsTableViewController
             av.ridOfBlur()
             self.dismissViewControllerAnimated(true){
-            
+                
             }
         }
     }
-    @IBAction func addtoCalendarClicked(sender: AnyObject) {
+    func addtoCalendarClicked() {
         CellAnimation.growAndShrink(percentage)
         if(calendarReady){
             let eventStore = EKEventStore()
@@ -116,30 +106,48 @@ class AssignmentDetailModalViewController: UIViewController {
                     print("error \(error)")
                     var localSource : EKSource = EKSource()
                     for source in eventStore.sources {
-                        if (source.sourceType == .Local){
-                            localSource = source
+                        if (source.sourceType == EKSourceType.CalDAV &&
+                            source.title == "iCloud")
+                        {
+                            localSource = source;
                             break;
                         }
                     }
-                    var calendar : EKCalendar;
-                    if (NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") == nil){
-                        calendar = EKCalendar(forEntityType: EKEntityType.Event, eventStore: eventStore)
-                        calendar.title = "GradeCheck"
-                        calendar.CGColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0).CGColor
-                        calendar.source = localSource
-                        do{
-                            try eventStore.saveCalendar(calendar, commit: true)
-                        }catch let error as NSError{
-                            let failureAlert = UIAlertController(title: "Error", message: "Failed to create calendar." + error.localizedDescription, preferredStyle: .Alert)
-                            let action = UIAlertAction(title: "Darn.", style: .Default, handler: nil)
-                            failureAlert.addAction(action)
-                            self.presentViewController(failureAlert, animated: true, completion: nil)
+                    
+                    if (localSource.title != "iCloud")
+                    {
+                        for source in eventStore.sources
+                        {
+                            if (source.sourceType == .Local)
+                            {
+                                localSource = source;
+                                break;
+                            }
                         }
-                        NSUserDefaults.standardUserDefaults().setObject(calendar.calendarIdentifier, forKey: "calendarIdentifier")
-                    }else{
-                        calendar = eventStore.calendarWithIdentifier(NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") as! String)!
                     }
-
+                    var calendar : EKCalendar;
+                        if (NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") == nil || (NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") as! String) == ""){
+                            calendar = EKCalendar(forEntityType: EKEntityType.Event, eventStore: eventStore)
+                            calendar.title = "GradeCheck"
+                            calendar.CGColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0).CGColor
+                            calendar.source = localSource
+                            do{
+                                try eventStore.saveCalendar(calendar, commit: true)
+                            }catch let error as NSError{
+                                let failureAlert = UIAlertController(title: "Error", message: "Failed to create calendar." + error.localizedDescription, preferredStyle: .Alert)
+                                let action = UIAlertAction(title: "Darn.", style: .Default, handler: nil)
+                                failureAlert.addAction(action)
+                                self.presentViewController(failureAlert, animated: true, completion: nil)
+                            }
+                            NSUserDefaults.standardUserDefaults().setObject(calendar.calendarIdentifier, forKey: "calendarIdentifier")
+                        }else{
+                            if let c = eventStore.calendarWithIdentifier(NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") as! String) {
+                                calendar = c
+                            }else{
+                                calendar = eventStore.defaultCalendarForNewEvents
+                            }
+                        }
+                    
                     let event = EKEvent(eventStore: eventStore)
                     
                     event.title = self.assignmentTitle.text!
@@ -155,7 +163,7 @@ class AssignmentDetailModalViewController: UIViewController {
                     let alarm : EKAlarm = EKAlarm(relativeOffset: -60*60*15)
                     let secondAlarm : EKAlarm = EKAlarm(relativeOffset: -60*60*39)
                     event.alarms = [alarm, secondAlarm]
-
+                    
                     var event_id = ""
                     do{
                         try eventStore.saveEvent(event, span: .ThisEvent)
@@ -181,16 +189,26 @@ class AssignmentDetailModalViewController: UIViewController {
             })
         }
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func previewActionItems() -> [UIPreviewActionItem] {
+        if(calendarReady){
+            let addToCalendar = UIPreviewAction(title: "Add to Calendar", style: .Default) { (action: UIPreviewAction, vc : UIViewController) in
+                print("Handler executing");
+                self.addtoCalendarClicked()
+            }
+            return [addToCalendar]
+        }else{
+            return [];
+        }
     }
-    */
-
+    
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
 }

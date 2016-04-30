@@ -19,7 +19,7 @@ app.post('/register', function(req, res) {
     if(bool){
         console.log("GOOD TO PROCEED");
 
-        User.register(new User({ username : req.body.username, phoneNumber : req.body.phoneNumber,grades:[{subject:"", grade:""}], deviceToken: req.body.deviceToken, preference : actual, studId: ""}), req.body.password, function(err, account) {
+        User.register(new User({ username : req.body.username, grades:[{subject:"", grade:""}], deviceToken: req.body.deviceToken, preference : actual, studId: ""}), req.body.password, function(err, account) {
             if (err) {
              console.log(err);
               return res.writeHead(400)
@@ -639,10 +639,39 @@ app.post('/classdata', function(req,res){
         case (x > 93) :
           counts["A"] = (counts["A"] || 0) + 1
           break;
-        case (x > 90) :
+        case (x > 89) :
           counts["A-"] = (counts["A-"] || 0) + 1
           break;
-        case (x >)
+        case (x > 86) :
+          counts["B+"] = (counts["B+"] || 0) + 1
+          break;
+        case (x > 83) :
+          counts["B"] = (counts["B"] || 0) + 1
+          break;
+        case (x > 79) :
+          counts["B-"] = (counts["B-"] || 0) + 1
+          break;
+        case (x > 76) :
+          counts["C+"] = (counts["C+"] || 0) + 1
+          break;
+        case (x > 73) :
+          counts["C"] = (counts["C"] || 0) + 1
+          break;
+        case (x > 69) : 
+          counts["C-"] = (counts["C-"] || 0) + 1
+          break;
+        case (x > 66) :
+          counts["D+"] = (counts["D+"] || 0) + 1
+          break;
+        case (x > 63) :
+          counts["D"] = (counts["D"] || 0) + 1
+          break;
+        case (x > 59) :
+          counts["D-"] = (counts["D-"] || 0) + 1
+          break;
+        default : 
+          counts["F"] = (counts["F"] || 0) + 1
+          break;
         } */
       counts[x]= (counts[x] || 0) + 1;        
       })
@@ -704,10 +733,16 @@ app.post('/classdata', function(req,res){
 app.post('/classAverages', function(req,res){
   console.log('classAverages requested for className :' + req.body.className)
   if(req.body.cookie && req.body.id){
+    var markingP;
+    if(req.body.markingPeriod !== undefined){
+      markingP= req.body.markingPeriod
+    }else{
+      markingP = markingPeriod
+    }
     console.log(req.body.cookie + " " + req.body.id);
     var gradebook = {method: 'GET',
         url:'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=' + req.body.id + 
-      '&action=form&courseCode=' + req.body.course +"&courseSection="+ req.body.section + "&mp=" + markingPeriod,
+      '&action=form&courseCode=' + req.body.course +"&courseSection="+ req.body.section + "&mp=" + markingP,
         'rejectUnauthorized' : false,
         headers:{'cache-control' : 'no-cache',
         'content-type': 'application/x-www-form-urlencoded',

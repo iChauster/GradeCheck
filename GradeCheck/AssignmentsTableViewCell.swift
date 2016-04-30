@@ -97,7 +97,7 @@ class AssignmentsTableViewCell: UITableViewCell {
                     
                     if(event_id != ""){
                         dispatch_async(dispatch_get_main_queue(), {
-                            let alertString = self.title.text! + " has been added to your calendar!"
+                            let alertString = self.title.text! + " has been added to your calendar! You may need to sync with iCloud calendar to see these features."
                             let alert = UIAlertController(title: "Added to Calendar" , message: alertString, preferredStyle: .Alert);
                             let cool = UIAlertAction(title: "Cool!", style: .Default, handler: nil)
                             alert.addAction(cool)

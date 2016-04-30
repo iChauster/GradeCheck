@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UIViewControllerPreviewingDelegate {
     var data : NSDictionary!
     var cookieData : NSDictionary!
     var assignments = NSArray()
@@ -20,6 +20,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     var markingPeriod : String?
     var cours : String!
     var sectio : String!
+    var selectedCell : DetailGradeTableViewCell?
     let url = "https://gradecheck.herokuapp.com/"
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
@@ -31,7 +32,15 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+      
+        if( traitCollection.forceTouchCapability == .Available){
+            
+            registerForPreviewingWithDelegate(self, sourceView: view)
+            
+        }else {
+            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(DetailGradeViewController.handleLongPress))
+            self.view.addGestureRecognizer(longPress)
+        }
         self.navBar.barTintColor = color;
         self.navItem.title = self.classtitle;
         self.assignmentTable.dataSource = self;
@@ -39,8 +48,6 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         let cookieArray = self.cookieData.objectForKey("cookie") as? NSArray;
         self.cookie = cookieArray![0] as? String;
         self.id = self.cookieData.objectForKey("id") as? String;
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(DetailGradeViewController.handleLongPress))
-        self.view.addGestureRecognizer(longPress)
         let delimiter = " -"
         let classString = data.objectForKey("class");
         let token = classString?.componentsSeparatedByString(delimiter)
@@ -88,7 +95,21 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
                         do{
                             self.assignments = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
                             self.assignments = self.assignments.reverse()
+                            if(self.assignments.count == 0){
+                                print("No Assignments")
+                                let noView = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,UIScreen.mainScreen().bounds.size.height))
+                                noView.backgroundColor = UIColor(red: 0.0, green: 0.5019, blue: 0.2509, alpha: 1.0)
+                                let noLabel = UILabel(frame:CGRectMake(10,0, 240,21));
+                                noLabel.textAlignment = .Center;
+                                noLabel.text = "No Assignments :)";
+                                noLabel.textColor = UIColor.whiteColor()
+                                noLabel.center = noView.center;
+                                noView.addSubview(noLabel)
+                                noView.bringSubviewToFront(noLabel)
+                                self.assignmentTable.backgroundView = noView;
+                            }
                             self.assignmentTable.reloadData()
+                            
                         }catch{
                             
                         }
@@ -195,9 +216,47 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     func ridOfBlur(){
         self.blurEffectView.removeFromSuperview()  
     }
-    
+    override func viewDidAppear(animated: Bool) {
+        if(self.assignmentTable.indexPathForSelectedRow != nil){
+            self.assignmentTable.deselectRowAtIndexPath(self.assignmentTable.indexPathForSelectedRow!, animated: true)
+        }
+    }
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = self.assignmentTable.indexPathForRowAtPoint(location) else {return nil}
+       
+        guard let cell = self.assignmentTable.cellForRowAtIndexPath(indexPath) as? DetailGradeTableViewCell else {return nil}
+        self.selectedCell = cell;
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let rectOfCellInTableView: CGRect = self.assignmentTable.rectForRowAtIndexPath(indexPath)
+        let rectOfCellInSuperview: CGRect = self.assignmentTable.convertRect(rectOfCellInTableView, toView: self.view)
+        previewingContext.sourceRect = rectOfCellInSuperview
+        // let detailvc = storyboard.instantiateViewControllerWithIdentifier("AssignmentDetail") as! AssignmentDetailModalViewController
+        let detailvc = storyboard.instantiateViewControllerWithIdentifier("ForceTouchAssignment") as! ForceTouchAssignmentsDetailViewController
+        var assignment = NSDictionary()
+        assignment = assignments[indexPath.row] as! NSDictionary
+        detailvc.calendarReady = cell.calendarReady
+        detailvc.assignment = assignment
+        detailvc.assignorNo = true;
+        return detailvc;
 
-    
+    }
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let projectionvc = storyboard.instantiateViewControllerWithIdentifier("ProjectionAssignmentView") as! ProjectionGradeViewController
+        var af : DetailGradeTableViewCell!
+        if(self.selectedCell != nil){
+            af = self.selectedCell
+        }
+        projectionvc.cookie = self.cookie
+        projectionvc.course = self.cours
+        projectionvc.section = self.sectio
+        projectionvc.assignment = af.assignment
+        projectionvc.markingPeriod = self.markingPeriod
+        projectionvc.otherAssignments = self.assignments
+        projectionvc.color = af.color
+        projectionvc.calendarReady = af.calendarReady
+        showViewController(projectionvc, sender: self)
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
