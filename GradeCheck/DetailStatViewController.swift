@@ -26,6 +26,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     var results : [GraphData] = [];
     var className : String!
     var dataArray = NSArray();
+    var markingPeriod : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         print(data)
@@ -158,11 +159,16 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         let idString = "&id=" + (NSUserDefaults .standardUserDefaults().objectForKey("id")as! String);
         let cookieString = "&cookie=" + self.cookie
         
+        
         let postData = NSMutableData(data: classNameString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(courseString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(sectionString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
         postData.appendData(cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        if(self.markingPeriod != nil){
+            let stringMarkingPeriod = "&markingPeriod=" + self.markingPeriod!
+            postData.appendData(stringMarkingPeriod.dataUsingEncoding(NSUTF8StringEncoding)!)
+        }
         //please stop looking at my fucking code you creep (ง •̀_•́)ง
         let request = NSMutableURLRequest(URL: NSURL(string: url + "classAverages")!,
                                           cachePolicy: .UseProtocolCachePolicy,

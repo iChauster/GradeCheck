@@ -35,7 +35,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
       
         if( traitCollection.forceTouchCapability == .Available){
             
-            registerForPreviewingWithDelegate(self, sourceView: view)
+            registerForPreviewingWithDelegate(self, sourceView: self.assignmentTable)
             
         }else {
             let longPress = UILongPressGestureRecognizer(target: self, action: #selector(DetailGradeViewController.handleLongPress))
@@ -227,9 +227,9 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         guard let cell = self.assignmentTable.cellForRowAtIndexPath(indexPath) as? DetailGradeTableViewCell else {return nil}
         self.selectedCell = cell;
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let rectOfCellInTableView: CGRect = self.assignmentTable.rectForRowAtIndexPath(indexPath)
-        let rectOfCellInSuperview: CGRect = self.assignmentTable.convertRect(rectOfCellInTableView, toView: self.view)
-        previewingContext.sourceRect = rectOfCellInSuperview
+        /*let rectOfCellInTableView: CGRect = self.assignmentTable.rectForRowAtIndexPath(indexPath)
+        let rectOfCellInSuperview: CGRect = self.assignmentTable.convertRect(rectOfCellInTableView, toView: self.view)*/
+        previewingContext.sourceRect = cell.frame;
         // let detailvc = storyboard.instantiateViewControllerWithIdentifier("AssignmentDetail") as! AssignmentDetailModalViewController
         let detailvc = storyboard.instantiateViewControllerWithIdentifier("ForceTouchAssignment") as! ForceTouchAssignmentsDetailViewController
         var assignment = NSDictionary()

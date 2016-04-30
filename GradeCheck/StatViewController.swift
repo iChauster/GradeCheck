@@ -171,6 +171,9 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let selectedObject = self.sortedArray[self.statTable.indexPathForSelectedRow!.row];
             view.className = selectedObject.classTitle
             self.statTable.deselectRowAtIndexPath(self.statTable.indexPathForSelectedRow!, animated: true)
+            if(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") != nil && (NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String) != "MP4"){
+                view.markingPeriod = NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as? String
+            }
 
         }
     }
