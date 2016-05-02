@@ -270,7 +270,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         indexSelfLimit += 1;
         
         self.updateRankView(String(indexSelfLimit), totalString: String(dataPoints.count))
-        self.updatePercentileView(gradeArray,controlGrade: Int(selfLimit)!);
+        self.updatePercentileView(gradeArray.reverse(),controlGrade: Int(selfLimit)!);
     }
     func updateMeanView(mean:String){
         self.meanView.meanLabel.text = mean;

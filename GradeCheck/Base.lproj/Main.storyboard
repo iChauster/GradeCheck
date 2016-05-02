@@ -278,11 +278,21 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slide to see your projected Grade!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHO-BZ-Gmm">
+                                        <rect key="frame" x="8" y="126" width="184" height="36"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.50196078430000002" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="AHO-BZ-Gmm" firstAttribute="top" secondItem="6fl-3K-GO2" secondAttribute="bottom" constant="8" id="5Im-U4-aSQ"/>
                                     <constraint firstAttribute="height" constant="200" id="8gE-4a-8Bk"/>
+                                    <constraint firstItem="AHO-BZ-Gmm" firstAttribute="leading" secondItem="uIE-p3-niH" secondAttribute="leading" constant="8" id="AGg-hb-V9i"/>
                                     <constraint firstItem="6fl-3K-GO2" firstAttribute="centerY" secondItem="uIE-p3-niH" secondAttribute="centerY" id="JjY-V6-Gab"/>
+                                    <constraint firstAttribute="trailing" secondItem="AHO-BZ-Gmm" secondAttribute="trailing" constant="8" id="MVs-R4-lYj"/>
+                                    <constraint firstItem="AHO-BZ-Gmm" firstAttribute="centerX" secondItem="uIE-p3-niH" secondAttribute="centerX" id="RJ5-Ix-STn"/>
                                     <constraint firstAttribute="width" constant="200" id="Shh-5R-Kof"/>
                                     <constraint firstItem="6fl-3K-GO2" firstAttribute="centerX" secondItem="uIE-p3-niH" secondAttribute="centerX" id="a1W-0N-ikq"/>
                                 </constraints>
@@ -642,7 +652,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1234-23 CLASS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJF-JM-KfN">
-                                                    <rect key="frame" x="216" y="20" width="129" height="22"/>
+                                                    <rect key="frame" x="8" y="20" width="544" height="22"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
                                                     <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -650,6 +660,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="QJF-JM-KfN" firstAttribute="centerY" secondItem="nJR-pK-nnF" secondAttribute="centerY" id="Kq3-kd-h9H"/>
+                                                <constraint firstItem="QJF-JM-KfN" firstAttribute="leading" secondItem="nJR-pK-nnF" secondAttribute="leadingMargin" id="frw-LD-C2Y"/>
+                                                <constraint firstItem="QJF-JM-KfN" firstAttribute="trailing" secondItem="nJR-pK-nnF" secondAttribute="trailingMargin" id="m22-Fh-eln"/>
                                                 <constraint firstItem="QJF-JM-KfN" firstAttribute="centerX" secondItem="nJR-pK-nnF" secondAttribute="centerX" id="mSG-zC-TUb"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -660,6 +672,15 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch your best classes for more" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJu-UE-4XX">
+                                <rect key="frame" x="20" y="188" width="207" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="207" id="jH8-dv-57u"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.21577080364070145" green="0.5" blue="0.22675918257373173" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -670,6 +691,8 @@
                             <constraint firstItem="LKm-5h-CX3" firstAttribute="top" secondItem="JhX-GK-YBm" secondAttribute="topMargin" constant="17" id="L0g-rx-qcB"/>
                             <constraint firstItem="LKm-5h-CX3" firstAttribute="centerX" secondItem="JhX-GK-YBm" secondAttribute="centerX" id="OLu-0o-DR4"/>
                             <constraint firstItem="uDy-By-tld" firstAttribute="trailing" secondItem="JhX-GK-YBm" secondAttribute="trailingMargin" id="QCj-GC-gWf"/>
+                            <constraint firstItem="uDy-By-tld" firstAttribute="top" secondItem="aJu-UE-4XX" secondAttribute="bottom" constant="8" id="QWz-eU-O4L"/>
+                            <constraint firstItem="aJu-UE-4XX" firstAttribute="leading" secondItem="JhX-GK-YBm" secondAttribute="leadingMargin" id="g5p-HH-7Hq"/>
                             <constraint firstItem="uDy-By-tld" firstAttribute="top" secondItem="LKm-5h-CX3" secondAttribute="bottom" constant="21" id="nuY-re-Fel"/>
                             <constraint firstItem="uDy-By-tld" firstAttribute="leading" secondItem="JhX-GK-YBm" secondAttribute="leadingMargin" id="pEP-Xm-I3h"/>
                         </constraints>

@@ -78,7 +78,7 @@ app.use(function(err, req, res, next) {
 app.listen(process.env.PORT || 2800, function(){
   console.log("gradeCheck: port : %d in %s", this.address().port, app.settings.env);
 });
-var hour = 1*60*1000;
+/*var hour = 1*60*1000;
 setInterval(function(){
   console.log("Every Hour");
   var currentHour = moment().tz("America/New_York").get("hour");
@@ -167,7 +167,7 @@ setInterval(function(){
               name = name.replace(/[\[\]]/g, "\\$&");
               var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
                 results = regex.exec(url);
-              var student = decodeURIComponent(results[2].replace(/\+/g, " "));*/
+              var student = decodeURIComponent(results[2].replace(/\+/g, " "));
               var gradebook = {method: 'GET',
                 url: 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=' + doc.username + '&action=form',
                 'rejectUnauthorized' : false,
@@ -258,6 +258,6 @@ var sendNotificationToUser = function(message){
     console.log(body);
     console.log(response.headers);
   });
-}
+}*/
 
 module.exports = app;
