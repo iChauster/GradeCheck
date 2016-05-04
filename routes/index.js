@@ -372,6 +372,39 @@ app.post('/gradebook', function(req,res){
 		});
 	}
 });
+app.post('/sss', function (req,res){
+  var qs = require("querystring");
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "parents.mtsd.k12.nj.us",
+  "port": null,
+  "path": "/genesis/j_security_check",
+  "rejectUnauthorized" : false,
+  "headers": {
+    "cache-control": "no-cache",
+    "postman-token": "29c6581f-320c-63a3-fac4-dd00d8cf32d5",
+    "content-type": "application/x-www-form-urlencoded"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(qs.stringify({ j_username: 'winnie2k6@gmail.com', j_password: 'ilovrain' }));
+req.end();
+});
 app.post('/getClassWeighting', function (req,res){
   //https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=000958&action=form&courseCode=33500&courseSection=1&mp=MP4
   if(req.body.cookie && req.body.id && req.body.courseCode && req.body.courseSection){
