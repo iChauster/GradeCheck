@@ -242,7 +242,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   					form: { 'j_username':username, 'j_password': req.body.password} 
   				};
           if(home == "https://parents.mtsd.k12.nj.us/genesis"){
-            res.writeHead(1738);
+            res.writeHead(400);
             res.end("Password incorrect");
           }else{
 	  			request(hoptions, function(error, response,body){
