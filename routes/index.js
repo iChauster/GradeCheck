@@ -11,6 +11,7 @@ var app = express.Router();
 var markingPeriod = "MP4";
 /* GET home page. */
 app.get('/', function(req, res, next) {
+  console.log(req.headers);
   res.render('info');
 });
 app.post('/register', function(req, res) {
@@ -240,6 +241,10 @@ app.post('/login', passport.authenticate('local'),function (req,res){
           "Accept-Encoding" : "gzip, deflate, sdch"},
   					form: { 'j_username':username, 'j_password': req.body.password} 
   				};
+          if(home == "https://parents.mtsd.k12.nj.us/genesis"){
+            res.writeHead(1738);
+            res.end("Password incorrect");
+          }else{
 	  			request(hoptions, function(error, response,body){
   					if(error) throw new Error(error);
             console.log("SEC REQUEST");
@@ -332,6 +337,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   						}
   					});
   				});
+        }
 			});
 		});
 	}
