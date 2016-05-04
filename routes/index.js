@@ -192,13 +192,15 @@ app.post('/login', passport.authenticate('local'),function (req,res){
       username = req.body.username;
       console.log(username + "no email, go to username");
     }
+    console.log(username);
+    console.log(req.body.password);
 		var second = {method : 'GET',
-				url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
+				url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check', 
 				'rejectUnauthorized' : false,
 				headers : {'cache-control':'no-cache'} };
 		request(second,function(error,response,body){
 			if (error) throw new Error(error);
-
+      console.log(response.headers);
 			cookie = response.headers['set-cookie'];
       console.log(cookie);
 			var options = { method: 'POST',
@@ -213,6 +215,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
 
 			request(options, function (error, response, body) {
   				if (error) throw new Error(error);
+          console.log("FIRST REQUEST");
   				console.log(response.headers);
   				console.log(response.statusCode);
   				var home = response.headers['location'];
@@ -227,24 +230,26 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   				};
 	  			request(hoptions, function(error, response,body){
   					if(error) throw new Error(error);
+            console.log("SEC REQUEST");
   					console.log(response.statusCode);
   					console.log(response.headers);
   					cookie = response.headers['set-cookie'];
-			       
-  					home = response.headers['location'];
+            console.log(cookie);
+            home = "parents?tab1=studentdata&tab2=studentsummary&action=form"
   					console.log("https://parents.mtsd.k12.nj.us/genesis/"+home);
   					var ptions = {method : 'GET',
   						url : 'https://parents.mtsd.k12.nj.us/genesis/'+home,
   						'rejectUnauthorized' : false,
   						headers : {'cache-control' : 'no-cache',
   						'content-type': 'application/x-www-form-urlencoded',
-  						'Cookie':cookie},
-  						form: { 'j_username':username, 'j_password': req.body.password} 
+  						'Cookie':cookie}
   					};
   					console.log(home);
 	  				request(ptions, function(error, response,body){
 	  					  					
 						if(error)throw new Error(error);
+            console.log(response.headers);
+
 						if(!req.body.id){
 							var returnArray = [req.user];
 							var $ = cheerio.load(body);
@@ -284,7 +289,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   						};
 
   						request(gradebook,function(error,response,body){
-  							
+  							console.log(response.headers);
   							var $ = cheerio.load(body);
   							$('td.cellRight').each(function(i,element){
   								var grade = $(this);

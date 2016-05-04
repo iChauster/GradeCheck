@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
     var loggedIn : Bool = false;
     var phoneNumberOption : String?
     var selectedIndex : Int?
-    let url = "https://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
     @IBAction func login(sender:UIButton!){
         NSLog("clicked");
         NSLog(usn!.text!);
