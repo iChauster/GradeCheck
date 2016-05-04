@@ -279,7 +279,7 @@ class LoginViewController: UIViewController {
             print("in")
         }
         
-        let request = NSMutableURLRequest(URL: NSURL(string: url + "sss")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: url + "login")!,
             cachePolicy: .UseProtocolCachePolicy,
             timeoutInterval: 10.0)
         request.HTTPMethod = "POST"

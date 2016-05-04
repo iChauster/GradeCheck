@@ -42,7 +42,8 @@ function isValid(username,pass,callback){
     var second = {method : 'GET',
         url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
         'rejectUnauthorized' : false,
-        headers : {'cache-control':'no-cache'} };
+        headers : {'cache-control':'no-cache',
+      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'} };
     request(second,function(error,response,body){
       if (error) throw new Error(error);
 
@@ -54,7 +55,8 @@ function isValid(username,pass,callback){
           headers: 
           { 'content-type': 'application/x-www-form-urlencoded',
           'Cookie' : cookie,
-          'cache-control': 'no-cache' },
+          'cache-control': 'no-cache' ,
+        'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'},
           form: { 'j_username':username, 'j_password': pass} 
         };
 
@@ -142,7 +144,8 @@ app.post('/relogin', passport.authenticate('local'), function (req,res){
         'rejectUnauthorized' : false,
         headers : {'content-type':'application/x-www-form-urlencoded',
           'Cookie' : cookie,
-          'cache-control' : 'no-cache'},
+          'cache-control' : 'no-cache',
+        'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'},
           form : { 'j_username' : username, 'j_password' : req.body.password}
     };
     request(poster, function (error, response, body){
@@ -156,7 +159,8 @@ app.post('/relogin', passport.authenticate('local'), function (req,res){
         headers : {
           'cache-control' : 'no-cache',
           'content-type' : 'application/x-www-form-urlencoded',
-          'Cookie' : cookie
+          'Cookie' : cookie,
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'
         },
         form : {'j_username' : username, 'j_password' : req.body.password}
       }
@@ -197,7 +201,8 @@ app.post('/login', passport.authenticate('local'),function (req,res){
 		var second = {method : 'GET',
 				url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check', 
 				'rejectUnauthorized' : false,
-				headers : {'cache-control':'no-cache'} };
+				headers : {'cache-control':'no-cache',
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'} };
 		request(second,function(error,response,body){
 			if (error) throw new Error(error);
       console.log(response.headers);
@@ -225,7 +230,8 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   					'rejectUnauthorized' : false,
   					headers : {'cache-control' : 'no-cache',
   					'content-type': 'application/x-www-form-urlencoded',
-  					'Cookie':cookie},
+  					'Cookie':cookie,
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'},
   					form: { 'j_username':username, 'j_password': req.body.password} 
   				};
 	  			request(hoptions, function(error, response,body){
@@ -242,6 +248,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   						'rejectUnauthorized' : false,
   						headers : {'cache-control' : 'no-cache',
   						'content-type': 'application/x-www-form-urlencoded',
+              'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
   						'Cookie':cookie}
   					};
   					console.log(home);
@@ -284,7 +291,8 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   							'rejectUnauthorized' : false,
   							headers:{'cache-control' : 'no-cache',
   							'content-type': 'application/x-www-form-urlencoded',
-  							'Cookie':cookie
+  							'Cookie':cookie,
+                'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'
   							}
   						};
 
@@ -333,6 +341,7 @@ app.post('/gradebook', function(req,res){
 			'rejectUnauthorized' : false,
 			headers:{'cache-control' : 'no-cache',
 			'content-type' : 'application/x-www-form-urlencoded',
+      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
 			'Cookie' : req.body.cookie}
 		};
 		request(go,function(error,response,body){
@@ -384,8 +393,8 @@ var options = {
   "rejectUnauthorized" : false,
   "headers": {
     "cache-control": "no-cache",
-    "postman-token": "29c6581f-320c-63a3-fac4-dd00d8cf32d5",
-    "content-type": "application/x-www-form-urlencoded"
+    "content-type": "application/x-www-form-urlencoded",
+    'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'
   }
 };
 
@@ -414,6 +423,7 @@ app.post('/getClassWeighting', function (req,res){
       '&action=form&courseCode=' + req.body.courseCode + '&courseSection=' + req.body.courseSection + '&mp=' + markingPeriod,
       'rejectUnauthorized' : false,
       headers :{'cache-control' : 'no-cache',
+      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
       'Cookie' : req.body.cookie}
     }
     request(re, function (error, response, body){
@@ -478,6 +488,7 @@ app.post('/listassignments',function(req,res){
 			'&action=form&dateRange=' + mp + '&date=' + dateString + "&courseAndSection=" + req.body.course +":"+ req.body.section,
 			'rejectUnauthorized' : false,
 			headers:{'cache-control' : 'no-cache',
+      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
 			'Cookie' : req.body.cookie}
 		}
     console.log('https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=' + req.body.id + 
@@ -571,6 +582,7 @@ app.post('/assignments', function(req, res){
   				'rejectUnauthorized' : false,
   				headers:{'cache-control' : 'no-cache',
   				'content-type': 'application/x-www-form-urlencoded',
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
   				'Cookie':req.body.cookie
   				}
   	};
@@ -805,6 +817,7 @@ app.post('/classAverages', function(req,res){
         'rejectUnauthorized' : false,
         headers:{'cache-control' : 'no-cache',
         'content-type': 'application/x-www-form-urlencoded',
+        'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
         'Cookie':req.body.cookie          
         }
     };
