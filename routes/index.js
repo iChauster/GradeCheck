@@ -214,7 +214,8 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   				headers: 
    				{ 'content-type': 'application/x-www-form-urlencoded',
    				'Cookie' : cookie,
-    	 		'cache-control': 'no-cache' },
+    	 		'cache-control': 'no-cache',
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' },
   				form: { 'j_username':username, 'j_password': req.body.password} 
   			};
 
@@ -241,7 +242,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   					console.log(response.headers);
   					cookie = response.headers['set-cookie'];
             console.log(cookie);
-            home = "parents?tab1=studentdata&tab2=studentsummary&action=form"
+            home = response.headers["location"];
   					console.log("https://parents.mtsd.k12.nj.us/genesis/"+home);
   					var ptions = {method : 'GET',
   						url : 'https://parents.mtsd.k12.nj.us/genesis/'+home,
@@ -341,7 +342,7 @@ app.post('/gradebook', function(req,res){
 			'rejectUnauthorized' : false,
 			headers:{'cache-control' : 'no-cache',
 			'content-type' : 'application/x-www-form-urlencoded',
-      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
+      'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3',
 			'Cookie' : req.body.cookie}
 		};
 		request(go,function(error,response,body){
@@ -381,39 +382,7 @@ app.post('/gradebook', function(req,res){
 		});
 	}
 });
-app.post('/sss', function (req,res){
-  var qs = require("querystring");
-var http = require("https");
 
-var options = {
-  "method": "POST",
-  "hostname": "parents.mtsd.k12.nj.us",
-  "port": null,
-  "path": "/genesis/j_security_check",
-  "rejectUnauthorized" : false,
-  "headers": {
-    "cache-control": "no-cache",
-    "content-type": "application/x-www-form-urlencoded",
-    'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(qs.stringify({ j_username: 'winnie2k6@gmail.com', j_password: 'ilovrain' }));
-req.end();
-});
 app.post('/getClassWeighting', function (req,res){
   //https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=000958&action=form&courseCode=33500&courseSection=1&mp=MP4
   if(req.body.cookie && req.body.id && req.body.courseCode && req.body.courseSection){
@@ -488,7 +457,7 @@ app.post('/listassignments',function(req,res){
 			'&action=form&dateRange=' + mp + '&date=' + dateString + "&courseAndSection=" + req.body.course +":"+ req.body.section,
 			'rejectUnauthorized' : false,
 			headers:{'cache-control' : 'no-cache',
-      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
+      'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3',
 			'Cookie' : req.body.cookie}
 		}
     console.log('https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=' + req.body.id + 
@@ -582,7 +551,7 @@ app.post('/assignments', function(req, res){
   				'rejectUnauthorized' : false,
   				headers:{'cache-control' : 'no-cache',
   				'content-type': 'application/x-www-form-urlencoded',
-          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
+          'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3',
   				'Cookie':req.body.cookie
   				}
   	};
@@ -817,7 +786,7 @@ app.post('/classAverages', function(req,res){
         'rejectUnauthorized' : false,
         headers:{'cache-control' : 'no-cache',
         'content-type': 'application/x-www-form-urlencoded',
-        'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
+        'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3',
         'Cookie':req.body.cookie          
         }
     };
