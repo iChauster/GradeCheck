@@ -78,6 +78,28 @@ app.use(function(err, req, res, next) {
 app.listen(process.env.PORT || 2800, function(){
   console.log("gradeCheck: port : %d in %s", this.address().port, app.settings.env);
 });
+var thirty = 30*60*1000;
+setInterval(function(){
+  console.log("Every Hour");
+  var currentHour = moment().tz("America/New_York").get("hour");
+  if(currentHour < 23 && currentHour > 5){
+    var re = {method : 'GET',
+        url : 'https://gradecheck.herokuapp.com/',
+        headers:{
+         'cache-control' : 'no-cache'
+        }
+    };
+    request(re, function (error,response,body){
+      if(error){
+        console.log(error);
+      }else{
+        console.log('keep alive');
+      }
+    });
+  }else{
+    console.log('taking a break. Be back in 6 hours ~');
+  }
+}, thirty)
 /*var hour = 1*60*1000;
 setInterval(function(){
   console.log("Every Hour");
