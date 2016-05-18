@@ -14,3 +14,12 @@ The Push Notification service was also working to check for changes, but we are 
 <img src="/screenshots/Projections.PNG" width="285">
 <img src="/screenshots/Stats.PNG" width="285">
 
+### future
+Ultimately, I want to impact the students, many of which are my peers, as much as possible. Creating this platform has already allowed many students to plan ahead and see where they need to focus and improve. 
+###### Here are some things I plan to implement in the forseeable future:
+-- A better push notification service
+-- Safer authentication between iOS and Server, and Server and Genesis
+-- Study plans for a large assignment coming up.
+-- Integration with School Events, clubs, etc.
+-- Wearable Applications, Android Application
+-- Integration amongst other schools, and attachments with other services, like Google Classroom, etc.
