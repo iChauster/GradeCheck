@@ -10,7 +10,7 @@ This application is used in conjunction with the iOS calendar and can project fu
 The Push Notification service was also working to check for changes, but we are working with the school itself to develop a better, more efficient way to be run. 
 
 # Screenshots
-<img src="/screenshots/GradeTable.PNG" width="400">
-<img src="/screenshots/Projections.PNG" width="400">
-<img src="/screenshots/Stats.PNG" width="400">
+<img src="/screenshots/GradeTable.PNG" width="285">
+<img src="/screenshots/Projections.PNG" width="285">
+<img src="/screenshots/Stats.PNG" width="285">
 
