@@ -681,10 +681,22 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZ6-CQ-gtJ">
+                                <rect key="frame" x="550" y="17" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="TRR-ok-B9D"/>
+                                    <constraint firstAttribute="width" constant="30" id="mQh-mv-gl4"/>
+                                </constraints>
+                                <state key="normal" image="settings.png"/>
+                                <connections>
+                                    <action selector="settingsSelected:" destination="RbO-4K-12V" eventType="touchUpInside" id="tdM-WM-GqO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.21577080364070145" green="0.5" blue="0.22675918257373173" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="cdQ-9G-8dg" firstAttribute="top" secondItem="uDy-By-tld" secondAttribute="bottom" constant="8" id="7wS-Ce-eUe"/>
+                            <constraint firstItem="fZ6-CQ-gtJ" firstAttribute="top" secondItem="JhX-GK-YBm" secondAttribute="topMargin" constant="17" id="A3h-bX-Z3x"/>
                             <constraint firstItem="LKm-5h-CX3" firstAttribute="top" secondItem="0kb-JY-2BA" secondAttribute="bottom" constant="-3" id="AuA-xt-JcP"/>
                             <constraint firstItem="uDy-By-tld" firstAttribute="top" secondItem="LKm-5h-CX3" secondAttribute="bottom" constant="21" id="DAH-Mf-hzf"/>
                             <constraint firstItem="uDy-By-tld" firstAttribute="centerX" secondItem="JhX-GK-YBm" secondAttribute="centerX" id="KiY-Tz-1k9"/>
@@ -695,18 +707,148 @@
                             <constraint firstItem="aJu-UE-4XX" firstAttribute="leading" secondItem="JhX-GK-YBm" secondAttribute="leadingMargin" id="g5p-HH-7Hq"/>
                             <constraint firstItem="uDy-By-tld" firstAttribute="top" secondItem="LKm-5h-CX3" secondAttribute="bottom" constant="21" id="nuY-re-Fel"/>
                             <constraint firstItem="uDy-By-tld" firstAttribute="leading" secondItem="JhX-GK-YBm" secondAttribute="leadingMargin" id="pEP-Xm-I3h"/>
+                            <constraint firstItem="fZ6-CQ-gtJ" firstAttribute="trailing" secondItem="JhX-GK-YBm" secondAttribute="trailingMargin" id="tgZ-ae-RK4"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Stats" image="statistics.png" selectedImage="statistics.png" id="ATP-wU-deC"/>
                     <connections>
                         <outlet property="gpaCircle" destination="LKm-5h-CX3" id="buE-qt-5yr"/>
+                        <outlet property="settings" destination="fZ6-CQ-gtJ" id="f8F-xG-awQ"/>
                         <outlet property="statTable" destination="uDy-By-tld" id="VMk-g5-wc0"/>
                         <segue destination="TiS-D7-XZS" kind="show" identifier="StatSegue" id="xqp-Ls-lHx"/>
+                        <segue destination="iWY-Kg-wDl" kind="show" identifier="SettingSegue" id="1iX-1a-yL1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LcX-2b-n8Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="28" y="653"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="zaY-4g-KYN">
+            <objects>
+                <viewController storyboardIdentifier="Settings" id="iWY-Kg-wDl" customClass="SettingsViewController" customModule="GradeCheck" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="X2c-99-QcE"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dwu-YS-95Z"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tmX-5x-pCZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="11m-EA-zZT">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <color key="barTintColor" red="0.1529411765" green="0.16078431369999999" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Settings" id="RJa-tU-WsI">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="D6c-0Q-eBO">
+                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="segueBack:" destination="iWY-Kg-wDl" id="fWN-3L-Jdv"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0re-Kn-N0l">
+                                <rect key="frame" x="21" y="54" width="558" height="338"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="0re-Kn-N0l" secondAttribute="height" multiplier="325:197" id="6G1-Y3-9uA"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" priority="750" constant="338" id="bR3-e0-uK1"/>
+                                </constraints>
+                                <state key="normal" image="blurrymont.png"/>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GlM-dZ-ZOc">
+                                <rect key="frame" x="21" y="400" width="558" height="143"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsCell" id="MnH-s3-L2K" customClass="SettingsTableViewCell" customModule="GradeCheck" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="558" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MnH-s3-L2K" id="Gxu-Ek-7Td">
+                                            <rect key="frame" x="0.0" y="0.0" width="558" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MAt-N3-N3I">
+                                                    <rect key="frame" x="8" y="12" width="238" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="238" id="Uoo-Dp-PgS"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MAt-N3-N3I" firstAttribute="centerY" secondItem="Gxu-Ek-7Td" secondAttribute="centerY" id="8xO-BN-b2F"/>
+                                                <constraint firstItem="MAt-N3-N3I" firstAttribute="leading" secondItem="Gxu-Ek-7Td" secondAttribute="leadingMargin" id="cpi-VJ-D6z"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="title" destination="MAt-N3-N3I" id="yMB-mS-K1C"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsSwitchCell" id="3eT-k2-9E8" customClass="SettingsSwitchTableViewCell" customModule="GradeCheck" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="558" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3eT-k2-9E8" id="tXw-jZ-k81">
+                                            <rect key="frame" x="0.0" y="0.0" width="558" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7sg-oR-Zxu">
+                                                    <rect key="frame" x="8" y="7" width="542" height="29"/>
+                                                    <segments>
+                                                        <segment title="First"/>
+                                                        <segment title="Second"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="updateGPAPreference:" destination="3eT-k2-9E8" eventType="valueChanged" id="FNs-Tw-bo0"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7sg-oR-Zxu" firstAttribute="bottom" secondItem="tXw-jZ-k81" secondAttribute="bottomMargin" id="Cpm-LY-RmM"/>
+                                                <constraint firstItem="7sg-oR-Zxu" firstAttribute="centerX" secondItem="tXw-jZ-k81" secondAttribute="centerX" id="GOv-hs-3R4"/>
+                                                <constraint firstItem="7sg-oR-Zxu" firstAttribute="leading" secondItem="tXw-jZ-k81" secondAttribute="leadingMargin" id="lYh-bw-MjB"/>
+                                                <constraint firstItem="7sg-oR-Zxu" firstAttribute="trailing" secondItem="tXw-jZ-k81" secondAttribute="trailingMargin" id="osz-M9-Y7O"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="segmentControl" destination="7sg-oR-Zxu" id="E9Z-Vs-kW8"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="iWY-Kg-wDl" id="U5r-HM-Vui"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="11m-EA-zZT" firstAttribute="centerX" secondItem="tmX-5x-pCZ" secondAttribute="centerX" id="1HI-sr-cDv"/>
+                            <constraint firstItem="0re-Kn-N0l" firstAttribute="leading" secondItem="tmX-5x-pCZ" secondAttribute="leadingMargin" constant="1" id="35t-B4-YcE"/>
+                            <constraint firstItem="GlM-dZ-ZOc" firstAttribute="leading" secondItem="tmX-5x-pCZ" secondAttribute="leadingMargin" constant="1" id="EH1-vQ-e7z"/>
+                            <constraint firstItem="Dwu-YS-95Z" firstAttribute="top" secondItem="GlM-dZ-ZOc" secondAttribute="bottom" constant="8" id="EN6-1c-dIB"/>
+                            <constraint firstItem="11m-EA-zZT" firstAttribute="top" secondItem="tmX-5x-pCZ" secondAttribute="topMargin" id="RoT-8N-JSS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="11m-EA-zZT" secondAttribute="trailing" constant="-20" id="TjC-hS-Okm"/>
+                            <constraint firstItem="GlM-dZ-ZOc" firstAttribute="top" secondItem="0re-Kn-N0l" secondAttribute="bottom" constant="8" id="clW-mw-aaK"/>
+                            <constraint firstItem="GlM-dZ-ZOc" firstAttribute="centerX" secondItem="tmX-5x-pCZ" secondAttribute="centerX" id="jUQ-7G-rv2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0re-Kn-N0l" secondAttribute="trailing" constant="1" id="lNh-va-Qt4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GlM-dZ-ZOc" secondAttribute="trailing" constant="1" id="nxa-9v-gr7"/>
+                            <constraint firstItem="0re-Kn-N0l" firstAttribute="top" secondItem="11m-EA-zZT" secondAttribute="bottom" constant="10" id="sIX-gZ-seZ"/>
+                            <constraint firstItem="11m-EA-zZT" firstAttribute="leading" secondItem="tmX-5x-pCZ" secondAttribute="leadingMargin" constant="-20" id="uK3-Ju-AOy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="MHSButton" destination="0re-Kn-N0l" id="WXn-jA-BX1"/>
+                        <outlet property="SettingsTable" destination="GlM-dZ-ZOc" id="Jq8-8D-zBs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4n9-Cb-SyQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="28" y="1429"/>
         </scene>
         <!--Assignment Detail Modal View Controller-->
         <scene sceneID="jr4-iU-d3i">
@@ -1521,9 +1663,11 @@
     </scenes>
     <resources>
         <image name="assign.png" width="30" height="30"/>
+        <image name="blurrymont.png" width="650" height="394"/>
         <image name="calendar.png" width="128" height="128"/>
         <image name="close.png" width="512" height="512"/>
         <image name="grades-icon3.png" width="30" height="30"/>
+        <image name="settings.png" width="512" height="512"/>
         <image name="statistics.png" width="30" height="30"/>
         <image name="whitespace-montgomery-logo.png" width="150" height="150"/>
     </resources>

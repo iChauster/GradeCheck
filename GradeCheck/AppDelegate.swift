@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             key.setPasscode("GCUsername", passcode: "");
             key.setPasscode("GCPassword", passcode: "");
             key.setPasscode("GCEmail", passcode:  "");
-            
+            NSUserDefaults.standardUserDefaults().setObject("Weighted", forKey: "GPA");
         }
             let types: UIUserNotificationType = [.Alert, .Badge, .Sound]
             let settings = UIUserNotificationSettings(forTypes: types, categories: nil)

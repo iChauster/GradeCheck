@@ -13,11 +13,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.4</string>
+	<string>1.4.5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.4</string>
+	<string>1.4.5</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -28,34 +28,34 @@
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>grades</string>
 			<key>UIApplicationShortcutItemSubtitle</key>
 			<string>Check your grades!</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Check Grades</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).CheckGrades</string>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>grades</string>
 		</dict>
 		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>assignments</string>
 			<key>UIApplicationShortcutItemSubtitle</key>
 			<string>See your Assignments!</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Assignments</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).CheckAssignments</string>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>assignments</string>
 		</dict>
 		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>statistics</string>
 			<key>UIApplicationShortcutItemSubtitle</key>
 			<string>See where you stand!</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Statistics</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Statistics</string>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>statistics</string>
 		</dict>
 	</array>
 	<key>UIBackgroundModes</key>

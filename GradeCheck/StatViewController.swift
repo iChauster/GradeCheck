@@ -22,9 +22,15 @@ class Grade : NSObject {
 class StatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var gpaCircle : GPAView!
     @IBOutlet weak var statTable : UITableView!
+    @IBOutlet weak var settings : UIButton!
     var gradesArray = NSArray();
     var sortedArray : [Grade] = [];
     var cookie : String!
+    @IBAction func settingsSelected(sender:UIButton){
+        CellAnimation.growAndShrink(self.settings)
+        self.performSegueWithIdentifier("SettingSegue", sender: self)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.gpaCircle.layer.cornerRadius = 0.5 * gpaCircle.bounds.size.width;
@@ -97,7 +103,7 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.sortedArray.append(new)
                 continue;
             }
-            if(a.objectForKey("class")!.containsString(" H") || a.objectForKey("class")!.containsString("AP") || a.objectForKey("class")!.containsString("Honors") || a.objectForKey("class")!.containsString("Hon")){
+            if((a.objectForKey("class")!.containsString(" H") || a.objectForKey("class")!.containsString("AP") || a.objectForKey("class")!.containsString("Honors") || a.objectForKey("class")!.containsString("Hon")) && NSUserDefaults.standardUserDefaults().objectForKey("GPA") as! String == "Weighted"){
                 grade = a.objectForKey("grade") as! String;
                 grade = String(grade.characters.dropLast());
                 print(grade);
