@@ -26,6 +26,7 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var gradesArray = NSArray();
     var sortedArray : [Grade] = [];
     var cookie : String!
+    var idString : String!
     @IBAction func settingsSelected(sender:UIButton){
         CellAnimation.growAndShrink(self.settings)
         self.performSegueWithIdentifier("SettingSegue", sender: self)
@@ -43,7 +44,6 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let rightSwipe = UISwipeGestureRecognizer(target: self.tabBarController, action: #selector(GradeViewController.swipeRight))
         rightSwipe.direction = .Right;
         self.view.addGestureRecognizer(rightSwipe)
-        
 
         
         self.getGPA()
@@ -94,7 +94,6 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             
             let a = gradesArray[i];
-            print(a);
             var grade : String!;
             var gradeInt : Int!;
             
@@ -106,7 +105,6 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if((a.objectForKey("class")!.containsString(" H") || a.objectForKey("class")!.containsString("AP") || a.objectForKey("class")!.containsString("Honors") || a.objectForKey("class")!.containsString("Hon")) && NSUserDefaults.standardUserDefaults().objectForKey("GPA") as! String == "Weighted"){
                 grade = a.objectForKey("grade") as! String;
                 grade = String(grade.characters.dropLast());
-                print(grade);
                 gradeInt = Int(grade)! + 5;
                 gradeTotal += Double(gradeInt);
                 let new = Grade(grade: gradeInt, className: a.objectForKey("class") as! String, dictionaryObject : a as! NSDictionary);
@@ -120,7 +118,6 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }else{
                 grade = a.objectForKey("grade") as! String
                 grade = String(grade.characters.dropLast());
-                print(grade);
                 gradeInt = Int(grade)!;
                 let new = Grade(grade: gradeInt, className: a.objectForKey("class") as! String, dictionaryObject : a as! NSDictionary);
                 self.sortedArray.append(new);
@@ -181,6 +178,9 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 view.markingPeriod = NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as? String
             }
 
+        }else if(segue.identifier == "SettingSegue"){
+            let view = segue.destinationViewController as! SettingsViewController
+            view.objectID = self.idString
         }
     }
     

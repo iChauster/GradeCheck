@@ -697,7 +697,6 @@
                         <constraints>
                             <constraint firstItem="cdQ-9G-8dg" firstAttribute="top" secondItem="uDy-By-tld" secondAttribute="bottom" constant="8" id="7wS-Ce-eUe"/>
                             <constraint firstItem="fZ6-CQ-gtJ" firstAttribute="top" secondItem="JhX-GK-YBm" secondAttribute="topMargin" constant="17" id="A3h-bX-Z3x"/>
-                            <constraint firstItem="LKm-5h-CX3" firstAttribute="top" secondItem="0kb-JY-2BA" secondAttribute="bottom" constant="-3" id="AuA-xt-JcP"/>
                             <constraint firstItem="uDy-By-tld" firstAttribute="top" secondItem="LKm-5h-CX3" secondAttribute="bottom" constant="21" id="DAH-Mf-hzf"/>
                             <constraint firstItem="uDy-By-tld" firstAttribute="centerX" secondItem="JhX-GK-YBm" secondAttribute="centerX" id="KiY-Tz-1k9"/>
                             <constraint firstItem="LKm-5h-CX3" firstAttribute="top" secondItem="JhX-GK-YBm" secondAttribute="topMargin" constant="17" id="L0g-rx-qcB"/>
@@ -822,6 +821,7 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="iWY-Kg-wDl" id="U5r-HM-Vui"/>
+                                    <outlet property="delegate" destination="iWY-Kg-wDl" id="376-I7-by1"/>
                                 </connections>
                             </tableView>
                         </subviews>

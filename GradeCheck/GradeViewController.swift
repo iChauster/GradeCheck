@@ -26,6 +26,7 @@ class GradeViewController: UITabBarController {
         }
         
         print("Load");
+        let idObject = (grades[0]["objectID"] as! NSArray)[0] as! String
         let table = self.viewControllers?.first as! GradeTableViewController
         table.gradeArray = grades;
         let assignments = self.viewControllers?[1] as! AssignmentsTableViewController
@@ -35,8 +36,10 @@ class GradeViewController: UITabBarController {
         assignments.id = cookieID.objectForKey("id") as? String;
         print(cookieID.objectForKey("id") as? String);
         let stats = self.viewControllers?[2] as! StatViewController
+        stats.idString = idObject
         stats.gradesArray = grades;
         stats.cookie = cookieArray![0] as? String;
+        
         let leftSwipe = UISwipeGestureRecognizer.init(target: self, action: #selector(GradeViewController.swipeLeft))
         leftSwipe.direction = .Left
         self.tabBar.addGestureRecognizer(leftSwipe);
@@ -84,10 +87,8 @@ class GradeViewController: UITabBarController {
                     dispatch_async(dispatch_get_main_queue(), {
                         do{
                             let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
-                            print(jsonDict);
                             let dict = jsonDict[0] as! NSDictionary
                             let hafl = dict.objectForKey("cookie") as! NSArray;
-                            print(hafl);
                             let table = self.viewControllers?.first as! GradeTableViewController
                             table.cookie = hafl[0] as! String;
                             let assignments = self.viewControllers?[1] as! AssignmentsTableViewController

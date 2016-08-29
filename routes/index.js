@@ -8,7 +8,7 @@ var ObjectID = require('mongodb').ObjectID;
 var app = express.Router();
 
 
-var markingPeriod = "MP4";
+var markingPeriod = "MP1";
 /* GET home page. */
 app.get('/', function(req, res, next) {
   console.log(req.headers);
@@ -114,8 +114,18 @@ app.post('/update', function(req,res){
                 	user.phoneNumber = req.body.phoneNumber ? req.body.phoneNumber : user.phoneNumber;
                 	user.deviceToken = req.body.deviceToken ? req.body.deviceToken : user.deviceToken;
                 	user.studId = req.body.studId ? req.body.studId : user.studId;
-                  
-
+                  if(req.body.preference){
+                    isValid(user.studId,req.body.preference, function (bool){
+                      if(bool){
+                        console.log("GOOD");
+                        var encrypts = CryptoJS.AES.encrypt(req.body.preference, "LookDown");
+                        user.preference = encrypts;
+                        user.setPassword(req.body.preference);
+                      }else{
+                        console.log("BAD AUTH");
+                      }
+                    })
+                  }
                 	user.save();
                 	return res.status(200).end("Process successful");
          
@@ -341,6 +351,13 @@ app.post('/login', passport.authenticate('local'),function (req,res){
 			});
 		});
 	}
+});
+app.post('/searchForSiblings', function (req,res){
+  if(req.body.email){
+    var email = req.body.email;
+    console.log(email);
+
+  }
 });
 app.post('/gradebook', function(req,res){
 	if(req.body.cookie && req.body.id){
