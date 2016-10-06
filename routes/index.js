@@ -330,16 +330,19 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   							$('td.cellRight').each(function(i,element){
   								var grade = $(this);
   								if(grade.attr('style') == "cursor:pointer;"){
-  									var classroom = grade.prev().prev().text();
-  									var teacher = grade.prev().text();
-  									teacher = teacher.replace("Email:","");
+  									var teacherCell = grade.prev()
+                    if(grade.prev().hasClass('cellCenter')){
+                      teacherCell = grade.prev().prev()
+                    }
+                    var classroom = teacherCell.prev().text();
+  									var teacher = teacherCell.text().replace("Email:","");
   									var num = grade.text();
   									num = num.trim();
   									classroom = classroom.trim();
   									teacher = teacher.trim();
   									var a = {};
                     var c = {};
-                    var classcodes = getParamNames(grade.prev().prev().children().attr('onclick'))[1];
+                    var classcodes = getParamNames(teacherCell.prev().children().attr('onclick'))[1];
                     classcodes = classcodes.replace(/'/g,"");
                     console.log(classcodes);
   									a["class"] = classroom;
@@ -451,16 +454,18 @@ app.post('/gradebook', function(req,res){
   				$('td.cellRight').each(function(i,element){
   					var grade = $(this);
   					if(grade.attr('style') == "cursor:pointer;"){
-  						var classroom = grade.prev().prev().text();
-  						var teacher = grade.prev().text();
-  						teacher = teacher.replace("Email:","");
+  						var teacherCell = grade.prev();
+              if(grade.prev().hasClass('cellCenter')){
+                teacherCell = grade.prev().prev()
+              }
+              var classroom = teacherCell.prev().text();
+              var teacher = teacherCell.text().replace("Email:","");
   						var num = grade.text();
   						num = num.trim();
   						classroom = classroom.trim();
   						teacher = teacher.trim();
-              var classcodes = getParamNames(grade.prev().prev().children().attr('onclick'))[1];
+              var classcodes = getParamNames(teacherCell.prev().children().attr('onclick'))[1];
               classcodes = classcodes.replace(/'/g,"");
-              console.log(classcodes);
   						var a = {};
   						a["class"] = classroom;
   						a["grade"] = num;
