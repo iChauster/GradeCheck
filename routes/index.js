@@ -40,44 +40,46 @@ app.post('/register', function(req, res) {
 });
 function isValid(username,pass,callback){
     var bool  = false;
-    var second = {method : 'GET',
-        url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
-        'rejectUnauthorized' : false,
-        headers : {'cache-control':'no-cache',
-      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'} };
-    request(second,function(error,response,body){
-      if (error) throw new Error(error);
+    if(typeof username !== undefined && typeof pass !== undefined && username != "" && pass != ""){
+      var second = {method : 'GET',
+          url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
+          'rejectUnauthorized' : false,
+          headers : {'cache-control':'no-cache',
+        'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'} };
+      request(second,function(error,response,body){
+        if (error) throw new Error(error);
 
-      cookie = response.headers['set-cookie'];
-      console.log(cookie);
-      var options = { method: 'POST',
-        url: 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
-        'rejectUnauthorized' : false,
-          headers: 
-          { 'content-type': 'application/x-www-form-urlencoded',
-          'Cookie' : cookie,
-          'cache-control': 'no-cache' ,
-        'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'},
-          form: { 'j_username':username, 'j_password': pass} 
-        };
+        cookie = response.headers['set-cookie'];
+        console.log(cookie);
+        var options = { method: 'POST',
+          url: 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
+          'rejectUnauthorized' : false,
+            headers: 
+            { 'content-type': 'application/x-www-form-urlencoded',
+            'Cookie' : cookie,
+            'cache-control': 'no-cache' ,
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'},
+            form: { 'j_username':username, 'j_password': pass} 
+          };
 
-      request(options, function (error, response, body) {
-          if (error) throw new Error(error);
-          console.log(response.headers);
-          console.log(response.statusCode);
-          var home = response.headers['location'];
-          console.log(home);
-          if(home == "/genesis/parents?gohome=true"){
-            bool = true;
-          }else if(home == "https://parents.mtsd.k12.nj.us/genesis"){
-            bool = false;
-          }else{
-            bool = false;
-          }
-          callback(bool);
-          return bool;
-      });
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+            console.log(response.headers);
+            console.log(response.statusCode);
+            var home = response.headers['location'];
+            console.log(home);
+            if(home == "/genesis/parents?gohome=true"){
+              bool = true;
+            }else if(home == "https://parents.mtsd.k12.nj.us/genesis"){
+              bool = false;
+            }else{
+              bool = false;
+            }
+            callback(bool);
+            return bool;
+        });
     });
+  }
 }
 app.post('/update', function(req,res){
 		console.log("user in");
@@ -194,6 +196,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
 	if(req.body.username && req.body.password){
 		var cookie;
 		var json = [];
+    var update = [];
     var username;
     var password;
     if(req.body.email){
@@ -335,13 +338,22 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   									classroom = classroom.trim();
   									teacher = teacher.trim();
   									var a = {};
+                    var c = {};
+                    var classcodes = getParamNames(grade.prev().prev().children().attr('onclick'))[1];
+                    classcodes = classcodes.replace(/'/g,"");
+                    console.log(classcodes);
   									a["class"] = classroom;
+                    c["subject"] = classroom;
+                    c["grade"] = num;
   									a["grade"] = num;
   									a["teacher"] = teacher;
+                    a["classCodes"] = classcodes;
   									json.push(a);
+                    update.push(c);
   								}
   							});
   							console.log(json);
+                updateOnDatabase(update,req.user);
 							res.send(JSON.stringify(json));
   						});
   						}
@@ -352,6 +364,49 @@ app.post('/login', passport.authenticate('local'),function (req,res){
 		});
 	}
 });
+function updateOnDatabase(art,user){
+  console.log('called')
+  console.log(art);
+  if(user && user.grades[0].subject != ""){
+    var gradesArray = user.grades;
+    var bool = true;
+    for (var i = 0; i < gradesArray.length; i ++){
+      var obj = gradesArray[i];
+      if(art[i].subject == gradesArray[i].subject && art[i].grade == gradesArray[i].grade){
+                      
+      }else{
+        bool = false;
+        var ol = gradesArray[i]
+        var ne = art[i]
+        console.log("Something changed : ============================================");
+        console.log(gradesArray[i].subject+ " " + gradesArray[i].grade + " to new grade of " + art[i].subject + " " + art[i].grade);
+        User.update({username:user.username, "grades.subject" : ol.subject},{"$set" : {"grades.$.grade" : ne.grade}},function (err, numberAffected, raw){
+          if(err){
+            console.log(err);
+          }
+            console.log(numberAffected);
+          });
+      }
+    }
+  }else{
+    console.log('updating for the first time');
+    User.update({username : user.username},{$set:{grades : art}},function (err,numberAffected,raw){
+      if(err){
+        console.log(err);
+      }
+      console.log(numberAffected);
+    });
+  }
+}
+var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+var ARGUMENT_NAMES = /([^\s,]+)/g;
+function getParamNames(func) {
+  var fnStr = func.toString().replace(STRIP_COMMENTS, '');
+  var result = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
+  if(result === null)
+     result = [];
+  return result;
+}
 app.post('/searchForSiblings', function (req,res){
   if(req.body.email){
     var email = req.body.email;
@@ -403,10 +458,14 @@ app.post('/gradebook', function(req,res){
   						num = num.trim();
   						classroom = classroom.trim();
   						teacher = teacher.trim();
+              var classcodes = getParamNames(grade.prev().prev().children().attr('onclick'))[1];
+              classcodes = classcodes.replace(/'/g,"");
+              console.log(classcodes);
   						var a = {};
   						a["class"] = classroom;
   						a["grade"] = num;
   						a["teacher"] = teacher;
+              a["classCodes"] = classcodes
   						rep.push(a);
   					}
   				});
@@ -454,7 +513,7 @@ app.post('/getClassWeighting', function (req,res){
                 if($(this).attr('class') != "listheading"){
                   var weightedObject = {};
                   weightedObject["category"] = $(this).children('.cellLeft').children('b').text();
-                  weightedObject["weight"] = $(this).children('.cellRight').text();
+                  weightedObject["weight"] = $(this).children('.cellRight').first().text();
                   weightedArray.push(weightedObject);
                 }
               });
@@ -665,7 +724,7 @@ app.post('/classdata', function(req,res){
     var a = {};
     a["subject"] = req.body.className;
     var b = {};
-    b["$elemMatch"] = {subject : "Alg. II Hon."};
+    b["$elemMatch"] = a;
     var c = {};
     c["grades"] = b;
     var split = req.body.className.split("-")[0].split("/");

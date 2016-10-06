@@ -19,7 +19,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     @IBOutlet weak var rankView : RankView!;
     @IBOutlet weak var percentileView : PercentileView!
     @IBOutlet weak var statisticsTable : UITableView!
-    let url = "https://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
 
     var gradesArray = NSArray()
     var cookie : String!
@@ -138,13 +138,9 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     }
     func getClassData(){
         print("getClassDataCalled")
-        let delimiter = " -"
-        let classString = self.data.objectForKey("class");
-        let token = classString?.componentsSeparatedByString(delimiter)
-        let final =  token![0];
-        print(final);
-        let secondDemiliter = "/";
-        let tok = final.componentsSeparatedByString(secondDemiliter);
+        let classString = self.data.objectForKey("classCodes");
+        let secondDemiliter = ":";
+        let tok = classString!.componentsSeparatedByString(secondDemiliter);
         let course = tok[0]
         let section = tok[1];
         print(course + " " + section)

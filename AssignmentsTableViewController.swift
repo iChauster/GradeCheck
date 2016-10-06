@@ -15,7 +15,7 @@ class AssignmentsTableViewController: UITableViewController {
     var cookie : String!
     var id : String!
     var eventStore = EKEventStore()
-    let url = "https://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
     var newAssignments = NSMutableArray()
     var blurEffectView = UIVisualEffectView()
     override func prefersStatusBarHidden() -> Bool {

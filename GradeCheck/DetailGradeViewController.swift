@@ -21,7 +21,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     var cours : String!
     var sectio : String!
     var selectedCell : DetailGradeTableViewCell?
-    let url = "https://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
     @IBOutlet weak var assignmentTable : UITableView!
@@ -47,14 +47,11 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         self.assignmentTable.delegate = self; 
         let cookieArray = self.cookieData.objectForKey("cookie") as? NSArray;
         self.cookie = cookieArray![0] as? String;
+        print(self.data)
         self.id = self.cookieData.objectForKey("id") as? String;
-        let delimiter = " -"
-        let classString = data.objectForKey("class");
-        let token = classString?.componentsSeparatedByString(delimiter)
-        let final =  token![0];
-        print(final);
-        let secondDemiliter = "/";
-        let tok = final.componentsSeparatedByString(secondDemiliter);
+        let classString = data.objectForKey("classCodes");
+        let secondDemiliter = ":";
+        let tok = classString!.componentsSeparatedByString(secondDemiliter);
         let course = tok[0]
         self.cours = course;
         let section = tok[1];

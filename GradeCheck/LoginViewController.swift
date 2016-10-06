@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
     var loggedIn : Bool = false;
     var phoneNumberOption : String?
     var selectedIndex : Int?
-    let url = "https://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
     @IBAction func login(sender:UIButton!){
         NSLog("clicked");
         NSLog(usn!.text!);
@@ -272,6 +272,7 @@ class LoginViewController: UIViewController {
             let idString = "&id=" + (NSUserDefaults.standardUserDefaults().objectForKey("id") as! String);
             postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
             print("good");
+            print(idString)
         }
         if((self.keychain.getPasscode("GCEmail")) != ""){
             let emailString = "&email=" + (self.keychain.getPasscode("GCEmail") as! String)
