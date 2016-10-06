@@ -21,7 +21,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     var cours : String!
     var sectio : String!
     var selectedCell : DetailGradeTableViewCell?
-    let url = "http://localhost:2800/"
+    let url = "http://gradecheck.herokuapp.com/"
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
     @IBOutlet weak var assignmentTable : UITableView!

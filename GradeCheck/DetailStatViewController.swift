@@ -19,7 +19,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     @IBOutlet weak var rankView : RankView!;
     @IBOutlet weak var percentileView : PercentileView!
     @IBOutlet weak var statisticsTable : UITableView!
-    let url = "http://localhost:2800/"
+    let url = "http://gradecheck.herokuapp.com/"
 
     var gradesArray = NSArray()
     var cookie : String!

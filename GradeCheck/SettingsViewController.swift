@@ -85,7 +85,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     func updateUser(field : String, value : String){
-        print(field + " " + value);
+         /* print(field + " " + value);
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"
@@ -126,7 +126,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         })
         
-        dataTask.resume()
+        dataTask.resume() */
         
     }
 

@@ -13,7 +13,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
     var gradeArray : NSArray!
     var cookie : String! = "";
     var id : String!
-    let url = "http://localhost:2800/"
+    let url = "http://gradecheck.herokuapp.com/"
     override func viewDidLoad() {
         super.viewDidLoad()
         if(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") != nil && NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String != "MP4"){

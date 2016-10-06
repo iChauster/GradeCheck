@@ -30,7 +30,7 @@ class ProjectionGradeViewController: UIViewController {
     var markingPeriod : String?
     var data : NSArray!
     var otherAssignments : NSArray!
-    let url = "http://localhost:2800/"
+    let url = "http://gradecheck.herokuapp.com/"
     var final : NSMutableDictionary! = NSMutableDictionary()
     var weights : NSMutableArray! = NSMutableArray()
     var originalMin : NSDictionary! = NSDictionary()
