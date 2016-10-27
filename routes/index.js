@@ -7,7 +7,11 @@ var CryptoJS = require('crypto-js');
 var ObjectID = require('mongodb').ObjectID;
 var app = express.Router();
 
+/*
 
+  spaghetti
+
+*/
 var markingPeriod = "MP1";
 /* GET home page. */
 app.get('/', function(req, res, next) {
