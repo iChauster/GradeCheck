@@ -111,6 +111,20 @@ setInterval(function(){
     console.log('taking a break. Be back in 6 hours ~');
   }
 }, thirty)
+function restart(){
+  User.find({}, function(err,doc){
+    if(err)
+      console.log(err);
+    doc.forEach(function(doc){
+      User.update({username:doc.username},{$set:{grades : [{"subject":"","grade" : ""}]}},function (err,numberAffected,raw){
+        if(err){
+          console.log(err);
+        }
+        console.log(numberAffected);
+      });
+    });
+  });
+}
 /*var hour = 1*60*1000;
 setInterval(function(){
   console.log("Every Hour");

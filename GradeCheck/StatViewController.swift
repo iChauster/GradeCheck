@@ -97,12 +97,12 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             var grade : String!;
             var gradeInt : Int!;
             
-            if(a.objectForKey("grade") as! String == "No Grades"){
+            if(a.objectForKey("grade") as! String == "No Grades" || a.objectForKey("grade") as! String == "0%"){
                 let new = Grade(grade: 0, className: gradesArray[i].objectForKey("class") as! String, dictionaryObject : a as! NSDictionary);
                 self.sortedArray.append(new)
                 continue;
             }
-            if((a.objectForKey("class")!.containsString(" H") || a.objectForKey("class")!.containsString("AP") || a.objectForKey("class")!.containsString("Honors") || a.objectForKey("class")!.containsString("Hon")) && NSUserDefaults.standardUserDefaults().objectForKey("GPA") as! String == "Weighted"){
+            if(((a.objectForKey("class")!.containsString(" H") && (a.objectForKey("class") as! String).characters.last == "H") || a.objectForKey("class")!.containsString("AP") || a.objectForKey("class")!.containsString("Honors") || a.objectForKey("class")!.containsString("Hon")) && NSUserDefaults.standardUserDefaults().objectForKey("GPA") as! String == "Weighted"){
                 grade = a.objectForKey("grade") as! String;
                 grade = String(grade.characters.dropLast());
                 gradeInt = Int(grade)! + 5;

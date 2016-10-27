@@ -605,21 +605,30 @@ app.post('/listassignments',function(req,res){
   						});
   					
   						value["category"] = actual.text().trim();
-  						var teachr = cat.prev();
-  						var teacherName = teachr.text().trim();
-  						value["teacher"] = teacherName;
-  						var course = teachr.prev();
-  						var courseName = course.text().trim();
-  						value["course"] = courseName;
-  						var due = course.prev();
-  						var dueDate = due.text().trim();
-  						value["dueDate"] = dueDate;
-  						var another = due.prev();
-  						var str = another.text().trim();
-  						value["stringDate"] = str;
+              var teachr = cat.prev();
+              var teacherName = teachr.text().trim();
+              value["teacher"] = teacherName;
+              var course = teachr.prev();
+              var courseName = course.text().trim();
+              value["course"] = courseName;
+              var due = course.prev();
+              var dueDate = due.text().trim();
+              var res = dueDate.split("\n");
+              var day = res[0];
+              var stringDate = res[1];
+              value["dueDate"] = day;
+              var another = due.prev();
+              var str = another.text().trim();
+              if(stringDate){
+                value["stringDate"] = stringDate.trim() + "/2016";
+              }else{
+                value["stringDate"] = "";
+              }
+              value["mp"] = str;
   						results.push(value);
   					}
   				}); 
+          console.log(results);
   				res.send(JSON.stringify(results));
 
 			}
@@ -708,14 +717,20 @@ app.post('/assignments', function(req, res){
   						value["course"] = courseName;
   						var due = course.prev();
   						var dueDate = due.text().trim();
-  						value["dueDate"] = dueDate;
+              var res = dueDate.split("\n");
+              var day = res[0];
+              var stringDate = res[1];
+  						value["dueDate"] = day;
   						var another = due.prev();
   						var str = another.text().trim();
-  						value["stringDate"] = str;
+  						value["stringDate"] = stringDate.trim() + "/2016";
+              value["mp"] = str;
+
   						total.push(value);
   					}
 
   				}); 
+          console.log(total);
   				res.send(JSON.stringify(total));			
 
   			}

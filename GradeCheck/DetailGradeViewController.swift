@@ -21,7 +21,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     var cours : String!
     var sectio : String!
     var selectedCell : DetailGradeTableViewCell?
-    let url = "http://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
     @IBOutlet weak var assignmentTable : UITableView!
@@ -161,10 +161,14 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "M/d/yyyy"
         let dat = dateFormatter.dateFromString(cell.date.text!)
-        if(dat!.compare(NSDate()) == .OrderedAscending){
-            cell.calendarReady = false;
+        if((dat) != nil){
+            if(dat!.compare(NSDate()) == .OrderedAscending){
+                cell.calendarReady = false;
+            }else{
+                cell.calendarReady = true;
+            }
         }else{
-            cell.calendarReady = true;
+            cell.calendarReady = false;
         }
         if(g.containsString("%")){
             g = String(g.characters.dropLast());
