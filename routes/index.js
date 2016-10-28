@@ -610,12 +610,15 @@ app.post('/listassignments',function(req,res){
   					
   						value["category"] = actual.text().trim();
               var teachr = cat.prev();
-              var teacherName = teachr.text().trim();
+              var courseCell = teachr.children().first();
+              var courseName = courseCell.text().trim();
+              var teacherName = courseCell.next().filter(function (i,el){
+                return $(this).attr('style') == "padding: 0 0 0 2px;font-size: 8pt;"
+              });
+              teacherName = teacherName.text().trim();
               value["teacher"] = teacherName;
-              var course = teachr.prev();
-              var courseName = course.text().trim();
               value["course"] = courseName;
-              var due = course.prev();
+              var due = teachr.prev();
               var dueDate = due.text().trim();
               var res = dueDate.split("\n");
               var day = res[0];
@@ -713,13 +716,16 @@ app.post('/assignments', function(req, res){
   						});
   					
   						value["category"] = actual.text().trim();
-  						var teachr = cat.prev();
-  						var teacherName = teachr.text().trim();
-  						value["teacher"] = teacherName;
-  						var course = teachr.prev();
-  						var courseName = course.text().trim();
-  						value["course"] = courseName;
-  						var due = course.prev();
+              var teachr = cat.prev();
+              var courseCell = teachr.children().first();
+              var courseName = courseCell.text().trim();
+              var teacherName = courseCell.next().filter(function (i,el){
+                return $(this).attr('style') == "padding: 0 0 0 2px;font-size: 8pt;"
+              });
+              teacherName = teacherName.text().trim();
+              value["teacher"] = teacherName;
+              value["course"] = courseName;
+  						var due = teachr.prev();
   						var dueDate = due.text().trim();
               var res = dueDate.split("\n");
               var day = res[0];
