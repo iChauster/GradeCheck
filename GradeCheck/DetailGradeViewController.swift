@@ -91,7 +91,6 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
                     dispatch_async(dispatch_get_main_queue(), {
                         do{
                             self.assignments = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
-                            self.assignments = self.assignments.reverse()
                             if(self.assignments.count == 0){
                                 print("No Assignments")
                                 let noView = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,UIScreen.mainScreen().bounds.size.height))
