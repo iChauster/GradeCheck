@@ -740,6 +740,7 @@ app.post('/assignments', function(req, res){
   					}
 
   				}); 
+          total = total.reverse();
           console.log(total);
   				res.send(JSON.stringify(total));			
 
