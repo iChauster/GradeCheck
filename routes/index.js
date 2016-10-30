@@ -636,7 +636,6 @@ app.post('/listassignments',function(req,res){
   					}
   				}); 
           console.log(results);
-          results = results.reverse();
   				res.send(JSON.stringify(results));
 
 			}
