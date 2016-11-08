@@ -341,6 +341,11 @@ app.post('/login', passport.authenticate('local'),function (req,res){
                     var classroom = teacherCell.prev().text();
   									var teacher = teacherCell.text().replace("Email:","");
   									var num = grade.text();
+                    if(num.includes('%')){
+
+                    }else{
+                      num += "%";
+                    }
   									num = num.trim();
   									classroom = classroom.trim();
   									teacher = teacher.trim();
@@ -466,6 +471,11 @@ app.post('/gradebook', function(req,res){
               var teacher = teacherCell.text().replace("Email:","");
   						var num = grade.text();
   						num = num.trim();
+              if(num.includes('%')){
+
+              }else{
+                num += "%";
+              }
   						classroom = classroom.trim();
   						teacher = teacher.trim();
               var classcodes = getParamNames(teacherCell.prev().children().attr('onclick'))[1];
