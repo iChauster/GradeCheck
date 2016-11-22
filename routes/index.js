@@ -343,10 +343,10 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   									var num = grade.text();
                     if(num.includes('%')){
                       num = num.replace('%','');
-                      var a = parseInt(num);
+                      var a = Math.round(num);
                       num = a + "%";
                     }else{
-                      var a = parseInt(num);
+                      var a = Math.round(num);
                       num += "%";
                     }
   									num = num.trim();
@@ -476,10 +476,10 @@ app.post('/gradebook', function(req,res){
   						num = num.trim();
               if(num.includes('%')){
                 num = num.replace('%','');
-                var a = parseInt(num);
+                var a = Math.round(num);
                 num = a + "%";
               }else{
-                var a = parseInt(num);
+                var a = Math.round(num);
                 num += "%";
               }
               console.log(num);
