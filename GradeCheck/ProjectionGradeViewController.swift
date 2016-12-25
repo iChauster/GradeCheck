@@ -41,7 +41,7 @@ class ProjectionGradeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.newGradeView.score.text = ""
-        self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String
+        self.id = UserDefaults.standard.object(forKey: "id") as! String
         self.category = self.assignment["category"] as! String
         self.classTitleLabel.text = self.assignment["course"] as? String
         self.teacherTitleLabel.text = self.assignment["teacher"] as? String
@@ -55,32 +55,33 @@ class ProjectionGradeViewController: UIViewController {
         self.newGradeView.layer.cornerRadius = self.newGradeView.bounds.height / 2.0;
         if(calendarReady){
             image = UIImage(named:"calendar.png")!
-            self.navItem.rightBarButtonItem!.tintColor = UIColor.whiteColor()
-            UIGraphicsBeginImageContext(CGSizeMake(30.0, 30.0))
-            image.drawInRect(CGRectMake(0, 0, 30.0, 30.0))
+            self.navItem.rightBarButtonItem!.tintColor = UIColor.white
+            UIGraphicsBeginImageContext(CGSize(width: 30.0, height: 30.0))
+            image.draw(in: CGRect(x: 0, y: 0, width: 30.0, height: 30.0))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            self.navItem.rightBarButtonItem!.image = newImage.imageWithRenderingMode(.AlwaysTemplate)
+            self.navItem.rightBarButtonItem!.image = newImage?.withRenderingMode(.alwaysTemplate)
         }else{
-            image = UIImage(named:"check.png")!.imageWithRenderingMode(.AlwaysOriginal)
-            UIGraphicsBeginImageContext(CGSizeMake(30.0, 30.0))
-            image.drawInRect(CGRectMake(0, 0, 30.0, 30.0))
+            image = UIImage(named:"check.png")!.withRenderingMode(.alwaysOriginal)
+            UIGraphicsBeginImageContext(CGSize(width: 30.0, height: 30.0))
+            image.draw(in: CGRect(x: 0, y: 0, width: 30.0, height: 30.0))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            self.navItem.rightBarButtonItem!.image = newImage.imageWithRenderingMode(.AlwaysOriginal)
+            self.navItem.rightBarButtonItem!.image = newImage?.withRenderingMode(.alwaysOriginal)
         }
         
         self.dateLabel.text = self.assignment["stringDate"] as? String
-        if(self.assignment["assignment"]!["details"] != nil && (self.assignment["assignment"]!["details"] as? String) != ""){
-            self.descriptionTitle.text = self.assignment["assignment"]!["details"] as? String
+        let dict = self.assignment["assignment"]! as! NSDictionary
+        if(dict["details"] != nil && (dict["details"] as? String) != ""){
+            self.descriptionTitle.text = dict["details"] as? String
         }else{
             self.descriptionTitle.text = "No Description"
         }
         self.categoryTitle.text = self.category
         print(self.color)
         self.navBar.barTintColor = self.color
-        self.navItem.title = self.assignment["assignment"]!["title"] as? String
-        self.navBar.tintColor = UIColor.whiteColor()
+        self.navItem.title = dict["title"] as? String
+        self.navBar.tintColor = UIColor.white
         // Do any additional setup after loading the view.
         self.sliderPercentView.layer.cornerRadius = self.sliderPercentView.bounds.height/2.0
         let headers = [
@@ -88,36 +89,36 @@ class ProjectionGradeViewController: UIViewController {
             "content-type": "application/x-www-form-urlencoded"
         ]
         let cookieString = "cookie=" + self.cookie
-        let id : String = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String
+        let id : String = UserDefaults.standard.object(forKey: "id") as! String
         let idString = "&id=" + id
         let courseString = "&courseCode=" + course;
         let sectionString = "&courseSection=" + section;
-        let postData = NSMutableData(data: cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(courseString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(sectionString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        var postData = NSData(data: cookieString.data(using: String.Encoding.utf8)!) as Data
+        postData.append(idString.data(using: String.Encoding.utf8)!)
+        postData.append(courseString.data(using: String.Encoding.utf8)!)
+        postData.append(sectionString.data(using: String.Encoding.utf8)!)
         if(markingPeriod != nil){
             let mpString = "&mp=" + self.markingPeriod!;
-            postData.appendData(mpString.dataUsingEncoding(NSUTF8StringEncoding)!)
+            postData.append(mpString.data(using: String.Encoding.utf8)!)
         }
-        let request = NSMutableURLRequest(URL: NSURL(string: url + "getClassWeighting")!,
-                                          cachePolicy: .UseProtocolCachePolicy,
+        let request = NSMutableURLRequest(url: URL(string: url + "getClassWeighting")!,
+                                          cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 10.0)
-        request.HTTPMethod = "POST"
+        request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
-        request.HTTPBody = postData
+        request.httpBody = postData
         
-        let session = NSURLSession.sharedSession()
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
-                print(error)
+                print(error ?? "Darn")
             } else {
-                let httpResponse = response as? NSHTTPURLResponse
-                print(httpResponse)
+                let httpResponse = response as? HTTPURLResponse
+                print(httpResponse ?? "Darn")
                 if(httpResponse?.statusCode == 200){
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         do{
-                            self.data = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            self.data = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             if((self.data[0] as! String) == "Total Points"){
                                 print("Total point conversion");
                                 self.categoryConversion = false
@@ -126,7 +127,7 @@ class ProjectionGradeViewController: UIViewController {
                                 for obj in arr {
                                     let dict = obj as! NSDictionary
                                     self.categoryConversion = true
-                                    self.weights.addObject(dict)
+                                    self.weights.add(dict)
                                 }
                             }
                             self.sum()
@@ -144,22 +145,24 @@ class ProjectionGradeViewController: UIViewController {
         
 
     }
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true;
     }
     func sum(){
-        let assignmentTitle = assignment["assignment"]!["title"] as! String
+        let dict = assignment["assignment"]! as! NSDictionary
+        let assignmentTitle = dict["title"] as! String
         for obj in otherAssignments{
             let dict = obj as! NSDictionary
             print(dict)
             let key = dict["category"] as! String
-            if((dict["assignment"]!["title"] as! String) == assignmentTitle){
+            let d = dict["assignment"]! as! NSDictionary
+            if((d["title"] as! String) == assignmentTitle){
                 if let val = final[key]{
                     print(val)
                 }else{
                     let array = NSMutableArray();
-                    array[0] = 0
-                    array[1] = 0
+                    array[0] = 0.0
+                    array[1] = 0.0
                     final.setValue(array, forKey:(dict["category"] as! String))
                 }
             }else{
@@ -194,12 +197,13 @@ class ProjectionGradeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     @IBAction func closeView(){
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     func adjustMin(){
         if let a = Double(self.maxScore.text!) {
         let minimumScore = self.sliderPercentView.currentValue * 0.01 * a
         self.achievedScore.text = String(format:"%.2f",minimumScore)
+        print(self.originalMin[self.category]!)
         var arr = self.originalMin[self.category] as! [Double]
         let minDoubs = arr[0]
         let newMin = minDoubs + minimumScore
@@ -209,12 +213,12 @@ class ProjectionGradeViewController: UIViewController {
         self.final[self.category] = array
         self.findFinalGrade()
         }else{
-            let alert = UIAlertController(title: "Grade Error", message: "Grade cannot be read.", preferredStyle: .Alert)
-            let action = UIAlertAction(title: "Aw.", style: .Default, handler: { (alert : UIAlertAction) in
-                self.dismissViewControllerAnimated(true, completion: nil)
+            let alert = UIAlertController(title: "Grade Error", message: "Grade cannot be read.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Aw.", style: .default, handler: { (alert : UIAlertAction) in
+                self.dismiss(animated: true, completion: nil)
             })
             alert.addAction(action)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     func findFinalGrade(){
@@ -244,38 +248,38 @@ class ProjectionGradeViewController: UIViewController {
             self.newGradeView.score.text = String(format: "%.2f", finalGrade) + "%"
             switch(Int(finalGrade)){
             case 0..<50:
-                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.blackColor()))){
-                    UIView.animateWithDuration(1.0, animations: {
-                        self.newGradeView.backgroundColor = UIColor.blackColor()
-                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.black))){
+                    UIView.animate(withDuration: 1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.black
+                        self.newGradeView.score.textColor = UIColor.white
                     })
                 }
             case 50..<75 :
-                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.redColor()))){
-                    UIView.animateWithDuration(1.0, animations: {
-                        self.newGradeView.backgroundColor = UIColor.redColor()
-                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.red))){
+                    UIView.animate(withDuration: 1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.red
+                        self.newGradeView.score.textColor = UIColor.white
                     })
                 }
             case 75..<85 :
-                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.yellowColor()))){
-                    UIView.animateWithDuration(1.0, animations: {
-                        self.newGradeView.backgroundColor = UIColor.yellowColor()
-                        self.newGradeView.score.textColor = UIColor.blackColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor().ICYellow))){
+                    UIView.animate(withDuration: 1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor().ICYellow
+                        self.newGradeView.score.textColor = UIColor.black
                     })
                 }
             case 85..<110 :
                 if(!(self.newGradeView.backgroundColor!.isEqual(UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)))){
-                    UIView.animateWithDuration(1.0, animations: {
+                    UIView.animate(withDuration: 1.0, animations: {
                         self.newGradeView.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
-                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                        self.newGradeView.score.textColor = UIColor.white
                     })
                 }
             default :
-                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.blackColor()))){
-                    UIView.animateWithDuration(1.0, animations: {
-                        self.newGradeView.backgroundColor = UIColor.blackColor()
-                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.black))){
+                    UIView.animate(withDuration: 1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.black
+                        self.newGradeView.score.textColor = UIColor.white
                     })
                 }
             }
@@ -292,49 +296,49 @@ class ProjectionGradeViewController: UIViewController {
             self.newGradeView.score.text = String(format: "%.2f",percentage) + "%"
             switch(Int(percentage)){
             case 0..<50:
-                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.blackColor()))){
-                    UIView.animateWithDuration(1.0, animations: {
-                        self.newGradeView.backgroundColor = UIColor.blackColor()
-                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.black))){
+                    UIView.animate(withDuration: 1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.black
+                        self.newGradeView.score.textColor = UIColor.white
                     })
                 }
             case 50..<75 :
-                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.redColor()))){
-                    UIView.animateWithDuration(1.0, animations: {
-                        self.newGradeView.backgroundColor = UIColor.redColor()
-                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.red))){
+                    UIView.animate(withDuration: 1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.red
+                        self.newGradeView.score.textColor = UIColor.white
                     })
                 }
             case 75..<85 :
-                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.yellowColor()))){
-                    UIView.animateWithDuration(1.0, animations: {
-                        self.newGradeView.backgroundColor = UIColor.yellowColor()
-                        self.newGradeView.score.textColor = UIColor.blackColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor().ICYellow))){
+                    UIView.animate(withDuration: 1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor().ICYellow
+                        self.newGradeView.score.textColor = UIColor.black
                     })
                 }
             case 85..<110 :
                 if(!(self.newGradeView.backgroundColor!.isEqual(UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)))){
-                    UIView.animateWithDuration(1.0, animations: {
+                    UIView.animate(withDuration: 1.0, animations: {
                         self.newGradeView.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
-                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                        self.newGradeView.score.textColor = UIColor.white
                     })
                 }
             default :
-                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.blackColor()))){
-                    UIView.animateWithDuration(1.0, animations: {
-                        self.newGradeView.backgroundColor = UIColor.blackColor()
-                        self.newGradeView.score.textColor = UIColor.whiteColor()
+                if(!(self.newGradeView.backgroundColor!.isEqual(UIColor.black))){
+                    UIView.animate(withDuration: 1.0, animations: {
+                        self.newGradeView.backgroundColor = UIColor.black
+                        self.newGradeView.score.textColor = UIColor.white
                     })
                 }
             }
 
         }
     }
-    @IBAction func addtoCalendarClicked(sender: AnyObject) {
+    @IBAction func addtoCalendarClicked(_ sender: AnyObject) {
         if(calendarReady){
             let eventStore = EKEventStore()
             
-            eventStore.requestAccessToEntityType( EKEntityType.Event, completion:{(granted, error) in
+            eventStore.requestAccess( to: EKEntityType.event, completion:{(granted, error) in
                 
                 if (granted) && (error == nil) {
                     print("granted \(granted)")
@@ -343,39 +347,39 @@ class ProjectionGradeViewController: UIViewController {
                     let event = EKEvent(eventStore: eventStore)
                     var localSource : EKSource = EKSource()
                     for source in eventStore.sources {
-                        if (source.sourceType == .Local){
+                        if (source.sourceType == .local){
                             localSource = source
                             break;
                         }
                     }
                     var calendar : EKCalendar
-                    if (NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") == nil){
-                        calendar = EKCalendar(forEntityType: EKEntityType.Event, eventStore: eventStore)
+                    if (UserDefaults.standard.object(forKey: "calendarIdentifier") == nil){
+                        calendar = EKCalendar(for: EKEntityType.event, eventStore: eventStore)
                         calendar.title = "GradeCheck"
-                        calendar.CGColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0).CGColor
+                        calendar.cgColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0).cgColor
                         calendar.source = localSource
                         do{
                             try eventStore.saveCalendar(calendar, commit: true)
                         }catch let error as NSError{
-                            let failureAlert = UIAlertController(title: "Error", message: "Failed to create calendar." + error.localizedDescription, preferredStyle: .Alert)
-                            let action = UIAlertAction(title: "Darn.", style: .Default, handler: nil)
+                            let failureAlert = UIAlertController(title: "Error", message: "Failed to create calendar." + error.localizedDescription, preferredStyle: .alert)
+                            let action = UIAlertAction(title: "Darn.", style: .default, handler: nil)
                             failureAlert.addAction(action)
-                            self.presentViewController(failureAlert, animated: true, completion: nil)
+                            self.present(failureAlert, animated: true, completion: nil)
                         }
-                        NSUserDefaults.standardUserDefaults().setObject(calendar.calendarIdentifier, forKey: "calendarIdentifier")
+                        UserDefaults.standard.set(calendar.calendarIdentifier, forKey: "calendarIdentifier")
                     }else{
-                        calendar = eventStore.calendarWithIdentifier(NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") as! String)!
+                        calendar = eventStore.calendar(withIdentifier: UserDefaults.standard.object(forKey: "calendarIdentifier") as! String)!
                     }
 
                     event.title = self.navItem.title!
-                    let dateFormatter = NSDateFormatter()
+                    let dateFormatter = DateFormatter()
                     dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd/yy")
-                    let date1 = dateFormatter.dateFromString(self.dateLabel.text!);
-                    let cal: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-                    let startDate = cal.dateBySettingHour(7, minute: 20, second: 0, ofDate: date1!, options: .MatchFirst)
+                    let date1 = dateFormatter.date(from: self.dateLabel.text!);
+                    let cal: Calendar! = Calendar(identifier: Calendar.Identifier.gregorian)
+                    let startDate = cal.date(bySettingHour: 7, minute: 20, second: 0, of: date1!, matchingPolicy: Calendar.MatchingPolicy.nextTime, repeatedTimePolicy: Calendar.RepeatedTimePolicy.first, direction: Calendar.SearchDirection.forward)
                     
                     event.startDate = startDate!
-                    event.endDate = (startDate?.dateByAddingTimeInterval(60*60))!;
+                    event.endDate = (startDate?.addingTimeInterval(60*60))!;
                     event.calendar = calendar
                     let alarm : EKAlarm = EKAlarm(relativeOffset: -60*60*15)
                     let secondAlarm : EKAlarm = EKAlarm(relativeOffset: -60*60*39)
@@ -383,7 +387,7 @@ class ProjectionGradeViewController: UIViewController {
                     event.alarms = [alarm, secondAlarm]
                     var event_id = ""
                     do{
-                        try eventStore.saveEvent(event, span: .ThisEvent)
+                        try eventStore.save(event, span: .thisEvent)
                         event_id = event.eventIdentifier
                     }
                     catch let error as NSError {
@@ -391,12 +395,12 @@ class ProjectionGradeViewController: UIViewController {
                     }
                     
                     if(event_id != ""){
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             let alertString = self.navItem.title! + " has been added to your calendar!"
-                            let alert = UIAlertController(title: "Added to Calendar" , message: alertString, preferredStyle: .Alert);
-                            let cool = UIAlertAction(title: "Cool!", style: .Default, handler: nil)
+                            let alert = UIAlertController(title: "Added to Calendar" , message: alertString, preferredStyle: .alert);
+                            let cool = UIAlertAction(title: "Cool!", style: .default, handler: nil)
                             alert.addAction(cool)
-                            self.presentViewController(alert, animated: true, completion: nil)
+                            self.present(alert, animated: true, completion: nil)
                             print("event added !")
                             
                         })

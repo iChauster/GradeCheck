@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 enum PercentLabelAnimationCurve {
-    case Linear
-    case EaseIn
-    case EaseOut
-    case EaseInOut
+    case linear
+    case easeIn
+    case easeOut
+    case easeInOut
 }
 
 class PercentLabel: UILabel {
@@ -21,15 +21,15 @@ class PercentLabel: UILabel {
     // TODO: String Formats
     
     let counterRate: Float = 3.0
-    var animationCurve: PercentLabelAnimationCurve = .EaseInOut
+    var animationCurve: PercentLabelAnimationCurve = .easeInOut
     var startingValue: CGFloat = 0
     var destinationValue: CGFloat = 0
-    var progress: NSTimeInterval = NSTimeInterval()
-    var lastUpdate: NSTimeInterval = NSTimeInterval()
-    var totalTime: NSTimeInterval = NSTimeInterval()
-    var timer: NSTimer = NSTimer()
+    var progress: TimeInterval = TimeInterval()
+    var lastUpdate: TimeInterval = TimeInterval()
+    var totalTime: TimeInterval = TimeInterval()
+    var timer: Timer = Timer()
     
-    func count(from startValue: CGFloat, to endValue: CGFloat, duration:NSTimeInterval) {
+    func count(from startValue: CGFloat, to endValue: CGFloat, duration:TimeInterval) {
         startingValue = startValue
         destinationValue = endValue
         timer.invalidate()
@@ -40,18 +40,18 @@ class PercentLabel: UILabel {
         } else {
             progress = 0
             totalTime = duration
-            lastUpdate = NSDate.timeIntervalSinceReferenceDate()
+            lastUpdate = Date.timeIntervalSinceReferenceDate
             
-            let timer = NSTimer(timeInterval: (1.0/30.0), target: self, selector: #selector(PercentLabel.updateValue), userInfo: nil, repeats: true)
+            let timer = Timer(timeInterval: (1.0/30.0), target: self, selector: #selector(PercentLabel.updateValue), userInfo: nil, repeats: true)
             
-            NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-            NSRunLoop.mainRunLoop().addTimer(timer, forMode: UITrackingRunLoopMode)
+            RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+            RunLoop.main.add(timer, forMode: RunLoopMode.UITrackingRunLoopMode)
             self.timer = timer
         }
     }
     
-    func updateValue(timer: NSTimer) {
-        let now = NSDate.timeIntervalSinceReferenceDate()
+    func updateValue(_ timer: Timer) {
+        let now = Date.timeIntervalSinceReferenceDate
         
         progress = progress + now - lastUpdate
         lastUpdate = now
@@ -64,16 +64,16 @@ class PercentLabel: UILabel {
         text = String(format:"%.0lf%%", Double(currentValue()))
     }
     
-    func update(t: Float) -> Float {
+    func update(_ t: Float) -> Float {
         var a = t;
         switch animationCurve {
-        case .Linear:
+        case .linear:
             return a
-        case .EaseIn:
+        case .easeIn:
             return powf(a, counterRate)
-        case .EaseOut:
+        case .easeOut:
             return 1.0 - powf((1.0 - a), counterRate)
-        case .EaseInOut:
+        case .easeInOut:
             var sign: Int = 1
             let r: Int = Int(counterRate)
             

@@ -13,7 +13,7 @@ import QuartzCore
 let CellAnimationStartTransform:CATransform3D = {
     let rotationDegrees: CGFloat = -15.0
     let rotationRadians: CGFloat = rotationDegrees * (CGFloat(M_PI)/180.0)
-    let offset = CGPointMake(-20, -20)
+    let offset = CGPoint(x: -20, y: -20)
     var startTransform = CATransform3DIdentity
     startTransform = CATransform3DRotate(CATransform3DIdentity,
         rotationRadians, 0.0, 0.0, 1.0)
@@ -43,9 +43,9 @@ let ShrinkExplodeStartTransform:CAKeyframeAnimation = {
     shrinklit = CATransform3DScale(shrinklit,0.01,0.01,0.01)
     
     let keyFrames = CAKeyframeAnimation(keyPath:"transform")
-    keyFrames.values = [NSValue(CATransform3D:CATransform3DIdentity),
-        NSValue(CATransform3D:grow),
-        NSValue(CATransform3D:shrinklit)]
+    keyFrames.values = [NSValue(caTransform3D:CATransform3DIdentity),
+        NSValue(caTransform3D:grow),
+        NSValue(caTransform3D:shrinklit)]
     keyFrames.keyTimes = [0.0,0.4,0.6];
     keyFrames.duration = 0.4
     keyFrames.beginTime = CACurrentMediaTime() + 0.05;
@@ -57,7 +57,7 @@ let ShrinkExplodeStartTransform:CAKeyframeAnimation = {
 class CellAnimation {
     // placeholder for things to come -- only fades in for now
     
-    class func animate(cell:UITableViewCell) {
+    class func animate(_ cell:UITableViewCell) {
         /* fade
         let view = cell.contentView
         view.layer.opacity = 0.1
@@ -69,30 +69,30 @@ class CellAnimation {
         view.layer.transform = CellAnimationStartTransform
         view.layer.opacity = 0.8
         
-        UIView.animateWithDuration(0.4) {
+        UIView.animate(withDuration: 0.4, animations: {
             view.layer.transform = CATransform3DIdentity
             view.layer.opacity = 1
-        }
+        }) 
     }
-    class func slide(cell:UITableViewCell){
+    class func slide(_ cell:UITableViewCell){
         let view = cell.contentView;
         view.layer.transform = CellAnimationStartSlide
         view.layer.opacity = 0.8;
         
-        UIView.animateWithDuration(0.4) { 
+        UIView.animate(withDuration: 0.4, animations: { 
             view.layer.transform = CATransform3DIdentity
             view.layer.opacity = 1;
-        }
+        }) 
     }
-    class func growAndShrink(view:UIView){
-        UIView.animateKeyframesWithDuration(0.4, delay: 0.0, options: .CalculationModeLinear, animations: {
-            UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: { () -> Void in
+    class func growAndShrink(_ view:UIView){
+        UIView.animateKeyframes(withDuration: 0.4, delay: 0.0, options: UIViewKeyframeAnimationOptions(), animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0, animations: { () -> Void in
                 view.layer.transform = CATransform3DIdentity
             })
-            UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.4, animations: { () -> Void in
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.4, animations: { () -> Void in
                 view.layer.transform = grow
             })
-            UIView.addKeyframeWithRelativeStartTime(0.4, relativeDuration: 0.6, animations: { () -> Void in
+            UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.6, animations: { () -> Void in
                 view.layer.transform = shrink
             })
             }, completion:{finshed in

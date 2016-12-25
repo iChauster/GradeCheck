@@ -13,18 +13,18 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
     var gradeArray : NSArray!
     var cookie : String! = "";
     var id : String!
-    let url = "http://localhost:2800/"
+    let url = "http://gradecheck.herokuapp.com/"
     override func viewDidLoad() {
         super.viewDidLoad()
-        if(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") != nil && NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String != "MP4"){
-            self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+        if(UserDefaults.standard.object(forKey: "GradeTableMP") != nil && UserDefaults.standard.object(forKey: "GradeTableMP") as! String != "MP4"){
+            self.gradebookWithMarkingPeriod(UserDefaults.standard.object(forKey: "GradeTableMP") as! String);
         }
         self.refreshControl = UIRefreshControl()
-        self.refreshControl!.backgroundColor = UIColor.blackColor()
-        self.refreshControl!.tintColor = UIColor.whiteColor()
-        self.refreshControl!.addTarget(self, action: #selector(GradeTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged);
+        self.refreshControl!.backgroundColor = UIColor.black
+        self.refreshControl!.tintColor = UIColor.white
+        self.refreshControl!.addTarget(self, action: #selector(GradeTableViewController.refresh), for: UIControlEvents.valueChanged);
         let leftSwipe = UISwipeGestureRecognizer.init(target: self.tabBarController, action: #selector(GradeViewController.swipeLeft))
-        leftSwipe.direction = .Left
+        leftSwipe.direction = .left
         self.tableView.addGestureRecognizer(leftSwipe);
         let rightSwipe = UISwipeGestureRecognizer.init(target:self.tabBarController, action: #selector(GradeViewController.swipeRight))
         self.tableView.addGestureRecognizer(rightSwipe)
@@ -39,56 +39,58 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         
     }
     var openingFrame : CGRect?
-    
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    override var prefersStatusBarHidden : Bool {
+        return true;
+    }
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let presentationAnimator = ExpandAnimator.animator
         presentationAnimator.openingFrame = openingFrame!
-        presentationAnimator.transitionMode = .Present;
+        presentationAnimator.transitionMode = .present;
         return presentationAnimator
     }
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let presentationAnimator = ExpandAnimator.animator
         presentationAnimator.openingFrame = openingFrame!
-        presentationAnimator.transitionMode = .Dismiss;
+        presentationAnimator.transitionMode = .dismiss;
         return presentationAnimator
     }
-    func markingPeriodSwitch(sender:UILongPressGestureRecognizer){
+    func markingPeriodSwitch(_ sender:UILongPressGestureRecognizer){
         print("longPress:",sender.state.rawValue);
-        if(sender.state == .Began){
-            let blurEffect = UIBlurEffect(style: .Light)
+        if(sender.state == .began){
+            let blurEffect = UIBlurEffect(style: .light)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
             blurEffectView.frame = self.view.bounds;
-            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
             self.view.addSubview(blurEffectView)
-            let alert = UIAlertController(title: "MP?", message: "What marking period would you like to view?", preferredStyle: .Alert)
-            let mp1 = UIAlertAction(title: "Marking Period 1", style: .Default) { (alert:UIAlertAction!) in
+            let alert = UIAlertController(title: "MP?", message: "What marking period would you like to view?", preferredStyle: .alert)
+            let mp1 = UIAlertAction(title: "Marking Period 1", style: .default) { (alert:UIAlertAction!) in
                 print("mp1 clicked");
-                NSUserDefaults.standardUserDefaults().setObject("MP1", forKey: "GradeTableMP")
-                self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+                UserDefaults.standard.set("MP1", forKey: "GradeTableMP")
+                self.gradebookWithMarkingPeriod(UserDefaults.standard.object(forKey: "GradeTableMP") as! String);
                 blurEffectView.removeFromSuperview();
             }
-            let mp2 = UIAlertAction(title: "Marking Period 2", style: .Default) { (alert:UIAlertAction!) in
+            let mp2 = UIAlertAction(title: "Marking Period 2", style: .default) { (alert:UIAlertAction!) in
                 print("mp1 clicked");
-                NSUserDefaults.standardUserDefaults().setObject("MP2", forKey: "GradeTableMP")
-                self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
-                blurEffectView.removeFromSuperview();
-
-            }
-            let mp3 = UIAlertAction(title: "Marking Period 3", style: .Default) { (alert:UIAlertAction!) in
-                print("mp1 clicked");
-                NSUserDefaults.standardUserDefaults().setObject("MP3", forKey: "GradeTableMP")
-                self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+                UserDefaults.standard.set("MP2", forKey: "GradeTableMP")
+                self.gradebookWithMarkingPeriod(UserDefaults.standard.object(forKey: "GradeTableMP") as! String);
                 blurEffectView.removeFromSuperview();
 
             }
-            let mp4 = UIAlertAction(title: "Marking Period 4", style: .Default) { (alert:UIAlertAction!) in
+            let mp3 = UIAlertAction(title: "Marking Period 3", style: .default) { (alert:UIAlertAction!) in
                 print("mp1 clicked");
-                NSUserDefaults.standardUserDefaults().setObject("MP4", forKey: "GradeTableMP")
-                self.gradebookWithMarkingPeriod(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String);
+                UserDefaults.standard.set("MP3", forKey: "GradeTableMP")
+                self.gradebookWithMarkingPeriod(UserDefaults.standard.object(forKey: "GradeTableMP") as! String);
+                blurEffectView.removeFromSuperview();
+
+            }
+            let mp4 = UIAlertAction(title: "Marking Period 4", style: .default) { (alert:UIAlertAction!) in
+                print("mp1 clicked");
+                UserDefaults.standard.set("MP4", forKey: "GradeTableMP")
+                self.gradebookWithMarkingPeriod(UserDefaults.standard.object(forKey: "GradeTableMP") as! String);
                 blurEffectView.removeFromSuperview();
             }
-            let cancel = UIAlertAction(title:"Cancel", style: .Cancel){(alert:UIAlertAction!) in
+            let cancel = UIAlertAction(title:"Cancel", style: .cancel){(alert:UIAlertAction!) in
                 print("cancelled");
                 blurEffectView.removeFromSuperview();
             }
@@ -97,7 +99,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
             alert.addAction(mp3);
             alert.addAction(mp4);
             alert.addAction(cancel);
-            self.presentViewController(alert, animated: true, completion: nil);
+            self.present(alert, animated: true, completion: nil);
             
         }else{
             print("n/a")
@@ -111,22 +113,22 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return gradeArray.count - 1;
     }
-    func gradebookWithMarkingPeriod(mp : String){
+    func gradebookWithMarkingPeriod(_ mp : String){
         if(self.cookie == ""){
             let cookieID = gradeArray[0] as! NSDictionary
-            let cookieArray = cookieID.objectForKey("cookie") as? NSArray
+            let cookieArray = cookieID.object(forKey: "cookie") as? NSArray
             self.cookie = cookieArray![0] as? String;
         }
-        self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
+        self.id = UserDefaults.standard.object(forKey: "id") as! String;
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"
@@ -134,28 +136,28 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         let cookieString = "cookie=" + self.cookie
         let idString = "&id=" + self.id
         let mpString = "&mp=" + mp;
-        let postData = NSMutableData(data: cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(mpString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        var postData = NSData(data: cookieString.data(using: String.Encoding.utf8)!) as Data
+        postData.append(idString.data(using: String.Encoding.utf8)!)
+        postData.append(mpString.data(using: String.Encoding.utf8)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: url + "gradebook")!,
-                                          cachePolicy: .UseProtocolCachePolicy,
+        let request = NSMutableURLRequest(url: URL(string: url + "gradebook")!,
+                                          cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 10.0)
-        request.HTTPMethod = "POST"
+        request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
-        request.HTTPBody = postData
+        request.httpBody = postData
         
-        let session = NSURLSession.sharedSession()
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
-                let httpResponse = response as? NSHTTPURLResponse
-                print(httpResponse)
+                let httpResponse = response as? HTTPURLResponse
+                print(httpResponse!)
                 if(httpResponse?.statusCode == 200){
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         do{
-                            self.gradeArray = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            self.gradeArray = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             self.tableView.reloadData()
                             self.refreshControl?.endRefreshing()
                             let gradeView = self.tabBarController as! GradeViewController
@@ -169,15 +171,15 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
                     })
                     
                 }else if(httpResponse?.statusCode == 440){
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         do{
-                            let cookie = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            let cookie = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             print(cookie);
                             let cooke = cookie[0] as! NSDictionary
-                            let hafl = cooke.objectForKey("set-cookie") as! NSArray;
+                            let hafl = cooke.object(forKey: "set-cookie") as! NSArray;
                             self.cookie = hafl[0] as! String;
                             print(self.cookie);
-                            self.tabBarController?.performSelector(#selector(GradeViewController.refreshAndLogin), withObject: self.cookie)
+                            self.tabBarController?.perform(#selector(GradeViewController.refreshAndLogin), with: self.cookie)
                             self.refreshControl?.endRefreshing()
                         }catch{
                             
@@ -192,44 +194,44 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
     }
     
     func refresh(){
-        self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSForegroundColorAttributeName:UIColor.white])
         print("refreshing....")
         if(self.cookie == ""){
             let cookieID = gradeArray[0] as! NSDictionary;
-            let cookieArray = cookieID.objectForKey("cookie") as? NSArray;
+            let cookieArray = cookieID.object(forKey: "cookie") as? NSArray;
             self.cookie = cookieArray![0] as? String;
             print("No cookie, finding from array")
         }else{
             print("Cookie, it's " + self.cookie);
         }
-        self.id = NSUserDefaults.standardUserDefaults().objectForKey("id") as! String;
+        self.id = UserDefaults.standard.object(forKey: "id") as! String;
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"
         ]
         let cookieString = "cookie=" + self.cookie
         let idString = "&id=" + self.id
-        let postData = NSMutableData(data: cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        var postData = NSData(data: cookieString.data(using: String.Encoding.utf8)!) as Data
+        postData.append(idString.data(using: String.Encoding.utf8)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: url + "gradebook")!,
-            cachePolicy: .UseProtocolCachePolicy,
+        let request = NSMutableURLRequest(url: URL(string: url + "gradebook")!,
+            cachePolicy: .useProtocolCachePolicy,
             timeoutInterval: 10.0)
-        request.HTTPMethod = "POST"
+        request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
-        request.HTTPBody = postData
+        request.httpBody = postData
         
-        let session = NSURLSession.sharedSession()
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 print(error)
             } else {
-                let httpResponse = response as? NSHTTPURLResponse
+                let httpResponse = response as? HTTPURLResponse
                 print(httpResponse)
                 if(httpResponse?.statusCode == 200){
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         do{
-                            self.gradeArray = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            self.gradeArray = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             self.tableView.reloadData()
                             self.refreshControl?.endRefreshing()
                         }catch{
@@ -238,15 +240,15 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
                     })
                     
                 }else if(httpResponse?.statusCode == 440){
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         do{
-                            let cookie = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            let cookie = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             print(cookie);
                             let cooke = cookie[0] as! NSDictionary
-                            let hafl = cooke.objectForKey("set-cookie") as! NSArray;
+                            let hafl = cooke.object(forKey: "set-cookie") as! NSArray;
                             self.cookie = hafl[0] as! String;
                             print(self.cookie);
-                            self.tabBarController?.performSelector(#selector(GradeViewController.refreshAndLogin), withObject: self.cookie)
+                            self.tabBarController?.perform(#selector(GradeViewController.refreshAndLogin), with: self.cookie)
                             self.refreshControl?.endRefreshing()
                         }catch{
                             
@@ -262,40 +264,22 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
 
         
     }
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ClassCell", forIndexPath: indexPath) as! GradeTableViewCell;
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ClassCell", for: indexPath) as! GradeTableViewCell;
         let element = gradeArray[indexPath.row + 1] as! NSDictionary;
-        cell.classg.text = element.objectForKey("class") as? String;
-        cell.grade.text = element.objectForKey("grade") as? String;
-        cell.teacher.text = element.objectForKey("teacher") as? String;
-        var g = element.objectForKey("grade") as! String;
-        if(g.containsString("%")){
+        cell.classg.text = element.object(forKey: "class") as? String;
+        cell.grade.text = element.object(forKey: "grade") as? String;
+        cell.teacher.text = element.object(forKey: "teacher") as? String;
+        var g = element.object(forKey: "grade") as! String;
+        if(g.contains("%")){
             g = String(g.characters.dropLast());
-            switch Int(g)!{
-            case 0..<50:
-                cell.views.backgroundColor = UIColor.blackColor()
-                cell.color = UIColor.blackColor()
-                cell.percent = Int(g);
-            case 51..<75 :
-                cell.views.backgroundColor = UIColor.blackColor()
-                cell.color = UIColor.redColor()
-                cell.percent = Int(g);
-            case 76..<85 :
-                cell.views.backgroundColor = UIColor.blackColor()
-                cell.color = UIColor.yellowColor()
-                cell.percent = Int(g);
-            case 86..<110 :
-                cell.views.backgroundColor = UIColor.blackColor()
-                cell.color = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
-                cell.percent = Int(g);
-            default :
-                cell.views.backgroundColor = UIColor.blackColor()
-                cell.color = UIColor.purpleColor()
-                cell.percent = Int(g)
-            }
+            let color = UIColor().getColor(grade: Double(g)!)
+            cell.views.backgroundColor = color
+            cell.color = color
+            cell.percent = Int(g)
         }else{
-            cell.views.backgroundColor = UIColor.blackColor()
-            cell.color = UIColor.blackColor()
+            cell.views.backgroundColor = UIColor.black
+            cell.color = UIColor.black
             cell.percent = -1;
         }
         cell.backgroundColor = cell.backgroundColor;
@@ -305,38 +289,39 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         cell.selectedBackgroundView = backgroundView
         return cell
     }
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let attributesFrame = tableView.cellForRowAtIndexPath(indexPath);
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let attributesFrame = tableView.cellForRow(at: indexPath);
         let attribute = attributesFrame?.frame;
-        let frameToOpenFrame = tableView.convertRect(attribute!, toView: tableView.superview)
+        let frameToOpenFrame = tableView.convert(attribute!, to: tableView.superview)
         openingFrame = frameToOpenFrame
+        print(openingFrame?.debugDescription)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let expandedvc = storyboard.instantiateViewControllerWithIdentifier("DetailGradeViewController") as! DetailGradeViewController
+        let expandedvc = storyboard.instantiateViewController(withIdentifier: "DetailGradeViewController") as! DetailGradeViewController
         expandedvc.transitioningDelegate = self
-        expandedvc.modalPresentationStyle = .Custom
+        expandedvc.modalPresentationStyle = .custom
 
-        let selectedCell = self.tableView.cellForRowAtIndexPath(self.tableView.indexPathForSelectedRow!) as! GradeTableViewCell
+        let selectedCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! GradeTableViewCell
         expandedvc.data = self.gradeArray[(self.tableView.indexPathForSelectedRow?.row)! + 1] as! NSDictionary
         expandedvc.color = selectedCell.color;
         expandedvc.cookieData = self.gradeArray[0] as! NSDictionary
         expandedvc.whole = self.gradeArray;
         expandedvc.classtitle = selectedCell.classg.text! + " - " + selectedCell.grade.text!;
-        expandedvc.markingPeriod = NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as? String
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        presentViewController(expandedvc, animated: true, completion: nil)
+        expandedvc.markingPeriod = UserDefaults.standard.object(forKey: "GradeTableMP") as? String
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        present(expandedvc, animated: true, completion: nil)
         
     }
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let actualCell = cell as! GradeTableViewCell
         CellAnimation.animate(actualCell);
         if(actualCell.percent != -1){
-            actualCell.grade.animationCurve = PercentLabelAnimationCurve.EaseInOut
+            actualCell.grade.animationCurve = PercentLabelAnimationCurve.easeInOut
             actualCell.grade.count(from: 0, to: CGFloat(actualCell.percent), duration: 1.0)
         }
         actualCell.backgroundColor = actualCell.contentView.backgroundColor;
-        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: 1.0, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             actualCell.views.backgroundColor = actualCell.color
             }) { (complete) in
                 
@@ -349,18 +334,18 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if(segue.identifier == "GradeSegue"){
-            let viewcontroller = segue.destinationViewController as! DetailGradeViewController
+            let viewcontroller = segue.destination as! DetailGradeViewController
             viewcontroller.data = self.gradeArray[(self.tableView.indexPathForSelectedRow?.row)! + 1] as! NSDictionary
-            let selectedCell = self.tableView.cellForRowAtIndexPath(self.tableView.indexPathForSelectedRow!) as! GradeTableViewCell
+            let selectedCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! GradeTableViewCell
             viewcontroller.color = selectedCell.color;
             viewcontroller.cookieData = self.gradeArray[0] as! NSDictionary
             viewcontroller.whole = self.gradeArray;
             viewcontroller.classtitle = selectedCell.classg.text! + " - " + selectedCell.grade.text!;
-            viewcontroller.markingPeriod = NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as? String
+            viewcontroller.markingPeriod = UserDefaults.standard.object(forKey: "GradeTableMP") as? String
         }
     }
  

@@ -18,56 +18,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case assignments = "CheckAssignments"
         case statistics = "Statistics"
     }
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        if (!NSUserDefaults.standardUserDefaults().boolForKey("HasLaunchedOnce")){
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasLaunchedOnce")
-            NSUserDefaults.standardUserDefaults().synchronize()
+        if (!UserDefaults.standard.bool(forKey: "HasLaunchedOnce")){
+            UserDefaults.standard.set(true, forKey: "HasLaunchedOnce")
+            UserDefaults.standard.synchronize()
             let key = Keychain()
-            key.setPasscode("GCUsername", passcode: "");
-            key.setPasscode("GCPassword", passcode: "");
-            key.setPasscode("GCEmail", passcode:  "");
-            NSUserDefaults.standardUserDefaults().setObject("Weighted", forKey: "GPA");
+            key.setPasscode(identifier: "GCUsername", passcode: "");
+            key.setPasscode(identifier: "GCPassword", passcode: "");
+            key.setPasscode(identifier: "GCEmail", passcode:  "");
+            UserDefaults.standard.set("Weighted", forKey: "GPA");
         }
-            let types: UIUserNotificationType = [.Alert, .Badge, .Sound]
-            let settings = UIUserNotificationSettings(forTypes: types, categories: nil)
+            let types: UIUserNotificationType = [.alert, .badge, .sound]
+            let settings = UIUserNotificationSettings(types: types, categories: nil)
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
             let oneSignal = OneSignal(launchOptions: launchOptions, appId: "83f615e3-1eab-4055-92ef-cb5f498968c9", handleNotification: nil)
 
-        oneSignal.IdsAvailable({ (userId, pushToken) in
-            NSLog("UserId:%@", userId)
+        oneSignal?.idsAvailable({ (userId, pushToken) in
+            print("UserId:%@", userId)
             if (pushToken != nil) {
-                NSLog("pushToken:%@", pushToken)
-                NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userId");
-                if(NSUserDefaults.standardUserDefaults().boolForKey("PushNotifs") == false){
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "shouldUpdateUserToken");
+                print("pushToken:%@", pushToken)
+                UserDefaults.standard.set(userId, forKey: "userId");
+                if(UserDefaults.standard.bool(forKey: "PushNotifs") == false){
+                    UserDefaults.standard.set(true, forKey: "shouldUpdateUserToken");
                 }
             }
         })
-        OneSignal.defaultClient().enableInAppAlertNotification(true)
+        OneSignal.defaultClient().enable(inAppAlertNotification: true)
         return true
     }
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         print("ayy");
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "PushNotifs");
+        UserDefaults.standard.set(true, forKey: "PushNotifs");
         
     }
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print(error.localizedDescription)
         print("push notifs failed")
-        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "PushNotifs");
+        UserDefaults.standard.set(false, forKey: "PushNotifs");
     }
-    func application(application: UIApplication, performActionForShortcutItem shortcutItem : UIApplicationShortcutItem, completionHandler: (Bool) -> Void){
+    func application(_ application: UIApplication, performActionFor shortcutItem : UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void){
         
         //Handle quick Actions
         completionHandler(handleQuickAction(shortcutItem))
     }
-    func handleQuickAction(shortcutItem: UIApplicationShortcutItem) -> Bool {
+    func handleQuickAction(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
         
         var quickActionHandled = false;
-        let type = shortcutItem.type.componentsSeparatedByString(".").last!
+        let type = shortcutItem.type.components(separatedBy: ".").last!
         let loginView = self.window?.rootViewController as! LoginViewController
         if let shortcutType = Shortcut.init(rawValue: type) {
             switch shortcutType {
@@ -88,25 +88,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return quickActionHandled
         
     }
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 

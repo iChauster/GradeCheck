@@ -1,51 +1,48 @@
-//
-//  Keychain.swift
-//  GradeCheck
-//
-//  Created by Ivan Chau on 2/21/16.
-//  Copyright © 2016 Ivan Chau. All rights reserved.
-//
-
-import Foundation
+import UIKit
 import Security
 
-let kSecClassGenericPasswordValue = NSString(format: kSecClassGenericPassword);
-let kSecClassValue = NSString(format: kSecClass);
-let kSecAttrServiceValue = NSString(format: kSecAttrService);
-let kSecValueDataValue = NSString(format: kSecValueData);
-let kSecMatchLimitValue = NSString(format: kSecMatchLimit);
-let kSecReturnDataValue = NSString(format: kSecReturnData);
-let kSecMatchLimitOneValue = NSString(format: kSecMatchLimitOne);
-let kSecAttrAccountValue = NSString(format: kSecAttrAccount);
+let kSecClassGenericPasswordValue = String(format: kSecClassGenericPassword as String)
+let kSecClassValue = String(format: kSecClass as String)
+let kSecAttrServiceValue = String(format: kSecAttrService as String)
+let kSecValueDataValue = String(format: kSecValueData as String)
+let kSecMatchLimitValue = String(format: kSecMatchLimit as String)
+let kSecReturnDataValue = String(format: kSecReturnData as String)
+let kSecMatchLimitOneValue = String(format: kSecMatchLimitOne as String)
+let kSecAttrAccountValue = String(format: kSecAttrAccount as String)
 
-class Keychain: NSObject {
+struct Keychain {
+    
     func setPasscode(identifier: String, passcode: String) {
-        let dataFromString: NSData = passcode.dataUsingEncoding(NSUTF8StringEncoding)!;
-        let keychainQuery = NSDictionary(
-            objects: [kSecClassGenericPasswordValue, identifier, dataFromString],
-            forKeys: [kSecClassValue, kSecAttrServiceValue, kSecValueDataValue]);
-        SecItemDelete(keychainQuery as CFDictionaryRef);
-        let status : OSStatus = SecItemAdd(keychainQuery as CFDictionaryRef, nil);
-        print (status)
+        if let dataFromString = passcode.data(using: String.Encoding.utf8) {
+            let keychainQuery = [
+                kSecClassValue: kSecClassGenericPasswordValue,
+                kSecAttrServiceValue: identifier,
+                kSecValueDataValue: dataFromString
+                ] as CFDictionary
+            SecItemDelete(keychainQuery)
+            print(SecItemAdd(keychainQuery, nil))
+        }
     }
-    func getPasscode(identifier: String) -> NSString? {
-        let keychainQuery = NSDictionary(
-            objects: [kSecClassGenericPasswordValue, identifier, kCFBooleanTrue, kSecMatchLimitOneValue],
-            forKeys: [kSecClassValue, kSecAttrServiceValue, kSecReturnDataValue, kSecMatchLimitValue]);
+    
+    func getPasscode(identifier: String) -> String? {
+        let keychainQuery = [
+            kSecClassValue: kSecClassGenericPasswordValue,
+            kSecAttrServiceValue: identifier,
+            kSecReturnDataValue: kCFBooleanTrue,
+            kSecMatchLimitValue: kSecMatchLimitOneValue
+            ] as  CFDictionary
         var dataTypeRef: AnyObject?
         let status: OSStatus = SecItemCopyMatching(keychainQuery, &dataTypeRef)
-        var passcode: NSString!;
+        var passcode: String?
         if (status == errSecSuccess) {
-            let retrievedData: NSData? = dataTypeRef as? NSData
-            if let result = NSString(data: retrievedData!, encoding: NSUTF8StringEncoding) {
+            if let retrievedData = dataTypeRef as? Data,
+                let result = String(data: retrievedData, encoding: String.Encoding.utf8) {
                 passcode = result as String
             }
         }
         else {
-            print("Nothing was retrieved from the keychain. Status code \(status)")
-            
+            print("Nothing was retrieved from the keychain. Status code \(status) ... \(passcode)")
         }
-        return passcode;
+        return passcode
     }
-    
 }

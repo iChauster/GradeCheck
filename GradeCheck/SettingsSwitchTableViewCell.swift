@@ -15,17 +15,17 @@ class SettingsSwitchTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
-    @IBAction func updateGPAPreference(sender:UISegmentedControl){
+    @IBAction func updateGPAPreference(_ sender:UISegmentedControl){
         if(sender.selectedSegmentIndex == 0){
-            NSUserDefaults.standardUserDefaults().setObject("Weighted",forKey: "GPA")
+            UserDefaults.standard.set("Weighted",forKey: "GPA")
             print("Set to Weighted")
         }else if(sender.selectedSegmentIndex == 1){
-            NSUserDefaults.standardUserDefaults().setObject("Unweighted", forKey: "GPA")
+            UserDefaults.standard.set("Unweighted", forKey: "GPA")
             print("Set to Unweighted")
 
         }

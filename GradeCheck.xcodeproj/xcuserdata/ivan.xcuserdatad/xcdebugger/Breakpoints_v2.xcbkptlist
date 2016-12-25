@@ -9,14 +9,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GradeCheck/AssignmentsTableViewCell.swift"
-            timestampString = "483504637.97438"
+            filePath = "GradeCheck/LoginViewController.swift"
+            timestampString = "502066905.187107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "addtoCalendarClicked(_:)"
-            landmarkType = "5">
+            startingLineNumber = "333"
+            endingLineNumber = "333"
+            landmarkName = "makeLoginRequestWithParams(_:pass:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

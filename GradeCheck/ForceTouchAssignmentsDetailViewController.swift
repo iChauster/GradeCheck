@@ -25,25 +25,26 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
     var calendarReady : Bool = true;
     var assignorNo : Bool = false;
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         print(assignment)
         if(calendarReady){
-            let cal = UIImage(named: "calendar.png")?.imageWithRenderingMode(.AlwaysTemplate)
-            self.calendar.setImage(cal, forState: .Normal)
-            self.calendar.setImage(cal, forState: .Selected)
+            let cal = UIImage(named: "calendar.png")?.withRenderingMode(.alwaysTemplate)
+            self.calendar.setImage(cal, for: UIControlState())
+            self.calendar.setImage(cal, for: .selected)
             self.calendar.tintColor = UIColor(red: 250/255.0, green: 251/255.0, blue: 250/255.0, alpha: 1.0)
         }else{
             let cal = UIImage(named:"check.png")
-            self.calendar.setImage(cal, forState: .Normal)
-            self.calendar.setImage(cal, forState: .Selected)
+            self.calendar.setImage(cal, for: UIControlState())
+            self.calendar.setImage(cal, for: .selected)
         }
-        assignmentTitle.text = assignment["assignment"]!["title"] as? String
-        if(assignment["assignment"]!["details"] != nil){
-            detailTitle!.text = assignment["assignment"]!["details"] as? String
+        let dict = assignment["asignment"]! as! NSDictionary
+        assignmentTitle.text = dict["title"] as? String
+        if(dict["details"] != nil){
+            detailTitle!.text = dict["details"] as? String
         }
         categoryTitle.text = assignment["category"] as? String
         courseTitle.text = assignment["course"] as? String
@@ -53,23 +54,26 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
         teacherName.text = assignment["teacher"] as? String
         percentage.layer.cornerRadius = 0.5 * percentage.bounds.height;
         var g = assignment["percent"] as? String
-        if(g!.containsString("%")){
+        if(g!.contains("%")){
             percentage.score.text = g!;
             g = String(g!.characters.dropLast());
             switch Double(g!)!{
             case 0..<50:
-                percentage.backgroundColor = UIColor.blackColor()
+                percentage.backgroundColor = UIColor.black
             case 51..<75 :
-                percentage.backgroundColor = UIColor.redColor()
+                percentage.backgroundColor = UIColor.red
             case 76..<85 :
-                percentage.backgroundColor = UIColor.yellowColor()
+                percentage.backgroundColor = UIColor.yellow
             case 86..<110 :
                 percentage.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
             default :
-                percentage.backgroundColor = UIColor.purpleColor()
+                percentage.backgroundColor = UIColor.purple
             }
+            let color = UIColor().getColor(grade: Double(g!)!)
+            percentage.backgroundColor = color
+            
         }else{
-            percentage.backgroundColor = UIColor.blackColor()
+            percentage.backgroundColor = UIColor.black
             percentage.score.text = "--"
         }
         // Do any additional setup after loading the view.
@@ -84,12 +88,12 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
         if(assignorNo == true){
             let vc = self.presentingViewController as! DetailGradeViewController
             vc.ridOfBlur()
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }else{
             let vc = self.presentingViewController as! GradeViewController
             let av = vc.selectedViewController as! AssignmentsTableViewController
             av.ridOfBlur()
-            self.dismissViewControllerAnimated(true){
+            self.dismiss(animated: true){
                 
             }
         }
@@ -99,14 +103,14 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
         if(calendarReady){
             let eventStore = EKEventStore()
             
-            eventStore.requestAccessToEntityType( EKEntityType.Event, completion:{(granted, error) in
+            eventStore.requestAccess( to: EKEntityType.event, completion:{(granted, error) in
                 
                 if (granted) && (error == nil) {
                     print("granted \(granted)")
                     print("error \(error)")
                     var localSource : EKSource = EKSource()
                     for source in eventStore.sources {
-                        if (source.sourceType == EKSourceType.CalDAV &&
+                        if (source.sourceType == EKSourceType.calDAV &&
                             source.title == "iCloud")
                         {
                             localSource = source;
@@ -118,7 +122,7 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
                     {
                         for source in eventStore.sources
                         {
-                            if (source.sourceType == .Local)
+                            if (source.sourceType == .local)
                             {
                                 localSource = source;
                                 break;
@@ -126,22 +130,22 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
                         }
                     }
                     var calendar : EKCalendar;
-                        if (NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") == nil || (NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") as! String) == ""){
-                            calendar = EKCalendar(forEntityType: EKEntityType.Event, eventStore: eventStore)
+                        if (UserDefaults.standard.object(forKey: "calendarIdentifier") == nil || (UserDefaults.standard.object(forKey: "calendarIdentifier") as! String) == ""){
+                            calendar = EKCalendar(for: EKEntityType.event, eventStore: eventStore)
                             calendar.title = "GradeCheck"
-                            calendar.CGColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0).CGColor
+                            calendar.cgColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0).cgColor
                             calendar.source = localSource
                             do{
                                 try eventStore.saveCalendar(calendar, commit: true)
                             }catch let error as NSError{
-                                let failureAlert = UIAlertController(title: "Error", message: "Failed to create calendar." + error.localizedDescription, preferredStyle: .Alert)
-                                let action = UIAlertAction(title: "Darn.", style: .Default, handler: nil)
+                                let failureAlert = UIAlertController(title: "Error", message: "Failed to create calendar." + error.localizedDescription, preferredStyle: .alert)
+                                let action = UIAlertAction(title: "Darn.", style: .default, handler: nil)
                                 failureAlert.addAction(action)
-                                self.presentViewController(failureAlert, animated: true, completion: nil)
+                                self.present(failureAlert, animated: true, completion: nil)
                             }
-                            NSUserDefaults.standardUserDefaults().setObject(calendar.calendarIdentifier, forKey: "calendarIdentifier")
+                            UserDefaults.standard.set(calendar.calendarIdentifier, forKey: "calendarIdentifier")
                         }else{
-                            if let c = eventStore.calendarWithIdentifier(NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") as! String) {
+                            if let c = eventStore.calendar(withIdentifier: UserDefaults.standard.object(forKey: "calendarIdentifier") as! String) {
                                 calendar = c
                             }else{
                                 calendar = eventStore.defaultCalendarForNewEvents
@@ -151,13 +155,13 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
                     let event = EKEvent(eventStore: eventStore)
                     
                     event.title = self.assignmentTitle.text!
-                    let dateFormatter = NSDateFormatter()
+                    let dateFormatter = DateFormatter()
                     dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd/yy")
-                    let date1 = dateFormatter.dateFromString(self.dueDate.text!);
-                    let cal: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-                    let startDate = cal.dateBySettingHour(7, minute: 20, second: 0, ofDate: date1!, options: .MatchFirst)
+                    let date1 = dateFormatter.date(from: self.dueDate.text!);
+                    let cal: Calendar! = Calendar(identifier: Calendar.Identifier.gregorian)
+                    let startDate = cal.date(bySettingHour: 7, minute: 20, second: 0, of: date1!, matchingPolicy: Calendar.MatchingPolicy.nextTime, repeatedTimePolicy: Calendar.RepeatedTimePolicy.first, direction: Calendar.SearchDirection.forward)
                     event.startDate = startDate!
-                    event.endDate = (startDate?.dateByAddingTimeInterval(60*60))!;
+                    event.endDate = (startDate?.addingTimeInterval(60*60))!;
                     event.notes = self.detailTitle!.text!
                     event.calendar = calendar
                     let alarm : EKAlarm = EKAlarm(relativeOffset: -60*60*15)
@@ -166,7 +170,7 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
                     
                     var event_id = ""
                     do{
-                        try eventStore.saveEvent(event, span: .ThisEvent)
+                        try eventStore.save(event, span: .thisEvent)
                         event_id = event.eventIdentifier
                     }
                     catch let error as NSError {
@@ -174,12 +178,12 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
                     }
                     
                     if(event_id != ""){
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             let alertString = self.assignmentTitle.text! + " has been added to your calendar!"
-                            let alert = UIAlertController(title: "Added to Calendar" , message: alertString, preferredStyle: .Alert);
-                            let cool = UIAlertAction(title: "Cool!", style: .Default, handler: nil)
+                            let alert = UIAlertController(title: "Added to Calendar" , message: alertString, preferredStyle: .alert);
+                            let cool = UIAlertAction(title: "Cool!", style: .default, handler: nil)
                             alert.addAction(cool)
-                            self.presentViewController(alert, animated: true, completion: nil)
+                            self.present(alert, animated: true, completion: nil)
                             print("event added !")
                             
                         })
@@ -189,9 +193,9 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
             })
         }
     }
-    override func previewActionItems() -> [UIPreviewActionItem] {
+    override var previewActionItems : [UIPreviewActionItem] {
         if(calendarReady){
-            let addToCalendar = UIPreviewAction(title: "Add to Calendar", style: .Default) { (action: UIPreviewAction, vc : UIViewController) in
+            let addToCalendar = UIPreviewAction(title: "Add to Calendar", style: .default) { (action: UIPreviewAction, vc : UIViewController) in
                 print("Handler executing");
                 self.addtoCalendarClicked()
             }

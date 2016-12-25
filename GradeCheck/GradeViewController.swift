@@ -21,74 +21,75 @@ class GradeViewController: UITabBarController {
         for item in items! {
             let unselectedItem: NSDictionary = [NSForegroundColorAttributeName: UIColor(red: 55/255, green: 127/255, blue: 58/255, alpha: 1.0)]
             let selectedItem: NSDictionary = [NSForegroundColorAttributeName: UIColor(red: 91/255, green: 208/255, blue: 98/255, alpha: 1.0)]
-            item.setTitleTextAttributes(unselectedItem as? [String : AnyObject], forState: .Normal)
-            item.setTitleTextAttributes(selectedItem as? [String : AnyObject], forState: .Selected)
+            item.setTitleTextAttributes(unselectedItem as? [String : AnyObject], for: UIControlState())
+            item.setTitleTextAttributes(selectedItem as? [String : AnyObject], for: .selected)
         }
         
         print("Load");
-        let idObject = (grades[0]["objectID"] as! NSArray)[0] as! String
+        let g = grades[0] as! NSDictionary
+        let idObject = (g["objectID"] as! NSArray)[0] as! String
         let table = self.viewControllers?.first as! GradeTableViewController
         table.gradeArray = grades;
         let assignments = self.viewControllers?[1] as! AssignmentsTableViewController
         let cookieID = grades[0] as! NSDictionary;
-        let cookieArray = cookieID.objectForKey("cookie") as? NSArray;
+        let cookieArray = cookieID.object(forKey: "cookie") as? NSArray;
         assignments.cookie = cookieArray![0] as? String;
-        assignments.id = cookieID.objectForKey("id") as? String;
-        print(cookieID.objectForKey("id") as? String);
+        assignments.id = cookieID.object(forKey: "id") as? String;
+        print(cookieID.object(forKey: "id") as? String);
         let stats = self.viewControllers?[2] as! StatViewController
         stats.idString = idObject
         stats.gradesArray = grades;
         stats.cookie = cookieArray![0] as? String;
         
         let leftSwipe = UISwipeGestureRecognizer.init(target: self, action: #selector(GradeViewController.swipeLeft))
-        leftSwipe.direction = .Left
+        leftSwipe.direction = .left
         self.tabBar.addGestureRecognizer(leftSwipe);
         let rightSwipe = UISwipeGestureRecognizer.init(target: self, action: #selector(GradeViewController.swipeRight))
-        rightSwipe.direction = .Right
+        rightSwipe.direction = .right
         self.tabBar.addGestureRecognizer(rightSwipe)
         // Do any additional setup after loading the view.
     }
-    func refreshAndLogin(cookie:String){
+    func refreshAndLogin(_ cookie:String){
         print(cookie);
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"
         ]
-        let usernameString = "username=" + (keychain.getPasscode("GCUsername")! as String)
+        let usernameString = "username=" + (keychain.getPasscode(identifier: "GCUsername")! as String)
         print(usernameString)
-        let passwordString = "&password=" + (keychain.getPasscode("GCPassword")! as String)
+        let passwordString = "&password=" + (keychain.getPasscode(identifier: "GCPassword")! as String)
         print(passwordString)
         let cookieString = "&cookie=" + cookie;
         print(cookieString);
-        let postData = NSMutableData(data: usernameString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(passwordString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        if((self.keychain.getPasscode("GCEmail")) != ""){
-            let emailString = "&email=" + (self.keychain.getPasscode("GCEmail") as! String)
-            postData.appendData(emailString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        var postData = NSData(data: usernameString.data(using: String.Encoding.utf8)!) as Data
+        postData.append(passwordString.data(using: String.Encoding.utf8)!)
+        postData.append(cookieString.data(using: String.Encoding.utf8)!)
+        if((self.keychain.getPasscode(identifier: "GCEmail")) != ""){
+            let emailString = "&email=" + (self.keychain.getPasscode(identifier: "GCEmail")!)
+            postData.append(emailString.data(using: String.Encoding.utf8)!)
             print("in")
         }
         
-        let request = NSMutableURLRequest(URL: NSURL(string: url + "relogin")!,
-                                          cachePolicy: .UseProtocolCachePolicy,
+        let request = NSMutableURLRequest(url: URL(string: url + "relogin")!,
+                                          cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 10.0)
-        request.HTTPMethod = "POST"
+        request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
-        request.HTTPBody = postData
+        request.httpBody = postData
         
-        let session = NSURLSession.sharedSession()
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 print(error)
             } else {
-                let httpResponse = response as? NSHTTPURLResponse
+                let httpResponse = response as? HTTPURLResponse
                 print(httpResponse)
                 if(httpResponse?.statusCode == 200){
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         do{
-                            let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             let dict = jsonDict[0] as! NSDictionary
-                            let hafl = dict.objectForKey("cookie") as! NSArray;
+                            let hafl = dict.object(forKey: "cookie") as! NSArray;
                             let table = self.viewControllers?.first as! GradeTableViewController
                             table.cookie = hafl[0] as! String;
                             let assignments = self.viewControllers?[1] as! AssignmentsTableViewController
@@ -100,14 +101,14 @@ class GradeViewController: UITabBarController {
                         }
                     })
                 }else{
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         
                         let alert = UIAlertController(title: "Connection Error:", message: "Incorrect login or server idle. Please try again. Status Code :" +
-                            String(httpResponse!.statusCode), preferredStyle: .Alert);
-                        let action = UIAlertAction(title: "OK", style: .Default, handler: { (alert) in
+                            String(httpResponse!.statusCode), preferredStyle: .alert);
+                        let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
                         })
                         alert.addAction(action)
-                        self.presentViewController(alert, animated: true, completion: nil);
+                        self.present(alert, animated: true, completion: nil);
                     });
                 }
             }
@@ -115,7 +116,7 @@ class GradeViewController: UITabBarController {
         
         dataTask.resume()
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
     }
     override func didReceiveMemoryWarning() {

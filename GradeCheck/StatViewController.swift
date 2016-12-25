@@ -27,9 +27,9 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var sortedArray : [Grade] = [];
     var cookie : String!
     var idString : String!
-    @IBAction func settingsSelected(sender:UIButton){
+    @IBAction func settingsSelected(_ sender:UIButton){
         CellAnimation.growAndShrink(self.settings)
-        self.performSegueWithIdentifier("SettingSegue", sender: self)
+        self.performSegue(withIdentifier: "SettingSegue", sender: self)
         
     }
     override func viewDidLoad() {
@@ -39,10 +39,10 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.statTable.delegate = self;
         self.statTable.layer.cornerRadius = 10;
         let leftSwipe = UISwipeGestureRecognizer(target: self.tabBarController, action: #selector(GradeViewController.swipeLeft))
-        leftSwipe.direction = .Left
+        leftSwipe.direction = .left
         self.view.addGestureRecognizer(leftSwipe)
         let rightSwipe = UISwipeGestureRecognizer(target: self.tabBarController, action: #selector(GradeViewController.swipeRight))
-        rightSwipe.direction = .Right;
+        rightSwipe.direction = .right;
         self.view.addGestureRecognizer(rightSwipe)
 
         
@@ -52,33 +52,33 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func touched(){
         print("called")
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("StatClassCell", forIndexPath: indexPath) as! StatTableViewCell;
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StatClassCell", for: indexPath) as! StatTableViewCell;
         let element = self.sortedArray[indexPath.row] ;
         cell.classTitle.text = element.classTitle
         let g = element.grade
-            switch Int(g){
+            switch Int(g!){
             case 0..<50:
-                cell.backgroundColor = UIColor.blackColor()
+                cell.backgroundColor = UIColor.black
             case 51..<75 :
-                cell.backgroundColor = UIColor.redColor()
+                cell.backgroundColor = UIColor.red
             case 76..<85 :
-                cell.backgroundColor = UIColor.yellowColor()
+                cell.backgroundColor = UIColor.yellow
             case 86..<110 :
                 cell.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
             default :
-                cell.backgroundColor = UIColor.purpleColor()
+                cell.backgroundColor = UIColor.purple
             }
        
         return cell
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sortedArray.count;
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.getGPA()
     }
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let realCell = cell as! StatTableViewCell;
         realCell.backgroundColor = realCell.backgroundColor;
         CellAnimation.slide(realCell)
@@ -97,17 +97,17 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             var grade : String!;
             var gradeInt : Int!;
             
-            if(a.objectForKey("grade") as! String == "No Grades" || a.objectForKey("grade") as! String == "0%"){
-                let new = Grade(grade: 0, className: gradesArray[i].objectForKey("class") as! String, dictionaryObject : a as! NSDictionary);
+            if((a as AnyObject).object(forKey: "grade") as! String == "No Grades" || (a as AnyObject).object(forKey: "grade") as! String == "0%"){
+                let new = Grade(grade: 0, className: (gradesArray[i] as AnyObject).object(forKey: "class") as! String, dictionaryObject : a as! NSDictionary);
                 self.sortedArray.append(new)
                 continue;
             }
-            if(((a.objectForKey("class")!.containsString(" H") && (a.objectForKey("class") as! String).characters.last == "H") || a.objectForKey("class")!.containsString("AP") || a.objectForKey("class")!.containsString("Honors") || a.objectForKey("class")!.containsString("Hon")) && NSUserDefaults.standardUserDefaults().objectForKey("GPA") as! String == "Weighted"){
-                grade = a.objectForKey("grade") as! String;
+            if(((((a as AnyObject).object(forKey: "class")! as AnyObject).contains(" H") && ((a as AnyObject).object(forKey: "class") as! String).characters.last == "H") || ((a as AnyObject).object(forKey: "class")! as AnyObject).contains("AP") || ((a as AnyObject).object(forKey: "class")! as AnyObject).contains("Honors") || ((a as AnyObject).object(forKey: "class")! as AnyObject).contains("Hon")) && UserDefaults.standard.object(forKey: "GPA") as! String == "Weighted"){
+                grade = (a as AnyObject).object(forKey: "grade") as! String;
                 grade = String(grade.characters.dropLast());
                 gradeInt = Int(grade)! + 5;
                 gradeTotal += Double(gradeInt);
-                let new = Grade(grade: gradeInt, className: a.objectForKey("class") as! String, dictionaryObject : a as! NSDictionary);
+                let new = Grade(grade: gradeInt, className: (a as AnyObject).object(forKey: "class") as! String, dictionaryObject : a as! NSDictionary);
                 self.sortedArray.append(new);
                 if(gradeInt > 100){
                     gradeInt = 100;
@@ -116,10 +116,10 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 classes += 1;
                 
             }else{
-                grade = a.objectForKey("grade") as! String
+                grade = (a as AnyObject).object(forKey: "grade") as! String
                 grade = String(grade.characters.dropLast());
                 gradeInt = Int(grade)!;
-                let new = Grade(grade: gradeInt, className: a.objectForKey("class") as! String, dictionaryObject : a as! NSDictionary);
+                let new = Grade(grade: gradeInt, className: (a as AnyObject).object(forKey: "class") as! String, dictionaryObject : a as! NSDictionary);
                 self.sortedArray.append(new);
                 gradeTotal += Double(gradeInt);
                 if(gradeInt > 95){
@@ -143,14 +143,14 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         CellAnimation.growAndShrink(self.gpaCircle);
         self.gpaCircle.GPA.text = String(gpa)
         self.gpaCircle.avg.text = String(average) + "%";
-        self.sortedArray.sortInPlace { (element, second) -> Bool in
+        self.sortedArray.sort { (element, second) -> Bool in
             return element.grade > second.grade
         }
         self.statTable.reloadData()
 
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("StatSegue", sender: self)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "StatSegue", sender: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -163,23 +163,23 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if(segue.identifier == "StatSegue"){
-            let view = segue.destinationViewController as! DetailStatViewController
+            let view = segue.destination as! DetailStatViewController
             view.data = self.sortedArray[self.statTable.indexPathForSelectedRow!.row].dictionaryObject as NSDictionary
             view.gradesArray = self.gradesArray
             view.cookie = self.cookie;
             let selectedObject = self.sortedArray[self.statTable.indexPathForSelectedRow!.row];
             view.className = selectedObject.classTitle
-            self.statTable.deselectRowAtIndexPath(self.statTable.indexPathForSelectedRow!, animated: true)
-            if(NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") != nil && (NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as! String) != "MP4"){
-                view.markingPeriod = NSUserDefaults.standardUserDefaults().objectForKey("GradeTableMP") as? String
+            self.statTable.deselectRow(at: self.statTable.indexPathForSelectedRow!, animated: true)
+            if(UserDefaults.standard.object(forKey: "GradeTableMP") != nil && (UserDefaults.standard.object(forKey: "GradeTableMP") as! String) != "MP4"){
+                view.markingPeriod = UserDefaults.standard.object(forKey: "GradeTableMP") as? String
             }
 
         }else if(segue.identifier == "SettingSegue"){
-            let view = segue.destinationViewController as! SettingsViewController
+            let view = segue.destination as! SettingsViewController
             view.objectID = self.idString
         }
     }

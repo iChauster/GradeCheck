@@ -35,16 +35,16 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         self.rankView.layer.cornerRadius = 0.5 * self.rankView.bounds.size.width;
         self.percentileView.layer.cornerRadius = 0.5 * self.percentileView.bounds.size.width;
         self.statisticsTable.layer.cornerRadius = 10;
-        self.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationBar.tintColor = UIColor.white
         // Do any additional setup after loading the view.
         self.graph.delegate = self;
         self.statisticsTable.dataSource = self;
         self.statisticsTable.delegate = self;
         self.graph.descriptionText = "Check out your class's grading curve.";
-        self.graph.descriptionTextColor = UIColor.whiteColor();
+        self.graph.descriptionTextColor = UIColor.white;
         self.graph.drawGridBackgroundEnabled = true;
         self.graph.gridBackgroundColor = UIColor(red: 0.0, green: 0.5019, blue: 0.2509, alpha: 1.0)
-        self.graph.animate(yAxisDuration: 3.0, easingOption: .EaseInOutQuart)
+        self.graph.animate(yAxisDuration: 3.0, easingOption: .easeInOutQuart)
         self.graph.noDataText = "No Data Available";
         self.navItem.title = self.className
         let headers = [
@@ -56,34 +56,34 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         if((self.data["grade"]as! String) != "No Grades"){
             self.getClassData();
         }else{
-            let alert = UIAlertController(title: "No Data!", message: "Grades are not in for the quarter yet!", preferredStyle: .Alert);
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let alert = UIAlertController(title: "No Data!", message: "Grades are not in for the quarter yet!", preferredStyle: .alert);
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
         let classNameString = "className=" + self.className;
         print("className=" + self.className)
-        let postData = NSMutableData(data: classNameString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        let postData = NSData(data: classNameString.data(using: String.Encoding.utf8)!) as Data
         //postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: url + "classdata")!,
-                                          cachePolicy: .UseProtocolCachePolicy,
+        let request = NSMutableURLRequest(url: URL(string: url + "classdata")!,
+                                          cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 10.0)
-        request.HTTPMethod = "POST"
+        request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
-        request.HTTPBody = postData
+        request.httpBody = postData
         
-        let session = NSURLSession.sharedSession()
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 print(error)
             } else {
-                let httpResponse = response as? NSHTTPURLResponse
+                let httpResponse = response as? HTTPURLResponse
                 print(httpResponse)
                 if(httpResponse?.statusCode == 200){
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         do{
-                            let graphDataCont = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            let graphDataCont = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             for i in 0..<graphDataCont.count{
                                 let element = graphDataCont[i] as! NSDictionary;
                                 print(element)
@@ -98,10 +98,10 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
                             self.getGraphData(self.results)
                             
                             }else{
-                                let alert = UIAlertController(title: "No Data!", message: "Grades are not in for the quarter yet!", preferredStyle: .Alert);
-                                let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                                let alert = UIAlertController(title: "No Data!", message: "Grades are not in for the quarter yet!", preferredStyle: .alert);
+                                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                                 alert.addAction(okAction)
-                                self.presentViewController(alert, animated: true, completion: nil)
+                                self.present(alert, animated: true, completion: nil)
                             }
                             CellAnimation.growAndShrink(self.meanView)
                             CellAnimation.growAndShrink(self.rankView)
@@ -112,12 +112,12 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
                     })
                     
                 }else if(httpResponse?.statusCode == 440){
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         do{
-                            let cookie = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            let cookie = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             print(cookie);
                             let cooke = cookie[0] as! NSDictionary
-                            let hafl = cooke.objectForKey("set-cookie") as! NSArray;
+                            let hafl = cooke.object(forKey: "set-cookie") as! NSArray;
                             self.cookie = hafl[0] as! String;
                             print(self.cookie);
                             
@@ -133,14 +133,14 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         dataTask.resume()
     
     }
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     func getClassData(){
         print("getClassDataCalled")
-        let classString = self.data.objectForKey("classCodes");
+        let classString = self.data.object(forKey: "classCodes");
         let secondDemiliter = ":";
-        let tok = classString!.componentsSeparatedByString(secondDemiliter);
+        let tok = (classString! as AnyObject).components(separatedBy: secondDemiliter);
         let course = tok[0]
         let section = tok[1];
         print(course + " " + section)
@@ -152,38 +152,38 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         print("className=" + self.className)
         let courseString = "&course=" + course;
         let sectionString = "&section=" + section;
-        let idString = "&id=" + (NSUserDefaults .standardUserDefaults().objectForKey("id")as! String);
+        let idString = "&id=" + (UserDefaults.standard.object(forKey: "id")as! String);
         let cookieString = "&cookie=" + self.cookie
         
         
-        let postData = NSMutableData(data: classNameString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(courseString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(sectionString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(idString.dataUsingEncoding(NSUTF8StringEncoding)!)
-        postData.appendData(cookieString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        var postData = NSData(data: classNameString.data(using: String.Encoding.utf8)!) as Data
+        postData.append(courseString.data(using: String.Encoding.utf8)!)
+        postData.append(sectionString.data(using: String.Encoding.utf8)!)
+        postData.append(idString.data(using: String.Encoding.utf8)!)
+        postData.append(cookieString.data(using: String.Encoding.utf8)!)
         if(self.markingPeriod != nil){
             let stringMarkingPeriod = "&markingPeriod=" + self.markingPeriod!
-            postData.appendData(stringMarkingPeriod.dataUsingEncoding(NSUTF8StringEncoding)!)
+            postData.append(stringMarkingPeriod.data(using: String.Encoding.utf8)!)
         }
         //please stop looking at my fucking code you creep (ง •̀_•́)ง
-        let request = NSMutableURLRequest(URL: NSURL(string: url + "classAverages")!,
-                                          cachePolicy: .UseProtocolCachePolicy,
+        let request = NSMutableURLRequest(url: URL(string: url + "classAverages")!,
+                                          cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 10.0)
-        request.HTTPMethod = "POST"
+        request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
-        request.HTTPBody = postData
+        request.httpBody = postData
         // < <> >
-        let session = NSURLSession.sharedSession()
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 print(error)
             } else {
-                let httpResponse = response as? NSHTTPURLResponse
+                let httpResponse = response as? HTTPURLResponse
                 print(httpResponse)
                 if(httpResponse?.statusCode == 200){
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         do{
-                            let graphDataCont = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            let graphDataCont = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             self.dataArray = graphDataCont
                             self.statisticsTable.reloadData();
                         }catch{
@@ -192,12 +192,12 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
                     })
                     
                 }else if(httpResponse?.statusCode == 440){
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         do{
-                            let cookie = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSArray;
+                            let cookie = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             print(cookie);
                             let cooke = cookie[0] as! NSDictionary
-                            let hafl = cooke.objectForKey("set-cookie") as! NSArray;
+                            let hafl = cooke.object(forKey: "set-cookie") as! NSArray;
                             self.cookie = hafl[0] as! String;
                             print(self.cookie);
                             
@@ -214,7 +214,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
 
         
     }
-    func getGraphData(dataPoints : [GraphData]){
+    func getGraphData(_ dataPoints : [GraphData]){
         var data : [ChartDataEntry] = []
         /*for i in 0..<dataPoints.count {
             let entry = ChartDataEntry(value: values[i], xIndex :i)
@@ -224,14 +224,14 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         var gradeSum : Int = 0;
         for i in 0..<dataPoints.count {
             let element = dataPoints[i];
-            let entry = ChartDataEntry(value:Double(element.occurences),xIndex:element.grade)
+            let entry = ChartDataEntry(x:Double(element.grade),y:Double(element.occurences))
             data.append(entry)
             gradeSum += element.grade;
             gradeArray.append(element.grade);
         }
-        gradeArray.sortInPlace()
+        gradeArray.sort()
         print(gradeArray)
-        gradeArray = gradeArray.reverse()
+        gradeArray = gradeArray.reversed()
         print(gradeArray)
         let meanGrade = Double(gradeSum) / Double(dataPoints.count);
         let meanString = String(format: "%.1f", meanGrade)
@@ -240,51 +240,51 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         for i in 0..<110 {
             array.append(String(i))
         }
-        let lineChartDataSet = LineChartDataSet(yVals: data, label: "Number of Students");
-        lineChartDataSet.setColor(UIColor.whiteColor().colorWithAlphaComponent(0.5));
-        lineChartDataSet.setCircleColor(UIColor.greenColor());
+        let lineChartDataSet = LineChartDataSet(values: data, label: "Number of Students");
+        lineChartDataSet.setColor(UIColor.white.withAlphaComponent(0.5));
+        lineChartDataSet.setCircleColor(UIColor.green);
         lineChartDataSet.lineWidth = 2.0;
         lineChartDataSet.circleRadius = 5.0;
         lineChartDataSet.fillAlpha = 65 / 255.0
-        lineChartDataSet.fillColor = UIColor.greenColor()
-        lineChartDataSet.highlightColor = UIColor.whiteColor();
+        lineChartDataSet.fillColor = UIColor.green
+        lineChartDataSet.highlightColor = UIColor.white;
         lineChartDataSet.drawCircleHoleEnabled = true;
-        lineChartDataSet.drawCubicEnabled = true;
-        let lineChartData = LineChartData(xVals: array, dataSet: lineChartDataSet)
-        lineChartData.setValueTextColor(UIColor.whiteColor())
+        lineChartDataSet.mode = .cubicBezier
+        let lineChartData = LineChartData(dataSet: lineChartDataSet)
+        lineChartData.setValueTextColor(UIColor.white)
         self.graph.data = lineChartData;
         var selfLimit = self.data["grade"] as! String
         selfLimit = String(selfLimit.characters.dropLast())
         let limitLine = ChartLimitLine(limit: Double(selfLimit)! , label: "You")
-        limitLine.lineColor = UIColor.redColor()
-        limitLine.valueTextColor = UIColor.whiteColor()
+        limitLine.lineColor = UIColor.red
+        limitLine.valueTextColor = UIColor.white
         limitLine.enabled = true;
         limitLine.lineWidth = 2.0;
         self.graph.xAxis.addLimitLine(limitLine)
         
-        var indexSelfLimit = Int(gradeArray.indexOf(Int(selfLimit)!)!)
+        var indexSelfLimit = Int(gradeArray.index(of: Int(selfLimit)!)!)
         indexSelfLimit += 1;
         
         self.updateRankView(String(indexSelfLimit), totalString: String(dataPoints.count))
-        self.updatePercentileView(gradeArray.reverse(),controlGrade: Int(selfLimit)!);
+        self.updatePercentileView(gradeArray.reversed(),controlGrade: Int(selfLimit)!);
     }
-    func updateMeanView(mean:String){
+    func updateMeanView(_ mean:String){
         self.meanView.meanLabel.text = mean;
     }
-    func updateRankView(rank : String, totalString : String){
+    func updateRankView(_ rank : String, totalString : String){
         print(rank + totalString)
         self.rankView.rankLabel.text = rank;
         self.rankView.totalLabel.text = totalString;
     }
-    func updatePercentileView(gradeArray : [Int], controlGrade: Int){
+    func updatePercentileView(_ gradeArray : [Int], controlGrade: Int){
        // PR% = Lower Rank + ( 0.5 x Same Rank ) / N (Total)
         /*let arr2 = [1,2,3,4,5,6,7,8,9,10]
         let indexOfFirstGreaterThanFive = arr2.indexOf({$0 > 5}) // 5
         let indexOfFirstGreaterThanOneHundred = arr2.indexOf({$0 > 100}) // nil*/
         //deal with when you have the highest grade, etc.
-        let indexesAboveControl = gradeArray.indexOf({$0 > controlGrade})
+        let indexesAboveControl = gradeArray.index(where: {$0 > controlGrade})
         if(indexesAboveControl != nil){
-            let indexOfGrade = gradeArray.indexOf(controlGrade)
+            let indexOfGrade = gradeArray.index(of: controlGrade)
             print(indexesAboveControl)
             print(indexOfGrade)
             let numberAbove = gradeArray.count - indexesAboveControl!
@@ -301,27 +301,27 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         }
     }
     @IBAction func segueToGradeView(){
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(self.dataArray.count == 0){
             return 0;
         }else{
             return 3;
         }
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("DetailStatCell", forIndexPath: indexPath) as! DetailStatTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DetailStatCell", for: indexPath) as! DetailStatTableViewCell
         let given = self.dataArray[indexPath.section] as! NSDictionary;
         print(given)
         cell.backgroundColor = UIColor(red: 55.0/255, green: 127.0/255, blue: 58.0/255, alpha: 1.0);
         let grades = given["grades"] as! NSDictionary
         var arrayOfGrades = grades["grades"] as! [Double];
-        arrayOfGrades.sortInPlace();
+        arrayOfGrades.sort();
         print(arrayOfGrades)
         if(indexPath.row == 0){
             cell.titleLabel.text = "Average " + (given["category"] as! String) + " Score :";
@@ -330,15 +330,15 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
             cell.dataView.dataLabel.text = String(format: "%.1f", averageScore) + "%";
             switch Int(averageScore){
             case 0..<50:
-                cell.dataView.backgroundColor = UIColor.blackColor()
+                cell.dataView.backgroundColor = UIColor.black
             case 51..<75 :
-                cell.dataView.backgroundColor = UIColor.redColor()
+                cell.dataView.backgroundColor = UIColor.red
             case 76..<85 :
-                cell.dataView.backgroundColor = UIColor.yellowColor()
+                cell.dataView.backgroundColor = UIColor.yellow
             case 86..<110 :
                 cell.dataView.backgroundColor = UIColor(red:0.1574, green:0.6298, blue:0.2128, alpha: 1.0)
             default :
-                cell.dataView.backgroundColor = UIColor.purpleColor()
+                cell.dataView.backgroundColor = UIColor.purple
             }
         }else if(indexPath.row == 1){
             cell.titleLabel.text = "Highest Score : ";
@@ -346,15 +346,15 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
             cell.dataView.dataLabel.text = String(format: "%.1f", finalElement!) + "%";
             switch Int(finalElement!){
             case 0..<50:
-                cell.dataView.backgroundColor = UIColor.blackColor()
+                cell.dataView.backgroundColor = UIColor.black
             case 51..<75 :
-                cell.dataView.backgroundColor = UIColor.redColor()
+                cell.dataView.backgroundColor = UIColor.red
             case 76..<85 :
-                cell.dataView.backgroundColor = UIColor.yellowColor()
+                cell.dataView.backgroundColor = UIColor.yellow
             case 86..<110 :
                 cell.dataView.backgroundColor = UIColor(red:0.1574, green:0.6298, blue:0.2128, alpha: 1.0)
             default :
-               cell.dataView.backgroundColor = UIColor.purpleColor()
+               cell.dataView.backgroundColor = UIColor.purple
             }
 
         }else if(indexPath.row == 2){
@@ -363,34 +363,34 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
             cell.dataView.dataLabel.text = String(format:"%.1f", firstElement!) + "%";
             switch Int(firstElement!){
             case 0..<50:
-                cell.dataView.backgroundColor = UIColor.blackColor()
+                cell.dataView.backgroundColor = UIColor.black
             case 51..<75 :
-                cell.dataView.backgroundColor = UIColor.redColor()
+                cell.dataView.backgroundColor = UIColor.red
             case 76..<85 :
-                cell.dataView.backgroundColor = UIColor.yellowColor()
+                cell.dataView.backgroundColor = UIColor.yellow
             case 86..<110 :
                 cell.dataView.backgroundColor = UIColor(red:0.1574, green:0.6298, blue:0.2128, alpha: 1.0)
             default :
-                cell.dataView.backgroundColor = UIColor.purpleColor()
+                cell.dataView.backgroundColor = UIColor.purple
             }
             
         }else{
-            let a = UIAlertController(title: "Something Got MESSED UP", message: "Whoops.", preferredStyle: .Alert)
-            self.presentViewController(a, animated: true, completion: nil);
+            let a = UIAlertController(title: "Something Got MESSED UP", message: "Whoops.", preferredStyle: .alert)
+            self.present(a, animated: true, completion: nil);
         }
         cell.backgroundColor = cell.backgroundColor;
         return cell
     }
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let actualCell = cell as! DetailStatTableViewCell
         CellAnimation.growAndShrink(actualCell.dataView)
         actualCell.backgroundColor = actualCell.contentView.backgroundColor;
 
     }
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return self.dataArray.count;
     }
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if(self.dataArray.count > 0){
             let dealing = self.dataArray[section] as! NSDictionary
             let string = dealing["category"] as! String
@@ -407,16 +407,16 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         }
     }
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let headerView = view as! UITableViewHeaderFooterView
-        headerView.textLabel?.textColor = UIColor.whiteColor()
-        headerView.backgroundView?.backgroundColor = UIColor.blackColor()
+        headerView.textLabel?.textColor = UIColor.white
+        headerView.backgroundView?.backgroundColor = UIColor.black
     }
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         

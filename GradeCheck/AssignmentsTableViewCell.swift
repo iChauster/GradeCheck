@@ -19,15 +19,15 @@ class AssignmentsTableViewCell: UITableViewCell {
     @IBOutlet weak var parent : AssignmentsTableViewController!
     var dateString : String!
     var calendarReady : Bool = true;
-    @IBAction func addtoCalendarClicked(sender: AnyObject) {
+    @IBAction func addtoCalendarClicked(_ sender: AnyObject) {
         if(calendarReady){
             let eventStore = EKEventStore()
             
-            eventStore.requestAccessToEntityType( EKEntityType.Event, completion:{(granted, error) in
+            eventStore.requestAccess( to: EKEntityType.event, completion:{(granted, error) in
                 if (granted) && (error == nil) {
                     var localSource : EKSource = EKSource()
                     for source in eventStore.sources {
-                        if (source.sourceType == EKSourceType.CalDAV &&
+                        if (source.sourceType == EKSourceType.calDAV &&
                             source.title == "iCloud")
                         {
                             localSource = source;
@@ -39,7 +39,7 @@ class AssignmentsTableViewCell: UITableViewCell {
                     {
                         for source in eventStore.sources
                         {
-                            if (source.sourceType == .Local)
+                            if (source.sourceType == .local)
                             {
                                 localSource = source;
                                 break;
@@ -47,22 +47,22 @@ class AssignmentsTableViewCell: UITableViewCell {
                         }
                     }
                     var calendar : EKCalendar;
-                    if (NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") == nil || (NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") as! String) == ""){
-                        calendar = EKCalendar(forEntityType: EKEntityType.Event, eventStore: eventStore)
+                    if (UserDefaults.standard.object(forKey: "calendarIdentifier") == nil || (UserDefaults.standard.object(forKey: "calendarIdentifier") as! String) == ""){
+                        calendar = EKCalendar(for: EKEntityType.event, eventStore: eventStore)
                         calendar.title = "GradeCheck"
-                        calendar.CGColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0).CGColor
+                        calendar.cgColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0).cgColor
                         calendar.source = localSource
                         do{
                             try eventStore.saveCalendar(calendar, commit: true)
                         }catch let error as NSError{
-                            let failureAlert = UIAlertController(title: "Error", message: "Failed to create calendar." + error.localizedDescription, preferredStyle: .Alert)
-                            let action = UIAlertAction(title: "Darn.", style: .Default, handler: nil)
+                            let failureAlert = UIAlertController(title: "Error", message: "Failed to create calendar." + error.localizedDescription, preferredStyle: .alert)
+                            let action = UIAlertAction(title: "Darn.", style: .default, handler: nil)
                             failureAlert.addAction(action)
-                            self.parent.presentViewController(failureAlert, animated: true, completion: nil)
+                            self.parent.present(failureAlert, animated: true, completion: nil)
                         }
-                        NSUserDefaults.standardUserDefaults().setObject(calendar.calendarIdentifier, forKey: "calendarIdentifier")
+                        UserDefaults.standard.set(calendar.calendarIdentifier, forKey: "calendarIdentifier")
                     }else{
-                        if let c = eventStore.calendarWithIdentifier(NSUserDefaults.standardUserDefaults().objectForKey("calendarIdentifier") as! String) {
+                        if let c = eventStore.calendar(withIdentifier: UserDefaults.standard.object(forKey: "calendarIdentifier") as! String) {
                             calendar = c
                         }else{
                             calendar = eventStore.defaultCalendarForNewEvents
@@ -73,14 +73,14 @@ class AssignmentsTableViewCell: UITableViewCell {
                     let event = EKEvent(eventStore: eventStore)
                     
                     event.title = self.title.text!
-                    let dateFormatter = NSDateFormatter()
+                    let dateFormatter = DateFormatter()
                     dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd/yy")
-                    let date1 = dateFormatter.dateFromString(self.dateString);
-                    let cal: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-                    let startDate = cal.dateBySettingHour(7, minute: 20, second: 0, ofDate: date1!, options: .MatchFirst)
+                    let date1 = dateFormatter.date(from: self.dateString);
+                    let cal: Calendar! = Calendar(identifier: Calendar.Identifier.gregorian)
+                    let startDate = cal.date(bySettingHour: 7, minute: 20, second: 0, of: date1!, matchingPolicy: Calendar.MatchingPolicy.nextTime, repeatedTimePolicy: Calendar.RepeatedTimePolicy.first, direction: Calendar.SearchDirection.forward)
                     
                     event.startDate = startDate!
-                    event.endDate = (startDate?.dateByAddingTimeInterval(60*60))!;
+                    event.endDate = (startDate?.addingTimeInterval(60*60))!;
                     event.notes = self.detail.text!
                     event.calendar = calendar
                     let alarm : EKAlarm = EKAlarm(relativeOffset: -60*60*15)
@@ -88,7 +88,7 @@ class AssignmentsTableViewCell: UITableViewCell {
                     event.alarms = [alarm, secondAlarm]
                     var event_id = ""
                     do{
-                        try eventStore.saveEvent(event, span: .ThisEvent)
+                        try eventStore.save(event, span: .thisEvent)
                         event_id = event.eventIdentifier
                     }
                     catch let error as NSError {
@@ -96,12 +96,12 @@ class AssignmentsTableViewCell: UITableViewCell {
                     }
                     
                     if(event_id != ""){
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             let alertString = self.title.text! + " has been added to your calendar! You may need to sync with iCloud calendar to see these features."
-                            let alert = UIAlertController(title: "Added to Calendar" , message: alertString, preferredStyle: .Alert);
-                            let cool = UIAlertAction(title: "Cool!", style: .Default, handler: nil)
+                            let alert = UIAlertController(title: "Added to Calendar" , message: alertString, preferredStyle: .alert);
+                            let cool = UIAlertAction(title: "Cool!", style: .default, handler: nil)
                             alert.addAction(cool)
-                            self.parent.presentViewController(alert, animated: true, completion: nil)
+                            self.parent.present(alert, animated: true, completion: nil)
                             print("event added !")
                             
                         })
@@ -123,7 +123,7 @@ class AssignmentsTableViewCell: UITableViewCell {
         CellAnimation.growAndShrink(self.grade)
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
