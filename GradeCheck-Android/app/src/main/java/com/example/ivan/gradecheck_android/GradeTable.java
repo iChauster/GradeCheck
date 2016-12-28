@@ -5,12 +5,15 @@ import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ViewFlipper;
 import android.support.v7.widget.*;
+import android.widget.TextView;
 import org.json.*;
 import android.content.SharedPreferences;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
 
 import me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout;
 import me.majiajie.pagerbottomtabstrip.TabItemBuilder;
@@ -29,6 +32,8 @@ public class GradeTable extends AppCompatActivity{
     private RecyclerView assignmentView;
     private RecyclerView tableView;
     private SwipeRefreshLayout gradeSl;
+    private SwipeRefreshLayout assignmentSl;
+    private TextView noAssignments;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +41,21 @@ public class GradeTable extends AppCompatActivity{
         tableView = (RecyclerView) findViewById(R.id.gradeView);
         RecyclerView statisticsView = (RecyclerView) findViewById(R.id.lineUpView);
         assignmentView = (RecyclerView) findViewById(R.id.assignmentView);
+        noAssignments = (TextView) findViewById(R.id.noAssignments);
         gradeSl = (SwipeRefreshLayout) findViewById(R.id.SwipeLayout);
         gradeSl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 SharedPreferences pref = getSharedPreferences("GradeCheckInfo", 0);
                 refreshGrades(cookie,pref.getString("id", ""), URL);
+            }
+        });
+        assignmentSl = (SwipeRefreshLayout) findViewById(R.id.AssignmentsSwipeLayout);
+        assignmentSl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                SharedPreferences pref = getSharedPreferences("GradeCheckInfo", 0);
+                makeAssignmentRequest(cookie,pref.getString("id", ""), URL);
             }
         });
         tableView.setHasFixedSize(true);
@@ -87,6 +101,7 @@ public class GradeTable extends AppCompatActivity{
                 JSONObject js =  j.getJSONObject(0);
                 JSONArray co = (JSONArray) js.get("cookie");
                 cookie = co.get(0).toString();
+                cookie = "[ 'JSESSIONID=7A889AF049920A0016F0809FB289BB49; Path=/genesis/; Secure; HttpOnly' ]";
                 RecyclerView.Adapter ra = new GradeCellAdapter(j);
                 tableView.setAdapter(ra);
             }catch(JSONException a){
@@ -99,9 +114,20 @@ public class GradeTable extends AppCompatActivity{
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                assignmentSl.setRefreshing(false);
                 RecyclerView.Adapter assignmentAdapter = new AssignmentCellAdapter(b);
                 assignmentView.setAdapter(assignmentAdapter);
+                if(b.length() != 0) {
+                    System.out.println("THERE ARE ASSIGNMENTS TO BE DISPLAYED");
+                    noAssignments.setVisibility(View.INVISIBLE);
+                    assignmentView.setVisibility(View.VISIBLE);
+                }else{
+                    System.out.println("THERE ARE NO ASSIGNMENTS TO BE DISPLAYED");
+                    noAssignments.setVisibility(View.VISIBLE);
+                    assignmentView.setVisibility(View.INVISIBLE);
+                }
                 VF.setDisplayedChild(1);
+
             }
         });
     }
@@ -142,7 +168,10 @@ public class GradeTable extends AppCompatActivity{
         }
     };
     public void setCookie(String c){
+        System.out.println("Cookie set " + this.cookie);
         this.cookie = c;
+        System.out.println("Cookie set to " + this.cookie);
+
     }
     public void checkCookieAndValidate(String co){
         Req r = new Req();
@@ -150,7 +179,7 @@ public class GradeTable extends AppCompatActivity{
             SharedPreferences pref = getSharedPreferences("GradeCheckInfo", 0);
             String U = pref.getString("Username", "");
             String P = pref.getString("Password", "");
-            r.reLoginRequest(co,U,P, URL + "assignments", new Callback() {
+            r.reLoginRequest(co,U,P, URL + "relogin", new Callback() {
                 @Override public void onFailure(Call call, IOException e) {
                     System.err.println("Error detected");
                     e.printStackTrace();
@@ -168,7 +197,8 @@ public class GradeTable extends AppCompatActivity{
                     try {
                         JSONArray j = new JSONArray(response.body().string());
                         JSONObject o = j.getJSONObject(0);
-                        setCookie(o.getString("cookie"));
+                        JSONArray at = o.getJSONArray("cookie");
+                        setCookie(at.get(0).toString());
                     } catch (JSONException a) {
                         System.err.println(a);
                     }
@@ -182,7 +212,9 @@ public class GradeTable extends AppCompatActivity{
     }
     public void refreshGrades(String cookie, String id, String URL){
         Req r = new Req();
-
+        System.out.println(cookie);
+        System.out.println(id);
+        System.out.println(URL);
         try {
             r.gradeBookRequest(cookie,id,URL + "gradebook", new Callback() {
                 @Override public void onFailure(Call call, IOException e) {
@@ -191,8 +223,7 @@ public class GradeTable extends AppCompatActivity{
                 }
 
                 @Override public void onResponse(Call call, Response response) throws IOException {
-                    if (!response.isSuccessful())
-                        throw new IOException("Unexpected code " + response);
+
                     if(response.code() == 200) {
                         Headers responseHeaders = response.headers();
                         for (int i = 0, size = responseHeaders.size(); i < size; i++) {
@@ -219,7 +250,12 @@ public class GradeTable extends AppCompatActivity{
                             JSONObject cok = j.getJSONObject(0);
                             JSONArray hafl = cok.getJSONArray("set-cookie");
                             checkCookieAndValidate(hafl.getString(0));
-                            gradeSl.setRefreshing(false);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    gradeSl.setRefreshing(false);
+                                }
+                            });
                         } catch (JSONException a) {
                             System.out.println(a);
                         }
@@ -230,7 +266,6 @@ public class GradeTable extends AppCompatActivity{
             System.out.println("Error");
             e.printStackTrace();
         }
-
 
     }
     public void makeAssignmentRequest(String cookie, String id, String URL){
@@ -245,19 +280,36 @@ public class GradeTable extends AppCompatActivity{
                 @Override public void onResponse(Call call, Response response) throws IOException {
                     if (!response.isSuccessful())
                         throw new IOException("Unexpected code " + response);
+                    if(response.code() == 200) {
+                        Headers responseHeaders = response.headers();
+                        for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                            System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                        }
 
-                    Headers responseHeaders = response.headers();
-                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
-                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
-                    }
+                        try {
+                            JSONArray j = new JSONArray(response.body().string());
+                            System.out.println(j.toString());
+                            layoutAssignments(j);
 
-                    try {
-                        JSONArray j = new JSONArray(response.body().string());
-                        System.out.println(j.toString());
-                        layoutAssignments(j);
-
-                    } catch (JSONException a) {
-                        System.out.println(a);
+                        } catch (JSONException a) {
+                            System.out.println(a);
+                        }
+                    }else if (response.code() == 440){
+                        System.out.println("Needs Refresh");
+                        Headers responseHeaders = response.headers();
+                        for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                            System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                        }
+                        try {
+                            JSONArray j = new JSONArray(response.body().string());
+                            System.out.println(j.toString());
+                            JSONObject cok = j.getJSONObject(0);
+                            JSONArray hafl = cok.getJSONArray("set-cookie");
+                            checkCookieAndValidate(hafl.getString(0));
+                            gradeSl.setRefreshing(false);
+                        } catch (JSONException a) {
+                            System.out.println(a);
+                        }
                     }
                 }
             });

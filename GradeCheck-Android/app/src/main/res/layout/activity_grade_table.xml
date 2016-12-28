@@ -3,19 +3,25 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout
+        android:id="@+id/tab"
+        android:elevation="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+    </me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout>
+
     <ViewFlipper
         android:id = "@+id/ViewFlipper"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="55dp"
-        >
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_grade_table"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.ivan.gradecheck_android.GradeTable">
+        android:layout_marginBottom="55dp">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/activity_grade_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.example.ivan.gradecheck_android.GradeTable">
             <android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -34,11 +40,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context="com.example.ivan.gradecheck_android.GradeTable">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/assignmentView"
-                android:scrollbars="vertical"
+            <android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:id="@+id/AssignmentsSwipeLayout">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/assignmentView"
+                    android:scrollbars="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.v4.widget.SwipeRefreshLayout>
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:id="@+id/noAssignments"
+                android:gravity="center"
+                android:visibility = "gone"
+                android:text="No Assignments" />
         </RelativeLayout>
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
@@ -55,11 +73,4 @@
                 android:layout_height="match_parent" />
         </RelativeLayout>
     </ViewFlipper>
-    <me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout
-        android:id="@+id/tab"
-        android:elevation="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-    </me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout>
 </RelativeLayout>
