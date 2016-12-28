@@ -101,7 +101,7 @@ public class GradeTable extends AppCompatActivity{
                 JSONObject js =  j.getJSONObject(0);
                 JSONArray co = (JSONArray) js.get("cookie");
                 cookie = co.get(0).toString();
-                cookie = "[ 'JSESSIONID=7A889AF049920A0016F0809FB289BB49; Path=/genesis/; Secure; HttpOnly' ]";
+                //cookie = "[ 'JSESSIONID=7A889AF049920A0016F0809FB289BB49; Path=/genesis/; Secure; HttpOnly' ]";
                 RecyclerView.Adapter ra = new GradeCellAdapter(j);
                 tableView.setAdapter(ra);
             }catch(JSONException a){
