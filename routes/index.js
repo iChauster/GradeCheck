@@ -459,6 +459,7 @@ app.post('/gradebook', function(req,res){
 				res.status(440).send(JSON.stringify(rep));
 			}else{
 				var $ = cheerio.load(body);
+        console.log(body);
 				var cookID = {};
 				cookID["cookie"] = [req.body.cookie, "SAFE"];
 				cookID["id"] = req.body.id;
