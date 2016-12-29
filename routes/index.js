@@ -578,7 +578,7 @@ app.post('/listassignments',function(req,res){
 			'&action=form&dateRange=' + mp + '&date=' + dateString + "&courseAndSection=" + req.body.course +":"+ req.body.section,
 			'rejectUnauthorized' : false,
 			headers:{'cache-control' : 'no-cache',
-      'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3',
+      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11',
       "Accept-Encoding" : "gzip, deflate, sdch",
       "Accept-Language" : "en-US,en;q=0.8",
 			'Cookie' : req.body.cookie}
@@ -686,7 +686,7 @@ app.post('/assignments', function(req, res){
   				'rejectUnauthorized' : false,
   				headers:{'cache-control' : 'no-cache',
   				'content-type': 'application/x-www-form-urlencoded',
-          'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3',
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11',
           "Accept-Encoding" : "gzip, deflate, sdch",
           "Accept-Language" : "en-US,en;q=0.8",
   				'Cookie':req.body.cookie
@@ -933,7 +933,7 @@ app.post('/classAverages', function(req,res){
         'rejectUnauthorized' : false,
         headers:{'cache-control' : 'no-cache',
         'content-type': 'application/x-www-form-urlencoded',
-        'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3',
+        'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11',
         "Accept-Encoding" : "gzip, deflate, sdch",
         "Accept-Language" : "en-US,en;q=0.8",
         'Cookie':req.body.cookie          
