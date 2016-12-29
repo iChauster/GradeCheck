@@ -444,7 +444,7 @@ app.post('/gradebook', function(req,res){
 			'rejectUnauthorized' : false,
 			headers:{'cache-control' : 'no-cache',
 			'content-type' : 'application/x-www-form-urlencoded',
-      'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3',
+      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
       "Accept-Language" : "en-US,en;q=0.8",
       "Accept-Encoding" : "gzip, deflate, sdch",
 			'Cookie' : req.body.cookie}
@@ -459,7 +459,6 @@ app.post('/gradebook', function(req,res){
 				res.status(440).send(JSON.stringify(rep));
 			}else{
 				var $ = cheerio.load(body);
-        console.log(body);
 				var cookID = {};
 				cookID["cookie"] = [req.body.cookie, "SAFE"];
 				cookID["id"] = req.body.id;
