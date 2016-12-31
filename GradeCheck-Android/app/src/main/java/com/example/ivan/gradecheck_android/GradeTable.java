@@ -1,20 +1,30 @@
 package com.example.ivan.gradecheck_android;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 import android.support.v7.widget.*;
 import android.widget.TextView;
 import org.json.*;
 import android.content.SharedPreferences;
 
-import java.io.IOException;
-import java.io.InterruptedIOException;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Collections;
 import me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout;
 import me.majiajie.pagerbottomtabstrip.TabItemBuilder;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
@@ -31,17 +41,25 @@ public class GradeTable extends AppCompatActivity{
     private String URL = "http://gradecheck.herokuapp.com/";
     private RecyclerView assignmentView;
     private RecyclerView tableView;
+    private RecyclerView gradeList;
     private SwipeRefreshLayout gradeSl;
     private SwipeRefreshLayout assignmentSl;
     private TextView noAssignments;
+    private LinearLayout gpaView;
+    private TextView gpaText;
+    private TextView gpaNum;
+    private JSONArray gs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grade_table);
         tableView = (RecyclerView) findViewById(R.id.gradeView);
-        RecyclerView statisticsView = (RecyclerView) findViewById(R.id.lineUpView);
+        gradeList = (RecyclerView) findViewById(R.id.lineUpView);
         assignmentView = (RecyclerView) findViewById(R.id.assignmentView);
         noAssignments = (TextView) findViewById(R.id.noAssignments);
+        gpaView = (LinearLayout) findViewById(R.id.gpaView);
+        gpaText = (TextView) findViewById(R.id.gpaText);
+        gpaNum = (TextView) findViewById(R.id.gpaNumericText);
         gradeSl = (SwipeRefreshLayout) findViewById(R.id.SwipeLayout);
         gradeSl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -64,7 +82,7 @@ public class GradeTable extends AppCompatActivity{
         final RecyclerView.LayoutManager la = new LinearLayoutManager(this);
         assignmentView.setLayoutManager(la);
         final RecyclerView.LayoutManager ls = new LinearLayoutManager(this);
-        statisticsView.setLayoutManager(ls);
+        gradeList.setLayoutManager(ls);
         PagerBottomTabLayout tab = (PagerBottomTabLayout) findViewById(R.id.tab);
         VF = (ViewFlipper) findViewById(R.id.ViewFlipper);
         TabItemBuilder grades = new TabItemBuilder(this).create()
@@ -100,8 +118,8 @@ public class GradeTable extends AppCompatActivity{
                 JSONArray j = new JSONArray(value);
                 JSONObject js =  j.getJSONObject(0);
                 JSONArray co = (JSONArray) js.get("cookie");
+                gs = j;
                 cookie = co.get(0).toString();
-                cookie = "[ 'JSESSIONID=7A889AF049920A0016F0809FB289BB49; Path=/genesis/; Secure; HttpOnly' ]";
                 RecyclerView.Adapter ra = new GradeCellAdapter(j);
                 tableView.setAdapter(ra);
             }catch(JSONException a){
@@ -143,6 +161,7 @@ public class GradeTable extends AppCompatActivity{
             }
         });
     }
+
     OnTabItemSelectListener listener = new OnTabItemSelectListener() {
         @Override
         public void onSelected(int index, Object tag) {
@@ -156,6 +175,11 @@ public class GradeTable extends AppCompatActivity{
                 }
             }else if (index == 2){
                 VF.setDisplayedChild(index);
+                YoYo.with(Techniques.Bounce).playOn(gpaView);
+                Map gpa = calcGPA();
+                gpaText.setText(String.valueOf(gpa.get("gpa")));
+                gpaNum.setText(String.valueOf(gpa.get("num")) + "%");
+                layoutStatTable((List<Grade>) gpa.get("sorted"));
                 System.out.println("Statistics pressed");
             }else{
                 VF.setDisplayedChild(index);
@@ -167,6 +191,92 @@ public class GradeTable extends AppCompatActivity{
             System.out.println("Index : " + index + " Tag : " + tag.toString());
         }
     };
+    public void layoutStatTable(List<Grade> list){
+        if(gradeList.getAdapter() == null){
+            gradeList.setAdapter(new StatCellAdapter(list));
+        }else{
+            gradeList.swapAdapter(new StatCellAdapter(list), true);
+        }
+    }
+    public Map calcGPA(){
+        Map m = new HashMap();
+        int classes = 0;
+        int gpaTotal = 0;
+        int gradeTotal = 0;
+        List<Grade> sortedArray = new ArrayList<Grade>();
+        System.out.println(gs);
+        for (int i = 1; i < gs.length(); i ++){
+            try {
+                JSONObject obj = gs.getJSONObject(i);
+                String gr = String.valueOf(obj.get("grade"));
+                double doubGrade = Double.parseDouble(gr.substring(0,gr.length()-1));
+                String className = obj.getString("class");
+                System.out.println(doubGrade);
+                if(gr.equals("No Grades") || gr.equals("0%")){
+                    Grade g = new Grade(doubGrade, className);
+                    sortedArray.add(g);
+                    continue;
+                }
+                if((className.contains(" H") && className.charAt(gr.length()-1) == 'H') || className.contains("Honors") || className.contains("AP") || className.contains("Hon")){
+                    System.out.println(className + " is a Honors Class");
+                    double grade = doubGrade + 5;
+                    gradeTotal += grade;
+                    Grade g = new Grade(grade, className);
+                    sortedArray.add(g);
+                    if(grade > 100){
+                        grade = 100;
+                    }
+                    gpaTotal += grade;
+                    classes ++;
+                }else{
+                    double grade = doubGrade;
+                    gradeTotal += grade;
+                    Grade g = new Grade(grade, className);
+                    sortedArray.add(g);
+                    if(grade > 95){
+                        grade = 95;
+                    }
+                    gpaTotal += grade;
+                    classes ++;
+                }
+            }catch (JSONException error){
+                System.err.print(error);
+            }
+        }
+        double av = gradeTotal / (double) classes;
+        av = Math.round(av * 100.0) / 100.0;
+        double gpaAvg = gpaTotal / (double) classes;
+        System.out.println(gpaTotal);
+        double gpaDiff = 10 - Math.round(gpaAvg) / 10.0;
+        double gpa = Math.round((4.5 - gpaDiff)*100.0)/100.0;
+        m.put("gpa", gpa);
+        m.put("num" , av);
+        Collections.sort(sortedArray, new Comparator<Grade>() {
+            @Override public int compare(Grade g1, Grade g2) {
+                return (int)(g2.grade - g1.grade); // Ascending
+            }
+
+        });
+        m.put("sorted", sortedArray);
+        int color = Color.parseColor("#00C853");
+        int[][] states = new int[][] {
+                new int[] { android.R.attr.state_enabled}, // enabled
+                new int[] {-android.R.attr.state_enabled}, // disabled
+                new int[] {-android.R.attr.state_checked}, // unchecked
+                new int[] { android.R.attr.state_pressed}  // pressed
+        };
+        int[] colors = new int[] {
+                color,
+                color,
+                color,
+                color
+        };
+        ColorStateList colorList = new ColorStateList(states, colors);
+        if (Build.VERSION.SDK_INT >= 21){
+            gpaView.setBackgroundTintList(colorList);
+        }
+        return m;
+    }
     public void setCookie(String c){
         System.out.println("Cookie set " + this.cookie);
         this.cookie = c;

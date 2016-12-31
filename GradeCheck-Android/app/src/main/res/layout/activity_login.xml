@@ -22,6 +22,18 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:background="#fff" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:layout_margin="20dp"
+        android:id="@+id/register"
+        android:layout_below="@+id/login"
+        android:layout_centerHorizontal="true"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:background="#000"
+        />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -64,13 +64,43 @@
             android:id="@+id/activity_statistics"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:background="#0c6d17"
             tools:context="com.example.ivan.gradecheck_android.GradeTable">
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="20dp"
+                android:orientation="vertical"
+                android:background="@drawable/circular_text"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/gpaView">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center"
+                    android:textSize="48dp"
+                    android:id="@+id/gpaText"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14dp"
+                    android:id="@+id/gpaNumericText"/>
+            </LinearLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/lineUpView"
                 android:scrollbars="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="200dp"/>
         </RelativeLayout>
     </ViewFlipper>
 </RelativeLayout>
