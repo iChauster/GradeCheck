@@ -644,7 +644,7 @@ app.post('/listassignments',function(req,res){
               var another = due.prev();
               var str = another.text().trim();
               if(stringDate){
-                value["stringDate"] = stringDate.trim() + "/2016";
+                value["stringDate"] = stringDate.trim() + "/2017";
               }else{
                 value["stringDate"] = "";
               }
@@ -750,7 +750,7 @@ app.post('/assignments', function(req, res){
   						value["dueDate"] = day;
   						var another = due.prev();
   						var str = another.text().trim();
-  						value["stringDate"] = stringDate.trim() + "/2016";
+  						value["stringDate"] = stringDate.trim() + "/2017";
               value["mp"] = str;
 
   						total.push(value);

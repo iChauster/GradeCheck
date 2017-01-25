@@ -1,6 +1,7 @@
 package com.example.ivan.gradecheck_android;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import org.json.*;
 import org.w3c.dom.Text;
@@ -8,7 +9,10 @@ import android.widget.TextView;
 import android.view.*;
 import android.support.v7.widget.CardView;
 import android.animation.ValueAnimator;
-
+import android.content.Intent;
+import android.app.Activity;
+import android.support.v4.util.Pair;
+import android.support.v4.app.ActivityOptionsCompat;
 import com.daimajia.androidanimations.library.BaseViewAnimator;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -18,6 +22,7 @@ import com.daimajia.androidanimations.library.YoYo;
 
 public class GradeCellAdapter extends RecyclerView.Adapter<GradeCellAdapter.ViewHolder> {
     private JSONArray dataSet;
+    private Activity activity;
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView teacherText;
@@ -32,7 +37,8 @@ public class GradeCellAdapter extends RecyclerView.Adapter<GradeCellAdapter.View
             classText = (TextView) v.findViewById(R.id.class_text);
         }
     }
-    public GradeCellAdapter(JSONArray dataSet){
+    public GradeCellAdapter(JSONArray dataSet, Activity a){
+        this.activity = a;
         this.dataSet = dataSet;
     }
     @Override
@@ -52,7 +58,7 @@ public class GradeCellAdapter extends RecyclerView.Adapter<GradeCellAdapter.View
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        JSONObject object = new JSONObject();
+        final JSONObject object;
         try {
             object = dataSet.getJSONObject(position + 1);
             String s = object.getString("grade");
@@ -80,6 +86,21 @@ public class GradeCellAdapter extends RecyclerView.Adapter<GradeCellAdapter.View
             YoYo.with(bv).playOn(holder.gradeText);
             YoYo.with(Techniques.RotateIn).playOn(holder.view);
             holder.view.setCardBackgroundColor(new GradeCheckColor().getColorWithGrade(gr));
+
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(Build.VERSION.SDK_INT >= 16) {
+                        System.out.println(object);
+                        Intent i = new Intent(activity, ClassView.class);
+                        i.putExtra("class", object.toString());
+                        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true);
+
+                        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pairs);
+                        activity.startActivity(i, transitionActivityOptions.toBundle());
+                    }
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }

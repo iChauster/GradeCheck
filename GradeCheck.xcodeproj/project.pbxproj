@@ -19,7 +19,6 @@
 		2C22E30B1CF7C9850011C2DE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C22E30A1CF7C9850011C2DE /* settings.png */; };
 		2C22E30D1CF7CFBC0011C2DE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C22E30C1CF7CFBC0011C2DE /* SettingsViewController.swift */; };
 		2C22E30F1CF7D47A0011C2DE /* blurrymont.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C22E30E1CF7D47A0011C2DE /* blurrymont.png */; };
-		2C5895021CAF320400F0876D /* fire.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C5895011CAF320400F0876D /* fire.jpg */; };
 		2C6AB4881CFCF4AC00E77252 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6AB4871CFCF4AC00E77252 /* SettingsTableViewCell.swift */; };
 		2C6AB48E1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6AB48D1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift */; };
 		2C6D37451CC82BAF0077F4A9 /* PercentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */; };
@@ -137,7 +136,6 @@
 		2C22E30A1CF7C9850011C2DE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		2C22E30C1CF7CFBC0011C2DE /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2C22E30E1CF7D47A0011C2DE /* blurrymont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blurrymont.png; sourceTree = "<group>"; };
-		2C5895011CAF320400F0876D /* fire.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = fire.jpg; path = ../../../Downloads/fire.jpg; sourceTree = "<group>"; };
 		2C6AB4871CFCF4AC00E77252 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		2C6AB48D1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercentLabel.swift; sourceTree = "<group>"; };
@@ -351,7 +349,6 @@
 				2CEC13151CC27D6B00678AA8 /* grades-icon3.png */,
 				2CD720BF1CAB546900338CA7 /* appIcon */,
 				ED7AA20A1C83986D001B2E68 /* calendar.png */,
-				2C5895011CAF320400F0876D /* fire.jpg */,
 				EDBE86061C7A46B10031EE8B /* back1.png */,
 				EDBE86011C7A2D460031EE8B /* background.png */,
 			);
@@ -524,7 +521,6 @@
 				2CD720BC1CAB53BF00338CA7 /* appIcon87.png in Resources */,
 				2C04CDEF1CCB0E32008B9FF4 /* close.png in Resources */,
 				EDBE85E71C78ED280031EE8B /* Assets.xcassets in Resources */,
-				2C5895021CAF320400F0876D /* fire.jpg in Resources */,
 				2C04CDE31CC997E6008B9FF4 /* TableSectionHeader.xib in Resources */,
 				EDBE85E51C78ED280031EE8B /* Main.storyboard in Resources */,
 				2CEC13261CC40AD500678AA8 /* assign@2x.png in Resources */,

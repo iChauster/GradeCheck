@@ -1,12 +1,14 @@
 package com.example.ivan.gradecheck_android;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.app.Activity;
+import android.transition.Fade;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
@@ -85,6 +87,7 @@ public class GradeTable extends AppCompatActivity{
         gradeList.setLayoutManager(ls);
         PagerBottomTabLayout tab = (PagerBottomTabLayout) findViewById(R.id.tab);
         VF = (ViewFlipper) findViewById(R.id.ViewFlipper);
+        setupWindowAnimations();
         TabItemBuilder grades = new TabItemBuilder(this).create()
                 .setText("Grades")
                 .setSelectedColor(Color.parseColor("#25A308"))
@@ -120,13 +123,22 @@ public class GradeTable extends AppCompatActivity{
                 JSONArray co = (JSONArray) js.get("cookie");
                 gs = j;
                 cookie = co.get(0).toString();
-                RecyclerView.Adapter ra = new GradeCellAdapter(j);
+                RecyclerView.Adapter ra = new GradeCellAdapter(j, this);
                 tableView.setAdapter(ra);
             }catch(JSONException a){
                 System.err.println(a);
             }
         }
     }
+    private void setupWindowAnimations(){
+        if(Build.VERSION.SDK_INT >= 21) {
+            Fade ex = new Fade();
+            ex.setDuration(1000);
+            getWindow().setExitTransition(ex);
+        }
+
+    }
+
     public void layoutAssignments(JSONArray a){
         final JSONArray b = a;
         runOnUiThread(new Runnable() {
@@ -151,10 +163,11 @@ public class GradeTable extends AppCompatActivity{
     }
     public void refreshGradesLayout (JSONArray g){
         final JSONArray b = g;
+        final Activity gt = this;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                RecyclerView.Adapter newGradeAdapter = new GradeCellAdapter(b);
+                RecyclerView.Adapter newGradeAdapter = new GradeCellAdapter(b, gt);
                 tableView.swapAdapter(newGradeAdapter, true);
                 newGradeAdapter.notifyDataSetChanged();
                 gradeSl.setRefreshing(false);

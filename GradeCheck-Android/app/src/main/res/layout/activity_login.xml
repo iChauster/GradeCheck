@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:text="Register"
         android:layout_margin="20dp"
+        android:textColor="#FFF"
         android:id="@+id/register"
         android:layout_below="@+id/login"
         android:layout_centerHorizontal="true"
