@@ -785,7 +785,7 @@ app.post('/classdata', function(req,res){
           var item = doc[i].grades[obj]
           if(item["subject"] == req.body.className){
             console.log(item["grade"]);
-            if(item["grade"] == "No Grades" || item["grade"] == 0){
+            if(item["grade"] == "No Grades" || item["grade"] == "0%"){
 
             }else{
               occurences.push(item["grade"].slice(0,-1));
