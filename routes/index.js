@@ -847,26 +847,6 @@ app.post('/classdata', function(req,res){
         b["occurences"] = counts[x];
         last.push(b);
       });
-      var sixt = {};
-      sixt["grade"] = "65";
-      sixt["occurences"] = 1;
-      last.push(sixt);
-      var sev = {};
-      sev["grade"] = "75";
-      sev["occurences"] = 3;
-      var e = {};
-      e["grade"] = "80";
-      e["occurences"] = 2;
-      var f = {};
-      f["grade"] = "60";
-      f["occurences"] = 1;
-      var g = {};
-      g["grade"] = "83";
-      g["occurences"] = 1;
-      last.push(sev);
-      last.push(e);
-      last.push(f);
-      last.push(g);
 
       last.sort(function (a,b){
         if(a.grade == "No Grades"){
