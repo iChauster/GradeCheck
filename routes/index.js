@@ -775,13 +775,11 @@ app.post('/classdata', function(req,res){
     b["$elemMatch"] = a;
     var c = {};
     c["grades"] = b;
-    var split = req.body.className.split("-")[0].split("/");
-    console.log(split)
     var occurences = [];
     var counts = {};
     var last = [];
     console.log(c)
-    User.find({"grades.subject": new RegExp(split[0])}, function (err, doc){
+    User.find({"grades.subject": new RegExp(req.body.className)}, function (err, doc){
       for (var i = 0; i < doc.length; i ++){
         for (obj in doc[i].grades) {
           var item = doc[i].grades[obj]
