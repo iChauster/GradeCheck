@@ -138,7 +138,13 @@ public class GradeTable extends AppCompatActivity{
         }
 
     }
+    public String[] getCookieAndID(){
+        SharedPreferences pref = getSharedPreferences("GradeCheckInfo", 0);
 
+        String id = pref.getString("id", "");
+        String[] a = new String[]{cookie,id};
+        return a;
+    }
     public void layoutAssignments(JSONArray a){
         final JSONArray b = a;
         runOnUiThread(new Runnable() {
@@ -230,7 +236,7 @@ public class GradeTable extends AppCompatActivity{
                     sortedArray.add(g);
                     continue;
                 }
-                if((className.contains(" H") && className.charAt(gr.length()-1) == 'H') || className.contains("Honors") || className.contains("AP") || className.contains("Hon")){
+                if((className.contains(" H") && className.charAt(className.length()-1) == 'H') || className.contains("Honors") || className.contains("AP") || className.contains("Hon")){
                     System.out.println(className + " is a Honors Class");
                     double grade = doubGrade + 5;
                     gradeTotal += grade;

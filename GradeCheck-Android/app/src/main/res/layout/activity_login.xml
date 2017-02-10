@@ -11,30 +11,6 @@
     android:background="@drawable/back1"
     tools:context="com.example.ivan.gradecheck_android.Login">
 
-    <Button
-        android:text="Login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="67dp"
-        android:id="@+id/login"
-        android:layout_below="@+id/username"
-        android:layout_centerHorizontal="true"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:background="#fff" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:layout_margin="20dp"
-        android:textColor="#FFF"
-        android:id="@+id/register"
-        android:layout_below="@+id/login"
-        android:layout_centerHorizontal="true"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:background="#000"
-        />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,4 +36,28 @@
         android:layout_above="@+id/password"
         android:layout_alignLeft="@+id/password"
         android:layout_alignStart="@+id/password" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textColor="#FFF"
+        android:id="@+id/register"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:background="#000"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/password"
+        android:layout_alignLeft="@+id/login"
+        android:layout_alignStart="@+id/login" />
+
+    <Button
+        android:text="Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:background="#fff"
+        android:layout_below="@+id/register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp" />
 </RelativeLayout>

@@ -69,6 +69,17 @@ public class Req {
                 .build();
         client.newCall(request).enqueue(c);
     }
+    public void classRequest(String cookie, String id, String course, String section, String URL, Callback c) throws Exception{
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        RequestBody body = RequestBody.create(mediaType, "cookie=" + cookie + "&id=" + id + "&course=" + course + "&section=" + section);
+        Request request = new Request.Builder()
+                .url(URL)
+                .post(body)
+                .addHeader("cache-control", "no-cache")
+                .addHeader("content-type", "application/x-www-form-urlencoded")
+                .build();
+        client.newCall(request).enqueue(c);
+    }
     public void reLoginRequest(String cookie, String username, String password, String URL, Callback c) throws Exception{
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         RequestBody body = RequestBody.create(mediaType, "username=" + username + "&password=" + password + "&cookie=" + cookie);

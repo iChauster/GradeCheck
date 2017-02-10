@@ -12,7 +12,7 @@ var app = express.Router();
   spaghetti
 
 */
-var markingPeriod = "MP2";
+var markingPeriod = "MP3";
 /* GET home page. */
 app.get('/', function(req, res, next) {
   console.log(req.headers);

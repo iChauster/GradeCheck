@@ -93,7 +93,11 @@ public class GradeCellAdapter extends RecyclerView.Adapter<GradeCellAdapter.View
                     if(Build.VERSION.SDK_INT >= 16) {
                         System.out.println(object);
                         Intent i = new Intent(activity, ClassView.class);
+                        GradeTable gt = (GradeTable) activity;
+                        String[] s = gt.getCookieAndID();
                         i.putExtra("class", object.toString());
+                        i.putExtra("auth", s);
+
                         final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true);
 
                         ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pairs);
@@ -106,6 +110,7 @@ public class GradeCellAdapter extends RecyclerView.Adapter<GradeCellAdapter.View
         }
 
     }
+
     @Override public int getItemCount(){
         return dataSet.length() - 1;
     }

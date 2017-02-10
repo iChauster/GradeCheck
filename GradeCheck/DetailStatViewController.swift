@@ -261,11 +261,12 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         limitLine.enabled = true;
         limitLine.lineWidth = 2.0;
         self.graph.xAxis.addLimitLine(limitLine)
+        if(gradeArray.index(of:Int(selfLimit)!) != nil){
+            var indexSelfLimit = Int(gradeArray.index(of: Int(selfLimit)!)!)
+            indexSelfLimit += 1;
         
-        var indexSelfLimit = Int(gradeArray.index(of: Int(selfLimit)!)!)
-        indexSelfLimit += 1;
-        
-        self.updateRankView(String(indexSelfLimit), totalString: String(dataPoints.count))
+            self.updateRankView(String(indexSelfLimit), totalString: String(dataPoints.count))
+        }
         self.updatePercentileView(gradeArray.reversed(),controlGrade: Int(selfLimit)!);
     }
     func updateMeanView(_ mean:String){
@@ -284,18 +285,20 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         //deal with when you have the highest grade, etc.
         let indexesAboveControl = gradeArray.index(where: {$0 > controlGrade})
         if(indexesAboveControl != nil){
-            let indexOfGrade = gradeArray.index(of: controlGrade)
+            
+            if let indexOfGrade = gradeArray.index(of: controlGrade){
             print(indexesAboveControl)
             print(indexOfGrade)
             let numberAbove = gradeArray.count - indexesAboveControl!
             print(numberAbove)
-            let numberSame = indexesAboveControl! - indexOfGrade!;
+            let numberSame = indexesAboveControl! - indexOfGrade;
             let numberBelow = gradeArray.count - numberAbove - numberSame;
             print(numberBelow)
             let percentile = (Double(numberBelow) + (0.5 * Double(numberSame))) / Double(gradeArray.count);
             let percentageString = String(format: "%.1f", percentile * 100)
             self.percentileView.percentLabel.text = percentageString + "%";
             print(percentile)
+            }
         }else{
             self.percentileView.percentLabel.text = "100%";
         }
