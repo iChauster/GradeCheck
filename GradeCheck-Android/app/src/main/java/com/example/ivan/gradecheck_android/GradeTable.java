@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 import android.support.v7.widget.*;
+import android.content.Context;
 import android.widget.TextView;
 import org.json.*;
 import android.content.SharedPreferences;
@@ -147,11 +148,28 @@ public class GradeTable extends AppCompatActivity{
     }
     public void layoutAssignments(JSONArray a){
         final JSONArray b = a;
+        final Context c = this;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                int index = 0;
                 assignmentSl.setRefreshing(false);
-                RecyclerView.Adapter assignmentAdapter = new AssignmentCellAdapter(b);
+                List<SimpleSectionedRecyclerViewAdapter.Section> sections =
+                        new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+
+                //Sections
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,"UPCOMING"));
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(index,"COMPLETED"));
+
+
+                //Add your adapter to the sectionAdapter
+                SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+                SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new
+                        SimpleSectionedRecyclerViewAdapter(c,R.layout.section,R.id.section_text, new AssignmentCellAdapter(b));
+                mSectionedAdapter.setSections(sections.toArray(dummy));
+
+                //Apply this adapter to the RecyclerView
+                RecyclerView.Adapter assignmentAdapter = mSectionedAdapter;
                 assignmentView.setAdapter(assignmentAdapter);
                 if(b.length() != 0) {
                     System.out.println("THERE ARE ASSIGNMENTS TO BE DISPLAYED");
@@ -211,10 +229,11 @@ public class GradeTable extends AppCompatActivity{
         }
     };
     public void layoutStatTable(List<Grade> list){
+        Activity a = this;
         if(gradeList.getAdapter() == null){
-            gradeList.setAdapter(new StatCellAdapter(list));
+            gradeList.setAdapter(new StatCellAdapter(list,a));
         }else{
-            gradeList.swapAdapter(new StatCellAdapter(list), true);
+            gradeList.swapAdapter(new StatCellAdapter(list,a), true);
         }
     }
     public Map calcGPA(){
@@ -227,12 +246,14 @@ public class GradeTable extends AppCompatActivity{
         for (int i = 1; i < gs.length(); i ++){
             try {
                 JSONObject obj = gs.getJSONObject(i);
+
                 String gr = String.valueOf(obj.get("grade"));
                 double doubGrade = Double.parseDouble(gr.substring(0,gr.length()-1));
                 String className = obj.getString("class");
                 System.out.println(doubGrade);
                 if(gr.equals("No Grades") || gr.equals("0%")){
                     Grade g = new Grade(doubGrade, className);
+                    g.setClassCode(obj.getString("classCodes"));
                     sortedArray.add(g);
                     continue;
                 }
@@ -240,7 +261,8 @@ public class GradeTable extends AppCompatActivity{
                     System.out.println(className + " is a Honors Class");
                     double grade = doubGrade + 5;
                     gradeTotal += grade;
-                    Grade g = new Grade(grade, className);
+                    Grade g = new Grade(doubGrade, className);
+                    g.setClassCode(obj.getString("classCodes"));
                     sortedArray.add(g);
                     if(grade > 100){
                         grade = 100;
@@ -251,6 +273,7 @@ public class GradeTable extends AppCompatActivity{
                     double grade = doubGrade;
                     gradeTotal += grade;
                     Grade g = new Grade(grade, className);
+                    g.setClassCode(obj.getString("classCodes"));
                     sortedArray.add(g);
                     if(grade > 95){
                         grade = 95;

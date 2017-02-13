@@ -28,6 +28,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     compile 'de.codecrafters.tableview:tableview:2.4.1'
     compile 'com.android.support:cardview-v7:21.0.+'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'me.majiajie:pager-bottom-tab-strip:1.0.0'
     compile 'com.nineoldandroids:library:2.4.0'

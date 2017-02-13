@@ -346,8 +346,12 @@ app.post('/login', passport.authenticate('local'),function (req,res){
                       var a = Math.round(num);
                       num = a + "%";
                     }else{
-                      var a = Math.round(num);
-                      num += "%";
+                      if(num == "No Grades"){
+                        num = "0%"
+                      }else{
+                        var a = Math.round(num);
+                        num += "%";
+                      }
                     }
   									num = num.trim();
   									classroom = classroom.trim();
@@ -839,6 +843,7 @@ app.post('/classdata', function(req,res){
         } */
       counts[x]= (counts[x] || 0) + 1;        
       })
+      console.log(counts);
       occurences.forEach(function(x){
         var b = {};
         b["grade"] = x;
