@@ -341,6 +341,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
                     var classroom = teacherCell.prev().text();
   									var teacher = teacherCell.text().replace("Email:","");
   									var num = grade.text();
+                    num = num.trim();
                     if(num.includes('%')){
                       num = num.replace('%','');
                       var a = Math.round(num);
