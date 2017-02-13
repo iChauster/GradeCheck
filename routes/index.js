@@ -483,8 +483,12 @@ app.post('/gradebook', function(req,res){
                 var a = Math.round(num);
                 num = a + "%";
               }else{
-                var a = Math.round(num);
-                num += "%";
+                if(num == "No Grades"){
+                  num = "0%"
+                }else{
+                  var a = Math.round(num);
+                  num += "%";
+                }
               }
               console.log(num);
   						classroom = classroom.trim();
