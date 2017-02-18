@@ -711,18 +711,86 @@ app.post('/assignments', function(req, res){
   			}else{
   				console.log(response.headers);
   				var $ = cheerio.load(body);
-  				$('td.cellRight').each(function(i,element){
+  				$('td.cellCenter').each(function(i,element){
   					var assignment = $(this);
-  					if(assignment.prev().attr('class') == "cellCenter"){
+  					if(assignment.prev().attr('height') == "25px"){
   						var value = {};
-  						value["gradeMax"] = assignment.text().trim();
-  						var percent = assignment.next().text();
-  						value["percent"] = percent;
-  						var grade = assignment.prev().prev();
+  						//value["gradeMax"] = assignment.text().trim();
+              var due = assignment;
+              var day = due.children().first();
+              value["dueDate"] = day.text().trim();
+              var another = due.prev();
+              var str = another.text().trim();
+              value["stringDate"] = day.next().text().trim() + "/2017";
+              value["mp"] = str;
+  						//var percent = assignment.next().text();
+              var courseCell = assignment.next().children().first();
+              var courseName = courseCell.text().trim();
+              var teacherName = courseCell.next().filter(function (i,el){
+                return $(this).attr('style') == "padding: 0 0 0 2px;font-size: 8pt;"
+              });
+              teacherName = teacherName.text().trim();
+              value["teacher"] = teacherName;
+              value["course"] = courseName;
+
+  						//value["percent"] = percent;
+
+              var cat = assignment.next().next()
+              var actual = cat.contents().filter(function(i,el){
+                if( $(this).attr('class') == "boxShadow"){
+                  return "";
+                }else{
+                  return $(this).text().trim();
+                }
+              });
+              value["category"] = actual.text().trim()
+              var title = {};
+              var first = cat.next().children('b');
+              var fir = first.text().trim();
+              title["title"] = fir;
+              var details = first.next().filter(function(i,el){
+                return $(this).attr('style') === "font-style:italic;padding-left:5px;"
+              });
+              details = details.text().trim()
+              title["details"] = details;
+              value["assignment"] = title;
+              /*var cat = grade.prev().prev();
+              var actual = cat.contents().filter(function(i,el){
+                if( $(this).attr('class') == "boxShadow"){
+                  return "";
+                }else{
+                  return $(this).text().trim();
+                }
+              });*/
+  						/*var grade = assignment.prev().prev();
   						var perc = grade.text();
   						perc = perc.trim();
-  						value["grade"] = perc;
-  						var title = {};
+  						value["grade"] = perc;*/
+              var gradeCell = cat.next().next();
+              var ratio;
+              var percent = gradeCell.contents().filter(function(i,el){
+                 return $(this).attr('style') === "font-weight: bold;"
+              });
+                value["percent"] = percent.text().trim()
+
+              var ratio = gradeCell.contents().filter(function(i,el){
+                 if ($(this).attr('style') == "font-weight: bold;"){
+                  return ""
+                 }else{
+                  return $(this).text().trim()
+                 }
+              });
+              ratio = ratio.text().trim();
+              var gg = ratio.split("/");
+              var grade = gg[0].trim();
+              var grademax;
+              if(gg[1] != undefined){
+                grademax = gg[1].trim();
+              }
+              value["gradeMax"] = grademax;
+              value["grade"] = grade;
+
+  						/*var title = {};
   						var first = grade.prev().children('b');
   						var fir = first.text().trim();
   						title["title"] = fir;
@@ -739,10 +807,10 @@ app.post('/assignments', function(req, res){
   							}else{
   								return $(this).text().trim();
   							}
-  						});
+  						});*/
   					
-  						value["category"] = actual.text().trim();
-              var teachr = cat.prev();
+  						//value["category"] = actual.text().trim();
+              /*var teachr = cat.prev();
               var courseCell = teachr.children().first();
               var courseName = courseCell.text().trim();
               var teacherName = courseCell.next().filter(function (i,el){
@@ -750,8 +818,8 @@ app.post('/assignments', function(req, res){
               });
               teacherName = teacherName.text().trim();
               value["teacher"] = teacherName;
-              value["course"] = courseName;
-  						var due = teachr.prev();
+              value["course"] = courseName;*/
+  						/*var due = teachr.prev();
   						var dueDate = due.text().trim();
               var res = dueDate.split("\n");
               var day = res[0];
@@ -760,7 +828,7 @@ app.post('/assignments', function(req, res){
   						var another = due.prev();
   						var str = another.text().trim();
   						value["stringDate"] = stringDate.trim() + "/2017";
-              value["mp"] = str;
+              value["mp"] = str;*/
 
   						total.push(value);
   					}
