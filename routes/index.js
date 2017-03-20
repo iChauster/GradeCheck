@@ -538,11 +538,12 @@ app.post('/getClassWeighting', function (req,res){
         var results = $('div').attr('style','text-align: left;font-size:14pt;padding-bottom:3px;').children('b').each(function (i,elem){
           if($(this).text() == "Grading Information"){
             var methodOfGrade = $(this).parent().next('b').text()
+            console.log(methodOfGrade);
             var method = $(this).parent();
             if(methodOfGrade == "Total Points"){
               weighted.push(methodOfGrade);
             }else{
-              weighted.push(methodOfGrade);
+              weighted.push("Category Weighting");
               var weightedArray = [];
               method.nextAll('.list').first().children().each(function (i,elem){
                 if($(this).attr('class') != "listheading"){
@@ -604,39 +605,20 @@ app.post('/listassignments',function(req,res){
 			}else{
 				console.log(response.headers);
 				var $ = cheerio.load(body);
-				$('td.cellRight').each(function(i,element){
-  					var assignment = $(this);
-  					if(assignment.prev().attr('class') == "cellCenter"){
-  						var value = {};
-  						value["gradeMax"] = assignment.text().trim();
-  						var percent = assignment.next().text();
-  						value["percent"] = percent;
-  						var grade = assignment.prev().prev();
-  						var perc = grade.text();
-  						perc = perc.trim();
-  						value["grade"] = perc;
-  						var title = {};
-  						var first = grade.prev().children('b');
-  						var fir = first.text().trim();
-  						title["title"] = fir;
-  						var details = first.next().filter(function(i,el){
-  							return $(this).attr('style') === "font-style:italic;padding-left:5px;"
-  						});
-  						details = details.text().trim()
-  						title["details"] = details;
-  						value["assignment"] = title;
-  						var cat = grade.prev().prev();
-  						var actual = cat.contents().filter(function(i,el){
-  							if( $(this).attr('class') == "boxShadow"){
-  								return "";
-  							}else{
-  								return $(this).text().trim();
-  							}
-  						});
-  					
-  						value["category"] = actual.text().trim();
-              var teachr = cat.prev();
-              var courseCell = teachr.children().first();
+				$('td.cellCenter').each(function(i,element){
+            var assignment = $(this);
+            if(assignment.prev().attr('height') == "25px"){
+              var value = {};
+              //value["gradeMax"] = assignment.text().trim();
+              var due = assignment;
+              var day = due.children().first();
+              value["dueDate"] = day.text().trim();
+              var another = due.prev();
+              var str = another.text().trim();
+              value["stringDate"] = day.next().text().trim() + "/2017";
+              value["mp"] = str;
+              //var percent = assignment.next().text();
+              var courseCell = assignment.next().children().first();
               var courseName = courseCell.text().trim();
               var teacherName = courseCell.next().filter(function (i,el){
                 return $(this).attr('style') == "padding: 0 0 0 2px;font-size: 8pt;"
@@ -644,20 +626,73 @@ app.post('/listassignments',function(req,res){
               teacherName = teacherName.text().trim();
               value["teacher"] = teacherName;
               value["course"] = courseName;
-              var due = teachr.prev();
-              var dueDate = due.text().trim();
-              var res = dueDate.split("\n");
-              var day = res[0];
-              var stringDate = res[1];
-              value["dueDate"] = day;
-              var another = due.prev();
-              var str = another.text().trim();
-              if(stringDate){
-                value["stringDate"] = stringDate.trim() + "/2017";
-              }else{
-                value["stringDate"] = "";
-              }
-              value["mp"] = str;
+
+              //value["percent"] = percent;
+
+              var cat = assignment.next().next()
+              var actual = cat.contents().filter(function(i,el){
+                if( $(this).attr('class') == "boxShadow"){
+                  return "";
+                }else{
+                  return $(this).text().trim();
+                }
+              });
+              value["category"] = actual.text().trim()
+              var title = {};
+              var first = cat.next().children('b');
+              var fir = first.text().trim();
+              title["title"] = fir;
+              var details = first.next().filter(function(i,el){
+                return $(this).attr('style') === "font-style:italic;padding-left:5px;"
+              });
+              details = details.text().trim()
+              title["details"] = details;
+              value["assignment"] = title;
+              /*var cat = grade.prev().prev();
+              var actual = cat.contents().filter(function(i,el){
+                if( $(this).attr('class') == "boxShadow"){
+                  return "";
+                }else{
+                  return $(this).text().trim();
+                }
+              });*/
+              /*var grade = assignment.prev().prev();
+              var perc = grade.text();
+              perc = perc.trim();
+              value["grade"] = perc;*/
+              var gradeCell = cat.next().next();
+              var ratio;
+              var percent = gradeCell.contents().filter(function(i,el){
+                 return $(this).attr('style') === "font-weight: bold;"
+              });
+                value["percent"] = percent.text().trim()
+              var ratio = gradeCell.contents().filter(function(i,el){
+                  if ($(this).attr('style') == "font-weight: bold;"){
+                    return ""
+                  }else if ($(this).attr('style') == "text-align: left;"){
+                    return $(this).text().trim();
+                  }else{
+                    return $(this).text().trim()
+                  }
+                });
+                ratio = ratio.text().trim();
+                var gg = ratio.split("/");
+                var grade = gg[0].trim();
+                var grademax;
+                if(gg[1] != undefined){
+                  grademax = gg[1].trim();
+                }else{
+                  console.log("ret");
+                    console.log(ratio);
+                    var gra = ratio.split(":");
+                    var maxPoints = gra[1].trim();
+                    console.log(maxPoints);
+                    grademax = maxPoints;
+                    grade = "";
+                }
+                value["gradeMax"] = grademax;
+                value["grade"] = grade;
+              
   						results.push(value);
   					}
   				}); 
@@ -772,23 +807,34 @@ app.post('/assignments', function(req, res){
                  return $(this).attr('style') === "font-weight: bold;"
               });
                 value["percent"] = percent.text().trim()
-
               var ratio = gradeCell.contents().filter(function(i,el){
-                 if ($(this).attr('style') == "font-weight: bold;"){
-                  return ""
-                 }else{
-                  return $(this).text().trim()
-                 }
-              });
-              ratio = ratio.text().trim();
-              var gg = ratio.split("/");
-              var grade = gg[0].trim();
-              var grademax;
-              if(gg[1] != undefined){
-                grademax = gg[1].trim();
-              }
-              value["gradeMax"] = grademax;
-              value["grade"] = grade;
+                  if ($(this).attr('style') == "font-weight: bold;"){
+                    return ""
+                  }else if ($(this).attr('style') == "text-align: left;"){
+                    return $(this).text().trim();
+                  }else{
+                    return $(this).text().trim()
+                  }
+                });
+                ratio = ratio.text().trim();
+                var gg = ratio.split("/");
+                var grade = gg[0].trim();
+                var grademax;
+                if(gg[1] != undefined){
+                  grademax = gg[1].trim();
+                }else{
+                  console.log("ret");
+                    console.log(ratio);
+                    var gra = ratio.split(":");
+                    var maxPoints = gra[1].trim();
+                    console.log(maxPoints);
+                    grademax = maxPoints;
+                    grade = "";
+                }
+                value["gradeMax"] = grademax;
+                value["grade"] = grade;
+              
+              
 
   						/*var title = {};
   						var first = grade.prev().children('b');
@@ -1005,30 +1051,66 @@ app.post('/classAverages', function(req,res){
         res.status(440).send(JSON.stringify(results));
       }else{
         var $ = cheerio.load(body);
-        $('td.cellRight').each(function(i,element){
-          var assignment = $(this);
-          if(assignment.prev().attr('class') == "cellCenter"){
-            var value = {};
-            value["gradeMax"] = assignment.text().trim();
-            var percent = assignment.next().text();
-            value["percent"] = percent;
-            var grade = assignment.prev().prev();
-            var perc = grade.text();
-            perc = perc.trim();
-            value["grade"] = perc;
-            var cat = grade.prev().prev();
-            var actual = cat.contents().filter(function(i,el){
-              if( $(this).attr('class') == "boxShadow"){
-                return "";
-              }else{
-                return $(this).text().trim();
+        $('td.cellCenter').each(function(i,element){
+            var assignment = $(this);
+            if(assignment.prev().attr('height') == "25px"){
+              var value = {};
+              var due = assignment;
+              var day = due.children().first();
+              var another = due.prev();
+              var str = another.text().trim();
+              var courseCell = assignment.next().children().first();
+              var courseName = courseCell.text().trim();
+              var cat = assignment.next().next()
+              var actual = cat.contents().filter(function(i,el){
+                if( $(this).attr('class') == "boxShadow"){
+                  return "";
+                }else{
+                  return $(this).text().trim();
+                }
+              });
+              value["category"] = actual.text().trim()
+              var gradeCell = cat.next().next();
+              var ratio;
+              var percent = gradeCell.contents().filter(function(i,el){
+                 return $(this).attr('style') === "font-weight: bold;"
+              });
+                value["percent"] = percent.text().trim()
+              var ratio = gradeCell.contents().filter(function(i,el){
+                  if ($(this).attr('style') == "font-weight: bold;"){
+                    return ""
+                  }else if ($(this).attr('style') == "text-align: left;"){
+                    return $(this).text().trim();
+                  }else{
+                    return $(this).text().trim()
+                  }
+                });
+                ratio = ratio.text().trim();
+                var gg = ratio.split("/");
+                var grade = gg[0].trim();
+                var grademax;
+                if(gg[1] != undefined){
+                  grademax = gg[1].trim();
+                }else{
+                  console.log("ret");
+                    console.log(ratio);
+                    var gra = ratio.split(":");
+                    if(gra[1] != undefined){
+                      var maxPoints = gra[1].trim();
+                      console.log(maxPoints);
+                      grademax = maxPoints;
+                      grade = "";
+                    }else{
+                      grademax = "";
+                      grade = "";
+                    }
+                }
+                value["gradeMax"] = grademax;
+                value["grade"] = grade;
+              
+                results.push(value);
               }
             });
-          
-            value["category"] = actual.text().trim();
-            results.push(value);
-          }
-        });
         var container = {};
         results.forEach(function(item){
           console.log(item);

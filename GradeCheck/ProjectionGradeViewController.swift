@@ -30,6 +30,7 @@ class ProjectionGradeViewController: UIViewController {
     var markingPeriod : String?
     var data : NSArray!
     var otherAssignments : NSArray!
+    //let url = "http://localhost:2800/"
     let url = "http://gradecheck.herokuapp.com/"
     var final : NSMutableDictionary! = NSMutableDictionary()
     var weights : NSMutableArray! = NSMutableArray()
@@ -153,7 +154,6 @@ class ProjectionGradeViewController: UIViewController {
         let assignmentTitle = dict["title"] as! String
         for obj in otherAssignments{
             let dict = obj as! NSDictionary
-            print(dict)
             let key = dict["category"] as! String
             let d = dict["assignment"]! as! NSDictionary
             if((d["title"] as! String) == assignmentTitle){
