@@ -685,7 +685,9 @@ app.post('/listassignments',function(req,res){
                   console.log("ret");
                     console.log(ratio);
                     var gra = ratio.split(":");
-                    var maxPoints = gra[1].trim();
+                    if(gra[1] != undefined){
+                      var maxPoints = gra[1].trim();
+                    }
                     console.log(maxPoints);
                     grademax = maxPoints;
                     grade = "";
@@ -826,7 +828,9 @@ app.post('/assignments', function(req, res){
                   console.log("ret");
                     console.log(ratio);
                     var gra = ratio.split(":");
-                    var maxPoints = gra[1].trim();
+                    if(gra[1] != undefined){
+                      var maxPoints = gra[1].trim();
+                    }
                     console.log(maxPoints);
                     grademax = maxPoints;
                     grade = "";
