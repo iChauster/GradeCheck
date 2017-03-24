@@ -195,22 +195,31 @@ class AssignmentsTableViewController: UITableViewController {
                 if(httpResponse?.statusCode == 200){
                     DispatchQueue.main.async(execute: {
                         do{
-                            let array = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
-                            self.assignments = NSMutableArray(array:array)
+                            let array = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
+                            self.assignments = NSMutableArray(array: array)
                             self.newAssignments = [];
+                            var newArray = Array<Any>();
                             for a in self.assignments {
-                                let obj = a as! NSDictionary
-                                let dateFormatter = DateFormatter()
-                                dateFormatter.dateFormat = "M/d/yyyy"
-                                let strDate = obj.object(forKey: "stringDate") as! String
-                                let date = dateFormatter.date(from: strDate)
-                                if(date!.compare(Date()) == .orderedAscending){
-                                    print("past");
-                                }else{
-                                    self.assignments.remove(obj)
-                                    self.newAssignments.add(obj)
+                                print(a)
+                                
+                                if let obj = a as? NSDictionary {
+                                    
+                                    
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "M/d/yyyy"
+                                    
+                                    let strDate = obj.object(forKey: "stringDate") as! String
+                                    let date = dateFormatter.date(from: strDate)
+                                    if(date!.compare(Date()) == .orderedAscending){
+                                        print("past");
+                                    }else{
+                                        newArray.append(obj)
+                                        self.newAssignments.add(obj)
+                                    }
                                 }
                             }
+                            self.assignments.removeObjects(in: newArray)
+                            print(self.assignments)
                             if(self.assignments.count == 0 && self.newAssignments.count == 0){
                                 print("No Assignments")
                                 let noView = UIView(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height))

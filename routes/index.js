@@ -1057,9 +1057,9 @@ app.post('/classAverages', function(req,res){
         var $ = cheerio.load(body);
         $('td.cellCenter').each(function(i,element){
             var assignment = $(this);
-            if(assignment.prev().attr('height') == "25px"){
+            if(assignment.prev().attr('class') == "cellLeft"){
               var value = {};
-              var due = assignment;
+              var due = assignment.prev().prev().prev().prev().prev();
               var day = due.children().first();
               var another = due.prev();
               var str = another.text().trim();
