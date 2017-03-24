@@ -1064,9 +1064,7 @@ app.post('/classAverages', function(req,res){
               var day = due.children().first();
               var another = due.prev();
               var str = another.text().trim();
-              var courseCell = assignment.next().children().first();
-              var courseName = courseCell.text().trim();
-              var cat = assignment.next().next()
+              var cat = due.next().next()
               var actual = cat.contents().filter(function(i,el){
                 if( $(this).attr('class') == "boxShadow"){
                   return "";
