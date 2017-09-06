@@ -71,6 +71,7 @@
             android:background="@drawable/circular_text"
             android:textSize="12dp"
             android:layout_width="60dp"
-            android:layout_height="60dp" />
+            android:layout_height="60dp"
+            android:transitionName="@string/transition"/>
     </android.support.v7.widget.CardView>
 </LinearLayout>

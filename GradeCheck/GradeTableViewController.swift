@@ -295,7 +295,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         let frameToOpenFrame = tableView.convert(attribute!, to: tableView.superview)
         openingFrame = frameToOpenFrame
         print(openingFrame?.debugDescription)
-        
+    
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let expandedvc = storyboard.instantiateViewController(withIdentifier: "DetailGradeViewController") as! DetailGradeViewController
@@ -307,7 +307,11 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         expandedvc.color = selectedCell.color;
         expandedvc.cookieData = self.gradeArray[0] as! NSDictionary
         expandedvc.whole = self.gradeArray;
-        expandedvc.classtitle = selectedCell.classg.text! + " - " + selectedCell.grade.text!;
+        expandedvc.gradeFrame = openingFrame
+        //expandedvc.classtitle = selectedCell.classg.text! + " - " + selectedCell.grade.text!;
+        expandedvc.classtitle = selectedCell.classg.text!
+        expandedvc.classGrade = selectedCell.grade.text!
+        expandedvc.classTeacher = selectedCell.teacher.text!
         expandedvc.markingPeriod = UserDefaults.standard.object(forKey: "GradeTableMP") as? String
         self.tableView.deselectRow(at: indexPath, animated: true)
         present(expandedvc, animated: true, completion: nil)
@@ -338,9 +342,12 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if(segue.identifier == "GradeSegue"){
-            let viewcontroller = segue.destination as! DetailGradeViewController
-            viewcontroller.data = self.gradeArray[(self.tableView.indexPathForSelectedRow?.row)! + 1] as! NSDictionary
+            
             let selectedCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! GradeTableViewCell
+    
+            let viewcontroller = segue.destination as! DetailGradeViewController
+            
+            viewcontroller.data = self.gradeArray[(self.tableView.indexPathForSelectedRow?.row)! + 1] as! NSDictionary
             viewcontroller.color = selectedCell.color;
             viewcontroller.cookieData = self.gradeArray[0] as! NSDictionary
             viewcontroller.whole = self.gradeArray;

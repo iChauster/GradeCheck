@@ -331,51 +331,24 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
             var averageScore = (grades["gradeAchieved"] as! Double)/(grades["gradeMax"]as! Double)
             averageScore *= 100;
             cell.dataView.dataLabel.text = String(format: "%.1f", averageScore) + "%";
-            switch Int(averageScore){
-            case 0..<50:
-                cell.dataView.backgroundColor = UIColor.black
-            case 51..<75 :
-                cell.dataView.backgroundColor = UIColor.red
-            case 76..<85 :
-                cell.dataView.backgroundColor = UIColor.yellow
-            case 86..<110 :
-                cell.dataView.backgroundColor = UIColor(red:0.1574, green:0.6298, blue:0.2128, alpha: 1.0)
-            default :
-                cell.dataView.backgroundColor = UIColor.purple
-            }
+            let color = UIColor().getColor(grade: averageScore)
+            cell.dataView.backgroundColor = color
+            cell.dataView.dataLabel.textColor = UIColor().getTextColor(color: color)
         }else if(indexPath.row == 1){
             cell.titleLabel.text = "Highest Score : ";
             let finalElement = arrayOfGrades.last
             cell.dataView.dataLabel.text = String(format: "%.1f", finalElement!) + "%";
-            switch Int(finalElement!){
-            case 0..<50:
-                cell.dataView.backgroundColor = UIColor.black
-            case 51..<75 :
-                cell.dataView.backgroundColor = UIColor.red
-            case 76..<85 :
-                cell.dataView.backgroundColor = UIColor.yellow
-            case 86..<110 :
-                cell.dataView.backgroundColor = UIColor(red:0.1574, green:0.6298, blue:0.2128, alpha: 1.0)
-            default :
-               cell.dataView.backgroundColor = UIColor.purple
-            }
+            let color = UIColor().getColor(grade: finalElement)
+            cell.dataView.backgroundColor = color
+            cell.dataView.dataLabel.textColor = UIColor().getTextColor(color: color)
 
         }else if(indexPath.row == 2){
             cell.titleLabel.text = "Lowest Score : ";
             let firstElement = arrayOfGrades.first;
             cell.dataView.dataLabel.text = String(format:"%.1f", firstElement!) + "%";
-            switch Int(firstElement!){
-            case 0..<50:
-                cell.dataView.backgroundColor = UIColor.black
-            case 51..<75 :
-                cell.dataView.backgroundColor = UIColor.red
-            case 76..<85 :
-                cell.dataView.backgroundColor = UIColor.yellow
-            case 86..<110 :
-                cell.dataView.backgroundColor = UIColor(red:0.1574, green:0.6298, blue:0.2128, alpha: 1.0)
-            default :
-                cell.dataView.backgroundColor = UIColor.purple
-            }
+            let color = UIColor().getColor(grade: firstElement)
+            cell.dataView.backgroundColor = color
+            cell.dataView.dataLabel.textColor = UIColor().getTextColor(color: color)
             
         }else{
             let a = UIAlertController(title: "Something Got MESSED UP", message: "Whoops.", preferredStyle: .alert)

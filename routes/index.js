@@ -12,7 +12,7 @@ var app = express.Router();
   spaghetti
 
 */
-var markingPeriod = "MP4";
+var markingPeriod = "MP1";
 /* GET home page. */
 app.get('/', function(req, res, next) {
   console.log(req.headers);
@@ -513,6 +513,7 @@ app.post('/gradebook', function(req,res){
 
 app.post('/getClassWeighting', function (req,res){
   //https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=000958&action=form&courseCode=33500&courseSection=1&mp=MP4
+  console.log("hello");
   if(req.body.cookie && req.body.id && req.body.courseCode && req.body.courseSection){
     var result = [];
     var re = {method:'GET',

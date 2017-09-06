@@ -10,11 +10,11 @@ public class GradeCheckColor {
     public int getColorWithGrade(double grade){
         int g = (int)grade;
         if(g <= 50){
-            return Color.BLACK;
+            return Color.parseColor("#1F1F21");
         }else if(g <= 75){
-            return Color.RED;
+            return Color.parseColor("#F4564D");
         }else if(g <= 85){
-            return Color.YELLOW;
+            return Color.parseColor("#FFCD02");
         }else{
             return Color.parseColor("#25A308");
         }

@@ -34,6 +34,13 @@ extension UIColor {
             return self.ICPurple
         }
     }
+    func getTextColor(color : UIColor) -> UIColor {
+        if(color.isEqual(ICYellow)){
+            return ICBlack;
+        }else{
+            return UIColor.white
+        }
+    }
     var ICPurple : UIColor {return UIColor(hex:"#5856D6")!}
     var ICBlack : UIColor {return UIColor(hex:"#1F1F21")!}
     var ICRed : UIColor {return UIColor(hex:"#F4564D")!}

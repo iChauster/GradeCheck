@@ -152,6 +152,9 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
         let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(LoginViewController.dismissKeyboard))
         downSwipe.direction = .down;
         self.view.addGestureRecognizer(downSwipe);
+        self.executeLogin()
+    }
+    func executeLogin() {
         if(!UserDefaults.standard.bool(forKey: "HasRegistered")){
             self.overlay.alpha = 0;
             self.login.isHidden = true
@@ -182,9 +185,9 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
                     self.statusLabel.text = "Logging in..."
                 }
                 /*if(NSUserDefaults.standardUserDefaults().boolForKey("shouldUpdateUserToken")){
-                    print("should update User Token");
-                    self.updateUser("deviceToken", value: (NSUserDefaults.standardUserDefaults().objectForKey("userId") as! String))
-                }*/
+                 print("should update User Token");
+                 self.updateUser("deviceToken", value: (NSUserDefaults.standardUserDefaults().objectForKey("userId") as! String))
+                 }*/
             }
             // This could also be another view, connected with an outlet
             
@@ -291,6 +294,19 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 print(error)
+                let err = error! as NSError
+                if(err.code == -1001){
+                    let alert = UIAlertController(title: "Request Timeout", message: "The server can't come to the phone right now.", preferredStyle: .alert)
+                    let alertActionCancel = UIAlertAction(title: "Is it dead?", style: .cancel, handler: { (UIAlertAction) in
+                        
+                    })
+                    let alertActionTryAgain = UIAlertAction(title: "Try again.", style: .default, handler: { (UIAlertAction) in
+                        self.executeLogin()
+                    })
+                    alert.addAction(alertActionCancel)
+                    alert.addAction(alertActionTryAgain)
+                    self.present(alert, animated: true)
+                }
             } else {
                 let httpResponse = response as? HTTPURLResponse
                 print(httpResponse!)

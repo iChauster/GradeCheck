@@ -125,9 +125,9 @@ class ProjectionGradeViewController: UIViewController {
                                 self.categoryConversion = false
                             }else if((self.data[0] as! String) == "Category Weighting"){
                                 let arr = self.data[1] as! NSArray
+                                self.categoryConversion = true
                                 for obj in arr {
                                     let dict = obj as! NSDictionary
-                                    self.categoryConversion = true
                                     self.weights.add(dict)
                                 }
                             }
@@ -200,18 +200,27 @@ class ProjectionGradeViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     func adjustMin(){
-        if let a = Double(self.maxScore.text!) {
-        let minimumScore = self.sliderPercentView.currentValue * 0.01 * a
-        self.achievedScore.text = String(format:"%.2f",minimumScore)
-        print(self.originalMin[self.category]!)
-        var arr = self.originalMin[self.category] as! [Double]
-        let minDoubs = arr[0]
-        let newMin = minDoubs + minimumScore
-        let maxDoubs = arr[1]
-        let newMax = maxDoubs + Double(self.assignment["gradeMax"] as! String)!
-        let array = [newMin, newMax]
-        self.final[self.category] = array
-        self.findFinalGrade()
+        if let b = self.maxScore.text {
+            if let a = Double(b) {
+            let minimumScore = self.sliderPercentView.currentValue * 0.01 * a
+            self.achievedScore.text = String(format:"%.2f",minimumScore)
+            print(self.originalMin[self.category]!)
+            var arr = self.originalMin[self.category] as! [Double]
+            let minDoubs = arr[0]
+            let newMin = minDoubs + minimumScore
+            let maxDoubs = arr[1]
+            let newMax = maxDoubs + Double(self.assignment["gradeMax"] as! String)!
+            let array = [newMin, newMax]
+            self.final[self.category] = array
+            self.findFinalGrade()
+            }else{
+                let alert = UIAlertController(title: "Grade Error", message: "Grade cannot be read.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Aw.", style: .default, handler: { (alert : UIAlertAction) in
+                    self.dismiss(animated: true, completion: nil)
+                })
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+            }
         }else{
             let alert = UIAlertController(title: "Grade Error", message: "Grade cannot be read.", preferredStyle: .alert)
             let action = UIAlertAction(title: "Aw.", style: .default, handler: { (alert : UIAlertAction) in

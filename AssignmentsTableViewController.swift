@@ -39,6 +39,8 @@ class AssignmentsTableViewController: UITableViewController {
         rightSwipe.direction = .right;
         self.tableView.addGestureRecognizer(rightSwipe)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(AssignmentsTableViewController.handleLongPress))
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 106
         self.view.addGestureRecognizer(longPress)
         let headers = [
             "cache-control": "no-cache",
@@ -316,6 +318,7 @@ class AssignmentsTableViewController: UITableViewController {
             g = String(g.characters.dropLast());
             let color = UIColor().getColor(grade: Double(g)!)
             cell.grade.backgroundColor = color
+            cell.grade.grade.textColor = UIColor().getTextColor(color: color)
         }else{
             cell.grade.backgroundColor = UIColor.black
         }
@@ -337,7 +340,7 @@ class AssignmentsTableViewController: UITableViewController {
         if(section == 0){
             header.title.text = "UPCOMING"
         }else{
-            header.title.text = "DONE"
+            header.title.text = "COMPLETED"
         }
         return cell;
     }

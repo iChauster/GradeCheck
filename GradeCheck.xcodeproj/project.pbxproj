@@ -27,6 +27,9 @@
 		2C86505B1CB4930F0039B1A9 /* appIcon152.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650591CB4930F0039B1A9 /* appIcon152.png */; };
 		2C86505C1CB4930F0039B1A9 /* appIcon167.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C86505A1CB4930F0039B1A9 /* appIcon167.png */; };
 		2C918C4E1CAC8CA300C80299 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */; };
+		2C9D84941F5CD57C0011A0C3 /* detailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C9D84931F5CD57C0011A0C3 /* detailCell.xib */; };
+		2C9D84981F5CD82C0011A0C3 /* SlideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9D84971F5CD82C0011A0C3 /* SlideCell.swift */; };
+		2C9D84A01F5CE0470011A0C3 /* Back-Chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9D849F1F5CE0470011A0C3 /* Back-Chevron.png */; };
 		2CA5B1511CC70E30005F80CE /* ExpandAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA5B1501CC70E30005F80CE /* ExpandAnimator.swift */; };
 		2CA67E201DADDFDA0093B7F6 /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CA67E1F1DADDFDA0093B7F6 /* download.png */; };
 		2CB2586E1DEB68590023E9A6 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB258691DEB67F40023E9A6 /* Charts.framework */; };
@@ -145,6 +148,9 @@
 		2C86505A1CB4930F0039B1A9 /* appIcon167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon167.png; path = ../../../Downloads/appIcon167.png; sourceTree = "<group>"; };
 		2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2C918C4F1CAC8D8400C80299 /* GradeCheck-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GradeCheck-Bridging-Header.h"; sourceTree = "<group>"; };
+		2C9D84931F5CD57C0011A0C3 /* detailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = detailCell.xib; sourceTree = "<group>"; };
+		2C9D84971F5CD82C0011A0C3 /* SlideCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideCell.swift; sourceTree = "<group>"; };
+		2C9D849F1F5CE0470011A0C3 /* Back-Chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back-Chevron.png"; sourceTree = "<group>"; };
 		2CA5B1501CC70E30005F80CE /* ExpandAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandAnimator.swift; sourceTree = "<group>"; };
 		2CA67E1F1DADDFDA0093B7F6 /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = download.png; path = ../../../Downloads/download.png; sourceTree = "<group>"; };
 		2CB258621DEB67F40023E9A6 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../Downloads/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
@@ -341,15 +347,16 @@
 				2C22E30A1CF7C9850011C2DE /* settings.png */,
 				2C6D374B1CC85A180077F4A9 /* whitespace-montgomery-logo.png */,
 				2CEC13271CC40B1A00678AA8 /* assign.png */,
+				2C9D849F1F5CE0470011A0C3 /* Back-Chevron.png */,
 				2C04CDEA1CC9B2FC008B9FF4 /* check.png */,
 				2CEC13231CC4098300678AA8 /* statistics@2x.png */,
+				EDBE86061C7A46B10031EE8B /* back1.png */,
 				2CEC131F1CC2835E00678AA8 /* statistics.png */,
 				2CEC13251CC40AD500678AA8 /* assign@2x.png */,
 				2CEC13291CC40BA000678AA8 /* grades-icon3@2x.png */,
 				2CEC13151CC27D6B00678AA8 /* grades-icon3.png */,
 				2CD720BF1CAB546900338CA7 /* appIcon */,
 				ED7AA20A1C83986D001B2E68 /* calendar.png */,
-				EDBE86061C7A46B10031EE8B /* back1.png */,
 				EDBE86011C7A2D460031EE8B /* background.png */,
 			);
 			name = art;
@@ -361,7 +368,9 @@
 				EDBE860A1C7A5ADD0031EE8B /* GradeTableViewController.swift */,
 				EDBE860C1C7A5BB60031EE8B /* GradeTableViewCell.swift */,
 				ED64DEA81CA3718D00B25150 /* DetailGradeViewController.swift */,
+				2C9D84931F5CD57C0011A0C3 /* detailCell.xib */,
 				ED64DEAE1CA4677E00B25150 /* DetailGradeTableViewCell.swift */,
+				2C9D84971F5CD82C0011A0C3 /* SlideCell.swift */,
 				2CFE269D1CCBEC54001B7AAE /* ProjectionGradeViewController.swift */,
 				2CFE26A21CCC7105001B7AAE /* SliderPercentView.swift */,
 				2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */,
@@ -507,8 +516,10 @@
 				2CD720BE1CAB545300338CA7 /* appIcon58.png in Resources */,
 				2CEC13201CC2835E00678AA8 /* statistics.png in Resources */,
 				EDBE86051C7A2F870031EE8B /* appicon.png in Resources */,
+				2C9D84941F5CD57C0011A0C3 /* detailCell.xib in Resources */,
 				EDBE85EA1C78ED280031EE8B /* LaunchScreen.storyboard in Resources */,
 				2CEC13161CC27D6B00678AA8 /* grades-icon3.png in Resources */,
+				2C9D84A01F5CE0470011A0C3 /* Back-Chevron.png in Resources */,
 				2CEC13281CC40B1A00678AA8 /* assign.png in Resources */,
 				2C86505B1CB4930F0039B1A9 /* appIcon152.png in Resources */,
 				2C6D374C1CC85A180077F4A9 /* whitespace-montgomery-logo.png in Resources */,
@@ -548,6 +559,7 @@
 				ED7AA22A1CA0C0FC001B2E68 /* DetailStatViewController.swift in Sources */,
 				2CFE269E1CCBEC54001B7AAE /* ProjectionGradeViewController.swift in Sources */,
 				ED7AA2081C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift in Sources */,
+				2C9D84981F5CD82C0011A0C3 /* SlideCell.swift in Sources */,
 				ED7AA2281CA0975D001B2E68 /* StatTableViewCell.swift in Sources */,
 				2C031C651CD2FD0D00390BC7 /* ForceTouchAssignmentsDetailViewController.swift in Sources */,
 				ED64DEA91CA3718D00B25150 /* DetailGradeViewController.swift in Sources */,
@@ -711,7 +723,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = GradeCheck/GradeCheck.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = WD6FRG4V7Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -723,8 +735,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ichauster.gradeCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2f0baf81-bb68-4cb5-9465-2f53fd586132";
-				PROVISIONING_PROFILE_SPECIFIER = "GradeCheck Distribution";
+				PROVISIONING_PROFILE = "37f1fdee-eaad-4501-8a0b-44df63e5ed3a";
+				PROVISIONING_PROFILE_SPECIFIER = GradeCheck;
 				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -739,6 +751,7 @@
 				CODE_SIGN_ENTITLEMENTS = GradeCheck/GradeCheck.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = WD6FRG4V7Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GradeCheck",
@@ -750,6 +763,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ichauster.gradeCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "37f1fdee-eaad-4501-8a0b-44df63e5ed3a";
+				PROVISIONING_PROFILE_SPECIFIER = GradeCheck;
 				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

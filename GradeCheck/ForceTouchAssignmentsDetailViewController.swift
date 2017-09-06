@@ -41,7 +41,7 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
             self.calendar.setImage(cal, for: UIControlState())
             self.calendar.setImage(cal, for: .selected)
         }
-        let dict = assignment["asignment"]! as! NSDictionary
+        let dict = assignment["assignment"]! as! NSDictionary
         assignmentTitle.text = dict["title"] as? String
         if(dict["details"] != nil){
             detailTitle!.text = dict["details"] as? String
@@ -57,20 +57,10 @@ class ForceTouchAssignmentsDetailViewController: UIViewController {
         if(g!.contains("%")){
             percentage.score.text = g!;
             g = String(g!.characters.dropLast());
-            switch Double(g!)!{
-            case 0..<50:
-                percentage.backgroundColor = UIColor.black
-            case 51..<75 :
-                percentage.backgroundColor = UIColor.red
-            case 76..<85 :
-                percentage.backgroundColor = UIColor.yellow
-            case 86..<110 :
-                percentage.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
-            default :
-                percentage.backgroundColor = UIColor.purple
-            }
             let color = UIColor().getColor(grade: Double(g!)!)
             percentage.backgroundColor = color
+            let c = UIColor().getTextColor(color: color)
+            percentage.score.textColor = c
             
         }else{
             percentage.backgroundColor = UIColor.black

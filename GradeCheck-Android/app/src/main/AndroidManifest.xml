@@ -24,6 +24,7 @@
                 android:value=".GradeTable" />
         </activity>
         <activity android:name=".StatView"></activity>
+        <activity android:name=".Projection"></activity>
     </application>
 
 </manifest>

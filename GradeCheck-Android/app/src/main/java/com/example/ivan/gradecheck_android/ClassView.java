@@ -1,6 +1,7 @@
 package com.example.ivan.gradecheck_android;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,9 @@ public class ClassView extends AppCompatActivity {
     private String URL = "http://gradecheck.herokuapp.com/";
     private RecyclerView tableView;
     private String title;
+    private String cookie;
+    private String id;
+    private String classCodes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +50,12 @@ public class ClassView extends AppCompatActivity {
                 // parse this
                 title = js.getString("class") + " : " + js.getString("grade");
                 String cs = js.getString("classCodes");
+                classCodes = cs;
                 String namepass[] = cs.split(":");
                 String course = namepass[0];
                 String section = namepass[1];
+                cookie = auth[0];
+                id = auth[1];
                 makeClassAssignmentsRequest(auth[0], auth[1], course, section, URL);
                 /*RecyclerView.Adapter ra = new AssignmentCellAdapter(js);
                 tableView.setAdapter(ra);*/
@@ -64,6 +71,16 @@ public class ClassView extends AppCompatActivity {
             myToolbar.requestLayout();
         }
 
+    }
+    public String[] getCookieAndID(){
+        SharedPreferences pref = getSharedPreferences("GradeCheckInfo", 0);
+
+        String id = pref.getString("id", "");
+        String[] a = new String[]{cookie,id};
+        return a;
+    }
+    public String getClassCodes(){
+        return classCodes;
     }
     public void makeClassAssignmentsRequest(String cookie, String id, String course, String section, String URL) {
         Req r = new Req();
@@ -108,7 +125,7 @@ public class ClassView extends AppCompatActivity {
         final Activity gt = this;
         /*RecyclerView.Adapter ra = new AssignmentCellAdapter(js);
         tableView.setAdapter(ra);*/
-        final RecyclerView.Adapter newGradeAdapter = new AssignmentCellAdapter(b);
+        final RecyclerView.Adapter newGradeAdapter = new AssignmentCellAdapter(b, gt);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

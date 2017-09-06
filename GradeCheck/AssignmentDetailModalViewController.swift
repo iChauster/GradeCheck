@@ -69,6 +69,7 @@ class AssignmentDetailModalViewController: UIViewController {
             g = String(g!.characters.dropLast());
             let color = UIColor().getColor(grade: Double(g!)!)
             percentage.backgroundColor = color
+            percentage.score.textColor = UIColor().getTextColor(color: color)
             
         }else{
             percentage.backgroundColor = UIColor.black

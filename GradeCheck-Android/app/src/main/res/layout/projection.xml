@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:id="@+id/projection"
+    android:background="#272927">
+
+    <TextView
+        android:text="New Overall Grade :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:textColor="#FFF"
+        android:layout_alignBaseline="@+id/resultText"
+        android:layout_alignBottom="@+id/resultText"
+        android:layout_toLeftOf="@+id/resultText"
+        android:layout_toStartOf="@+id/resultText"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:text="Assignment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/assignment"
+        android:layout_above="@+id/projectionText"
+        android:layout_alignLeft="@+id/projectionText"
+        android:layout_alignStart="@+id/projectionText"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:transitionName="@string/transition"
+        android:textColor="#FFF"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circular_text"
+        android:gravity="center"
+        android:id="@+id/resultText"
+        android:textColor="#FFF"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_below="@+id/projectionText"
+        android:layout_toRightOf="@+id/assignment"
+        android:layout_marginLeft="39dp" />
+
+    <TextView
+        android:layout_gravity="center"
+        android:background="@drawable/circular_text"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/projectionText"
+        android:textColor="#FFF"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        tools:layout_editor_absoluteY="50dp"
+        tools:layout_editor_absoluteX="69dp"
+        android:layout_marginTop="117dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="82dp">
+    </TextView>
+
+</RelativeLayout>

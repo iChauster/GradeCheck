@@ -56,20 +56,11 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCell(withIdentifier: "StatClassCell", for: indexPath) as! StatTableViewCell;
         let element = self.sortedArray[indexPath.row] ;
         cell.classTitle.text = element.classTitle
-        let g = element.grade
-            switch Int(g!){
-            case 0..<50:
-                cell.backgroundColor = UIColor.black
-            case 51..<75 :
-                cell.backgroundColor = UIColor.red
-            case 76..<85 :
-                cell.backgroundColor = UIColor.yellow
-            case 86..<110 :
-                cell.backgroundColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0);
-            default :
-                cell.backgroundColor = UIColor.purple
-            }
-       
+        let num = Double(element.grade)
+        let color = UIColor().getColor(grade: num)
+        cell.backgroundColor = color
+        cell.classTitle.textColor = UIColor().getTextColor(color: color)
+
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

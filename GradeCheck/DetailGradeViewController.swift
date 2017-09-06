@@ -18,15 +18,19 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     var color : UIColor!
     var classtitle : String!
     var markingPeriod : String?
+    var classGrade : String?
+    var classTeacher : String?
     var cours : String!
     var sectio : String!
     var selectedCell : DetailGradeTableViewCell?
+    var gradeFrame : CGRect!
     let url = "http://gradecheck.herokuapp.com/"
     //let url = "http://localhost:2800/"
 
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
     @IBOutlet weak var assignmentTable : UITableView!
+    @IBOutlet weak var slideCell : SlideCell!
     var blurEffectView = UIVisualEffectView()
     
     override var prefersStatusBarHidden : Bool {
@@ -43,8 +47,18 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
             let longPress = UILongPressGestureRecognizer(target: self, action: #selector(DetailGradeViewController.handleLongPress))
             self.view.addGestureRecognizer(longPress)
         }
+        self.navBar.alpha = 0.0;
+        self.assignmentTable.alpha = 0.0;
+        Bundle.main.loadNibNamed("detailCell", owner: self, options: nil)
+        self.view.addSubview(slideCell)
+        slideCell.frame = gradeFrame
+        self.slideCell.content.backgroundColor = self.color
+        
         self.navBar.barTintColor = color;
         self.navItem.title = self.classtitle;
+        self.slideCell.course.text = self.classtitle
+        self.slideCell.grade.text = self.classGrade
+        self.slideCell.teacher.text = self.classTeacher
         self.assignmentTable.dataSource = self;
         self.assignmentTable.delegate = self; 
         let cookieArray = self.cookieData.object(forKey: "cookie") as? NSArray;
@@ -96,16 +110,21 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
                             if(self.assignments.count == 0){
                                 print("No Assignments")
                                 let noView = UIView(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height))
-                                noView.backgroundColor = UIColor(red: 0.0, green: 0.5019, blue: 0.2509, alpha: 1.0)
+                                //noView.backgroundColor = UIColor(red: 0.0, green: 0.5019, blue: 0.2509, alpha: 1.0)
                                 let noLabel = UILabel(frame:CGRect(x: 10,y: 0, width: 240,height: 21));
                                 noLabel.textAlignment = .center;
                                 noLabel.text = "No Assignments :)";
                                 noLabel.textColor = UIColor.white
-                                noLabel.center = noView.center;
+                                noLabel.center = self.view.convert(self.view.center, to: self.assignmentTable)
+                                //noLabel.center.y -= 42 + 44
                                 noView.addSubview(noLabel)
                                 noView.bringSubview(toFront: noLabel)
                                 self.assignmentTable.backgroundView = noView;
                             }
+                            UIView.animate(withDuration: 0.8, delay: 0.0, options: [.allowAnimatedContent,.curveEaseInOut,], animations: {
+                                self.slideCell.frame.origin.y = 0
+                                self.assignmentTable.alpha = 1;
+                            }, completion: nil)
                             self.assignmentTable.reloadData()
                             
                         }catch{
@@ -157,7 +176,11 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         cell.detail.text = assignDictionary.object(forKey: "details") as? String;
         cell.type.text = (object as AnyObject).object(forKey: "category") as? String;
         var g = (object as AnyObject).object(forKey: "percent") as! String;
-        cell.grade.grade.text = g
+        if let a = String(g){
+            cell.grade.grade.text = a
+        }else{
+            cell.grade.grade.text = "A"
+        }
         cell.date.text = (object as AnyObject).object(forKey: "stringDate") as? String;
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "M/d/yyyy"
@@ -176,6 +199,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
             let color = UIColor().getColor(grade: Double(g)!)
             cell.grade.backgroundColor = color
             cell.color = color
+            cell.grade.grade.textColor = UIColor().getTextColor(color: color)
         }else{
             cell.grade.backgroundColor = UIColor.black
             cell.color = UIColor.black

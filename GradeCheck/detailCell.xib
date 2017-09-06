@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Helvetica.ttc">
+            <string>Helvetica-Bold</string>
+        </array>
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Medium</string>
+        </array>
+        <array key="HelveticaNeueLights.ttc">
+            <string>HelveticaNeue-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailGradeViewController" customModule="GradeCheck" customModuleProvider="target">
+            <connections>
+                <outlet property="slideCell" destination="iN0-l3-epB" id="TL4-7H-3as"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SlideCell" customModule="GradeCheck" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHe-p5-Dkp">
+                    <rect key="frame" x="10" y="8" width="355" height="70"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9g-Vv-xoZ">
+                            <rect key="frame" x="42" y="8" width="223" height="26"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="21"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZ2-Sc-A2E" customClass="PercentLabel" customModule="GradeCheck" customModuleProvider="target">
+                            <rect key="frame" x="273" y="-2" width="74" height="75"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="74" id="Mhv-6B-QsF"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="28"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jBg-lb-Ye3">
+                            <rect key="frame" x="8" y="24" width="13" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="jBg-lb-Ye3" secondAttribute="height" multiplier="13:22" id="oOP-Vq-yHl"/>
+                            </constraints>
+                            <state key="normal" image="Back-Chevron.png"/>
+                            <connections>
+                                <action selector="segueBack" destination="-1" eventType="touchUpInside" id="bCK-IZ-5VS"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Teacher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ntg-aC-eAW">
+                            <rect key="frame" x="42" y="38" width="223" height="23.5"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="TZ2-Sc-A2E" firstAttribute="leading" secondItem="Ntg-aC-eAW" secondAttribute="trailing" constant="8" id="5FL-w4-rkL"/>
+                        <constraint firstItem="TZ2-Sc-A2E" firstAttribute="leading" secondItem="i9g-Vv-xoZ" secondAttribute="trailing" constant="8" id="6y1-t1-rqQ"/>
+                        <constraint firstItem="jBg-lb-Ye3" firstAttribute="leading" secondItem="VHe-p5-Dkp" secondAttribute="leading" constant="8" id="HVp-ZJ-3bV"/>
+                        <constraint firstItem="Ntg-aC-eAW" firstAttribute="leading" secondItem="jBg-lb-Ye3" secondAttribute="trailing" constant="21" id="HwD-je-0li"/>
+                        <constraint firstAttribute="bottom" secondItem="TZ2-Sc-A2E" secondAttribute="bottom" constant="-3" id="TAG-od-yOs"/>
+                        <constraint firstItem="i9g-Vv-xoZ" firstAttribute="leading" secondItem="jBg-lb-Ye3" secondAttribute="trailing" constant="21" id="Y5d-hd-1bo"/>
+                        <constraint firstAttribute="trailing" secondItem="TZ2-Sc-A2E" secondAttribute="trailing" constant="8" id="YgJ-Ay-uvW"/>
+                        <constraint firstAttribute="bottom" secondItem="Ntg-aC-eAW" secondAttribute="bottom" constant="8" id="Yj6-o8-gBS"/>
+                        <constraint firstItem="Ntg-aC-eAW" firstAttribute="top" secondItem="i9g-Vv-xoZ" secondAttribute="bottom" constant="4" id="eIO-Xo-YBJ"/>
+                        <constraint firstItem="jBg-lb-Ye3" firstAttribute="top" secondItem="VHe-p5-Dkp" secondAttribute="top" constant="24" id="kcz-VR-ACh"/>
+                        <constraint firstItem="TZ2-Sc-A2E" firstAttribute="top" secondItem="VHe-p5-Dkp" secondAttribute="top" constant="-2" id="q9H-bs-3rl"/>
+                        <constraint firstItem="i9g-Vv-xoZ" firstAttribute="top" secondItem="VHe-p5-Dkp" secondAttribute="top" constant="8" id="upY-Bb-rJF"/>
+                        <constraint firstAttribute="bottom" secondItem="jBg-lb-Ye3" secondAttribute="bottom" constant="24" id="wCc-gg-IUO"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="VHe-p5-Dkp" secondAttribute="bottom" constant="8" id="Hsq-Ej-5P5"/>
+                <constraint firstAttribute="trailing" secondItem="VHe-p5-Dkp" secondAttribute="trailing" constant="10" id="XPZ-FN-d55"/>
+                <constraint firstItem="VHe-p5-Dkp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="dJL-f0-LXw"/>
+                <constraint firstItem="VHe-p5-Dkp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="oVo-mT-oBq"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="content" destination="VHe-p5-Dkp" id="88O-XU-83i"/>
+                <outlet property="course" destination="i9g-Vv-xoZ" id="8no-rK-wPe"/>
+                <outlet property="grade" destination="TZ2-Sc-A2E" id="nEJ-xO-gaX"/>
+                <outlet property="teacher" destination="Ntg-aC-eAW" id="CqJ-gI-hBs"/>
+            </connections>
+            <point key="canvasLocation" x="33.5" y="357"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Back-Chevron.png" width="39" height="66"/>
+    </resources>
+</document>

@@ -1,9 +1,14 @@
 package com.example.ivan.gradecheck_android;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import org.json.*;
 import org.w3c.dom.Text;
@@ -20,6 +25,7 @@ import com.daimajia.androidanimations.library.YoYo;
 
 public class AssignmentCellAdapter extends RecyclerView.Adapter<AssignmentCellAdapter.ViewHolder> {
     private JSONArray dataSet;
+    private Activity activity;
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView assignmentText;
@@ -28,6 +34,7 @@ public class AssignmentCellAdapter extends RecyclerView.Adapter<AssignmentCellAd
         public TextView descriptionText;
         public TextView dateView;
         public CardView view;
+        public JSONArray dataSet;
         public ViewHolder(View v) {
             super(v);
             view = (CardView) v.findViewById(R.id.card_view);
@@ -38,8 +45,9 @@ public class AssignmentCellAdapter extends RecyclerView.Adapter<AssignmentCellAd
             classText = (TextView) v.findViewById(R.id.class_text);
         }
     }
-    public AssignmentCellAdapter(JSONArray dataSet){
+    public AssignmentCellAdapter(JSONArray dataSet, Activity a){
         this.dataSet = dataSet;
+        this.activity = a;
     }
 
     @Override
@@ -68,7 +76,9 @@ public class AssignmentCellAdapter extends RecyclerView.Adapter<AssignmentCellAd
             holder.classText.setText(object.getString("course"));
             holder.descriptionText.setText(assignment.getString("details"));
             holder.dateView.setText(object.getString("dueDate"));
+            holder.dataSet = dataSet;
             YoYo.with(Techniques.ZoomIn).playOn(holder.gradeText);
+            final JSONObject o = object;
             if(!s.equals("")) {
                 s = s.substring(0, s.length() - 1);
                 System.out.println(s);
@@ -109,6 +119,27 @@ public class AssignmentCellAdapter extends RecyclerView.Adapter<AssignmentCellAd
                     holder.gradeText.setBackgroundTintList(colorList);
                 }
             }
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    if (Build.VERSION.SDK_INT >= 16) {
+                        System.out.println(o);
+                        if(activity instanceof ClassView){
+                            Intent i = new Intent(activity, Projection.class);
+                            ClassView cv = (ClassView) activity;
+                            String[] f = cv.getCookieAndID();
+                            String classCodes = cv.getClassCodes();
+                            i.putExtra("classCodes",classCodes);
+                            i.putExtra("class", o.toString());
+                            i.putExtra("auth", f);
+                            i.putExtra("dataSet", dataSet.toString());
+                            final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true);
+                            ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pairs);
+                            activity.startActivity(i, transitionActivityOptions.toBundle());
+                        }
+                    }
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }

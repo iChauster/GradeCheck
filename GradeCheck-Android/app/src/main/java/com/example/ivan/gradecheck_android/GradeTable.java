@@ -22,12 +22,19 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Collections;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.util.Locale;
+import java.util.Arrays;
+
 import me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout;
 import me.majiajie.pagerbottomtabstrip.TabItemBuilder;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
@@ -149,6 +156,7 @@ public class GradeTable extends AppCompatActivity{
     public void layoutAssignments(JSONArray a){
         final JSONArray b = a;
         final Context c = this;
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -158,14 +166,51 @@ public class GradeTable extends AppCompatActivity{
                         new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
 
                 //Sections
+                System.out.println(b);
+                for (int i = 0; i < b.length(); i ++){
+                    try {
+                        JSONObject obj = b.getJSONObject(i);
+                        String date = obj.getString("stringDate");
+                        String d = date.replace("\\", "");
+                        DateFormat format = new SimpleDateFormat("M/dd/yyyy", Locale.ENGLISH);
+                        try{
+                            Date newDate = format.parse(d);
+                            if(newDate.compareTo(new Date()) < 0){
+                                System.out.println("less than zero for " + i);
+                                index = i;
+                            }
+                        }catch(ParseException e){
+                            System.err.println(e);
+                        }
+                        System.out.println(date);
+                    }catch (JSONException e){
+                        System.err.print(e);
+                    }
+                }
+                ArrayList<JSONObject> before = new ArrayList<JSONObject>();
+                ArrayList<JSONObject> after = new ArrayList<JSONObject>();
+                for(int i = 0; i < b.length(); i ++){
+
+                    try {
+                        JSONObject o = b.getJSONObject(i);
+                        if(i <= index){
+                            after.add(o);
+                        }else{
+                            before.add(o);
+                        }
+                    }catch(JSONException e){
+                        System.err.println(e);
+                    }
+                }
+                before.addAll(after);
+                JSONArray fin = new JSONArray(before);
                 sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,"UPCOMING"));
-                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(index,"COMPLETED"));
-
-
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(b.length()-index-1,"COMPLETED"));
+                Activity d = (Activity) c;
                 //Add your adapter to the sectionAdapter
                 SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
                 SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new
-                        SimpleSectionedRecyclerViewAdapter(c,R.layout.section,R.id.section_text, new AssignmentCellAdapter(b));
+                        SimpleSectionedRecyclerViewAdapter(c,R.layout.section,R.id.section_text, new AssignmentCellAdapter(fin, d));
                 mSectionedAdapter.setSections(sections.toArray(dummy));
 
                 //Apply this adapter to the RecyclerView

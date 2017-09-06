@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GradeCheck-Android</string>
+    <string name="transition">PredictionTransition</string>
 </resources>
