@@ -729,7 +729,7 @@ app.post('/assignments', function(req, res){
     }
     var dateString = mm +"/"+dd+"/"+yyyy;
 		var gradebook = {method: 'GET',
-  				url: 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=' + req.body.id + '&action=form',
+  				url: 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=listassignments&studentid=' + req.body.id + '&action=form&dateRange=weekof&courseAndSection=&status=',
   				'rejectUnauthorized' : false,
   				headers:{'cache-control' : 'no-cache',
   				'content-type': 'application/x-www-form-urlencoded',

@@ -320,7 +320,10 @@ class AssignmentsTableViewController: UITableViewController {
             cell.grade.backgroundColor = color
             cell.grade.grade.textColor = UIColor().getTextColor(color: color)
         }else{
-            cell.grade.backgroundColor = UIColor.black
+            cell.grade.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+            cell.grade.layer.borderColor = UIColor().getColor(grade: 0).cgColor
+            cell.grade.layer.borderWidth = 2;
+            
         }
         cell.backgroundColor = cell.backgroundColor;
         let backgroundView = UIView();

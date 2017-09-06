@@ -341,7 +341,7 @@
                                                 <action selector="closeView" destination="PT7-Xt-OlL" id="PoD-qV-4UH"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" image="calendar.png" id="DzI-Ny-4n5">
+                                        <barButtonItem key="rightBarButtonItem" id="DzI-Ny-4n5">
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="addtoCalendarClicked:" destination="PT7-Xt-OlL" id="Ylj-be-mzF"/>
