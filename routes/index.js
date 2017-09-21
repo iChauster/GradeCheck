@@ -35,7 +35,6 @@ app.post('/register', function(req, res) {
             }
         });
       }else{
-        console.log(result);
         console.log("DOESN'T WORK");
         res.writeHead(912);
         res.end("RegistrationFailed");
@@ -384,6 +383,24 @@ app.post('/login', passport.authenticate('local'),function (req,res){
 		});
 	}
 });
+function wipeDataBase(){
+  console.log('wiping database...');
+   User.find({}, function (err, doc){
+      wipeAccounts(0, doc);
+    });
+}
+function wipeAccounts(position, array){
+  if(position < array.length){
+    var user = array[position]
+    User.update({username:user.username}, {"$set" : {"grades":[{subject:"", grade:""}]}}, function (err, numberAffected, raw){
+      if(err){
+        console.log(err);
+      }
+      console.log('cleared ' + user.studId)
+      wipeAccounts(position + 1, array);
+    });
+  }
+}
 function updateOnDatabase(art,user){
   console.log('called')
   console.log(art);

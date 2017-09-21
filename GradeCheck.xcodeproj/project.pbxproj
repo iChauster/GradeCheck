@@ -23,6 +23,7 @@
 		2C6AB48E1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6AB48D1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift */; };
 		2C6D37451CC82BAF0077F4A9 /* PercentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */; };
 		2C6D374C1CC85A180077F4A9 /* whitespace-montgomery-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6D374B1CC85A180077F4A9 /* whitespace-montgomery-logo.png */; };
+		2C859F151F6B886000C68BDC /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 2C859F141F6B886000C68BDC /* AppIcon.appiconset */; };
 		2C8650581CB48DE80039B1A9 /* appIcon76.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650571CB48DE80039B1A9 /* appIcon76.png */; };
 		2C86505B1CB4930F0039B1A9 /* appIcon152.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650591CB4930F0039B1A9 /* appIcon152.png */; };
 		2C86505C1CB4930F0039B1A9 /* appIcon167.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C86505A1CB4930F0039B1A9 /* appIcon167.png */; };
@@ -143,6 +144,7 @@
 		2C6AB48D1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercentLabel.swift; sourceTree = "<group>"; };
 		2C6D374B1CC85A180077F4A9 /* whitespace-montgomery-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitespace-montgomery-logo.png"; sourceTree = "<group>"; };
+		2C859F141F6B886000C68BDC /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AppIcon.appiconset; sourceTree = "<group>"; };
 		2C8650571CB48DE80039B1A9 /* appIcon76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon76.png; path = ../../../Downloads/appIcon76.png; sourceTree = "<group>"; };
 		2C8650591CB4930F0039B1A9 /* appIcon152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon152.png; path = ../../../Downloads/appIcon152.png; sourceTree = "<group>"; };
 		2C86505A1CB4930F0039B1A9 /* appIcon167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon167.png; path = ../../../Downloads/appIcon167.png; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				EDBE85E31C78ED280031EE8B /* Main.storyboard */,
 				EDBE86031C7A2D5D0031EE8B /* art */,
 				EDBE85E61C78ED280031EE8B /* Assets.xcassets */,
+				2C859F141F6B886000C68BDC /* AppIcon.appiconset */,
 				EDBE85E81C78ED280031EE8B /* LaunchScreen.storyboard */,
 				EDBE85EB1C78ED290031EE8B /* Info.plist */,
 				2C918C4F1CAC8D8400C80299 /* GradeCheck-Bridging-Header.h */,
@@ -432,6 +435,7 @@
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = WD6FRG4V7Z;
 						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -523,6 +527,7 @@
 				2CEC13281CC40B1A00678AA8 /* assign.png in Resources */,
 				2C86505B1CB4930F0039B1A9 /* appIcon152.png in Resources */,
 				2C6D374C1CC85A180077F4A9 /* whitespace-montgomery-logo.png in Resources */,
+				2C859F151F6B886000C68BDC /* AppIcon.appiconset in Resources */,
 				2CA67E201DADDFDA0093B7F6 /* download.png in Resources */,
 				2C22E30B1CF7C9850011C2DE /* settings.png in Resources */,
 				2CD720B41CAB524700338CA7 /* appIcon180.png in Resources */,
@@ -735,8 +740,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ichauster.gradeCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37f1fdee-eaad-4501-8a0b-44df63e5ed3a";
-				PROVISIONING_PROFILE_SPECIFIER = GradeCheck;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -762,8 +767,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ichauster.gradeCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37f1fdee-eaad-4501-8a0b-44df63e5ed3a";
-				PROVISIONING_PROFILE_SPECIFIER = GradeCheck;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

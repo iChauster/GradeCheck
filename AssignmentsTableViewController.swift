@@ -313,6 +313,7 @@ class AssignmentsTableViewController: UITableViewController {
         var g = given.object(forKey: "percent") as! String;
         cell.date.text = given.object(forKey: "dueDate") as? String;
         cell.dateString = given.object(forKey: "stringDate") as? String;
+        cell.grade.layer.borderWidth = 0;
         cell.grade.grade.text = g
         if(g.contains("%")){
             g = String(g.characters.dropLast());
@@ -323,7 +324,6 @@ class AssignmentsTableViewController: UITableViewController {
             cell.grade.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
             cell.grade.layer.borderColor = UIColor().getColor(grade: 0).cgColor
             cell.grade.layer.borderWidth = 2;
-            
         }
         cell.backgroundColor = cell.backgroundColor;
         let backgroundView = UIView();
