@@ -404,7 +404,7 @@ function wipeAccounts(position, array){
 function updateOnDatabase(art,user){
   console.log('called')
   console.log(art);
-  if(user && user.grades[0].subject != ""){
+  if(user && user.grades[0] && user.grades[0].subject != ""){
     var gradesArray = user.grades;
     var bool = true;
     for (var i = 0; i < gradesArray.length; i ++){
