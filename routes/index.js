@@ -410,22 +410,24 @@ function updateOnDatabase(art,user){
   if(user && user.grades[0] && user.grades[0].subject != ""){
     var gradesArray = user.grades;
     var bool = true;
-    for (var i = 0; i < gradesArray.length; i ++){
-      var obj = gradesArray[i];
-      if(art[i].subject == gradesArray[i].subject && art[i].grade == gradesArray[i].grade){
-                      
-      }else{
-        bool = false;
-        var ol = gradesArray[i]
-        var ne = art[i]
-        console.log("Something changed : ============================================");
-        console.log(gradesArray[i].subject+ " " + gradesArray[i].grade + " to new grade of " + art[i].subject + " " + art[i].grade);
-        User.update({username:user.username, "grades.subject" : ol.subject},{"$set" : {"grades.$.grade" : ne.grade}},function (err, numberAffected, raw){
-          if(err){
-            console.log(err);
-          }
-            console.log(numberAffected);
-          });
+    if(art.count > 0){
+      for (var i = 0; i < gradesArray.length; i ++){
+        var obj = gradesArray[i];
+        if(art[i].subject == gradesArray[i].subject && art[i].grade == gradesArray[i].grade){
+                        
+        }else{
+          bool = false;
+          var ol = gradesArray[i]
+          var ne = art[i]
+          console.log("Something changed : ============================================");
+          console.log(gradesArray[i].subject+ " " + gradesArray[i].grade + " to new grade of " + art[i].subject + " " + art[i].grade);
+          User.update({username:user.username, "grades.subject" : ol.subject},{"$set" : {"grades.$.grade" : ne.grade}},function (err, numberAffected, raw){
+            if(err){
+              console.log(err);
+            }
+              console.log(numberAffected);
+            });
+        }
       }
     }
   }else{
