@@ -181,7 +181,10 @@ app.post('/relogin', passport.authenticate('local'), function (req,res){
         form : {'j_username' : username, 'j_password' : req.body.password}
       }
       request(se, function (error,response,body){
-        if(error)throw new Error(error);
+        if(error){
+          res.writeHead(420);
+          res.end("Authentication Failed")
+        }
         console.log(response.statusCode);
         console.log(response.headers);
         cookie = response.headers['set-cookie'];
