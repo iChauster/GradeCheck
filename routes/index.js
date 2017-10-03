@@ -184,15 +184,16 @@ app.post('/relogin', passport.authenticate('local'), function (req,res){
         if(error){
           res.writeHead(420);
           res.end("Authentication Failed")
+        }else{
+          console.log(response.statusCode);
+          console.log(response.headers);
+          cookie = response.headers['set-cookie'];
+          var cookieObject = {};
+          cookieObject["cookie"] = cookie;
+          js.push(cookieObject);
+          console.log(js);
+          res.send(JSON.stringify(js));
         }
-        console.log(response.statusCode);
-        console.log(response.headers);
-        cookie = response.headers['set-cookie'];
-        var cookieObject = {};
-        cookieObject["cookie"] = cookie;
-        js.push(cookieObject);
-        console.log(js);
-        res.send(JSON.stringify(js));
       });
     });
   }
