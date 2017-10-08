@@ -53,7 +53,6 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         self.view.addSubview(slideCell)
         slideCell.frame = gradeFrame
         self.slideCell.content.backgroundColor = self.color
-        
         self.navBar.barTintColor = color;
         self.navItem.title = self.classtitle;
         self.slideCell.course.text = self.classtitle
@@ -194,6 +193,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         }else{
             cell.calendarReady = false;
         }
+        cell.grade.layer.borderWidth = 0;
         if(g.contains("%")){
             g = String(g.characters.dropLast());
             let color = UIColor().getColor(grade: Double(g)!)

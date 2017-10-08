@@ -310,7 +310,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         expandedvc.gradeFrame = openingFrame
         //expandedvc.classtitle = selectedCell.classg.text! + " - " + selectedCell.grade.text!;
         expandedvc.classtitle = selectedCell.classg.text!
-        expandedvc.classGrade = selectedCell.grade.text!
+        expandedvc.classGrade = String(selectedCell.percent) + "%"
         expandedvc.classTeacher = selectedCell.teacher.text!
         expandedvc.markingPeriod = UserDefaults.standard.object(forKey: "GradeTableMP") as? String
         self.tableView.deselectRow(at: indexPath, animated: true)

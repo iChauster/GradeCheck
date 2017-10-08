@@ -23,6 +23,8 @@
 		2C6AB48E1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6AB48D1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift */; };
 		2C6D37451CC82BAF0077F4A9 /* PercentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */; };
 		2C6D374C1CC85A180077F4A9 /* whitespace-montgomery-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6D374B1CC85A180077F4A9 /* whitespace-montgomery-logo.png */; };
+		2C825A441F8403C1007456DF /* GPAHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C825A431F8403C1007456DF /* GPAHistoryViewController.swift */; };
+		2C825A511F86C562007456DF /* YearViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C825A501F86C562007456DF /* YearViewController.swift */; };
 		2C859F151F6B886000C68BDC /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 2C859F141F6B886000C68BDC /* AppIcon.appiconset */; };
 		2C8650581CB48DE80039B1A9 /* appIcon76.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650571CB48DE80039B1A9 /* appIcon76.png */; };
 		2C86505B1CB4930F0039B1A9 /* appIcon152.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C8650591CB4930F0039B1A9 /* appIcon152.png */; };
@@ -144,6 +146,8 @@
 		2C6AB48D1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercentLabel.swift; sourceTree = "<group>"; };
 		2C6D374B1CC85A180077F4A9 /* whitespace-montgomery-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitespace-montgomery-logo.png"; sourceTree = "<group>"; };
+		2C825A431F8403C1007456DF /* GPAHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPAHistoryViewController.swift; sourceTree = "<group>"; };
+		2C825A501F86C562007456DF /* YearViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearViewController.swift; sourceTree = "<group>"; };
 		2C859F141F6B886000C68BDC /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AppIcon.appiconset; sourceTree = "<group>"; };
 		2C8650571CB48DE80039B1A9 /* appIcon76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon76.png; path = ../../../Downloads/appIcon76.png; sourceTree = "<group>"; };
 		2C8650591CB4930F0039B1A9 /* appIcon152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon152.png; path = ../../../Downloads/appIcon152.png; sourceTree = "<group>"; };
@@ -277,6 +281,8 @@
 			children = (
 				2C6AB48C1CFCF4B500E77252 /* Settings */,
 				ED7AA20F1C9508C4001B2E68 /* StatViewController.swift */,
+				2C825A431F8403C1007456DF /* GPAHistoryViewController.swift */,
+				2C825A501F86C562007456DF /* YearViewController.swift */,
 				ED7AA2271CA0975B001B2E68 /* StatTableViewCell.swift */,
 				ED7AA2111C962171001B2E68 /* GPAView.swift */,
 				ED7AA2291CA0C0FC001B2E68 /* DetailStatViewController.swift */,
@@ -560,6 +566,7 @@
 				2C6D37451CC82BAF0077F4A9 /* PercentLabel.swift in Sources */,
 				2CFE26A31CCC7105001B7AAE /* SliderPercentView.swift in Sources */,
 				2C1E22551DFC896A008CC80F /* IColor.swift in Sources */,
+				2C825A511F86C562007456DF /* YearViewController.swift in Sources */,
 				2C6AB4881CFCF4AC00E77252 /* SettingsTableViewCell.swift in Sources */,
 				ED7AA22A1CA0C0FC001B2E68 /* DetailStatViewController.swift in Sources */,
 				2CFE269E1CCBEC54001B7AAE /* ProjectionGradeViewController.swift in Sources */,
@@ -573,6 +580,7 @@
 				EDBE860D1C7A5BB60031EE8B /* GradeTableViewCell.swift in Sources */,
 				2C04CDED1CCAFD8E008B9FF4 /* AssignmentDetailModalViewController.swift in Sources */,
 				2CD720AF1CAB140A00338CA7 /* GraphData.swift in Sources */,
+				2C825A441F8403C1007456DF /* GPAHistoryViewController.swift in Sources */,
 				2C6AB48E1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift in Sources */,
 				2CA5B1511CC70E30005F80CE /* ExpandAnimator.swift in Sources */,
 				EDBE86001C7A2A150031EE8B /* LoginViewController.swift in Sources */,

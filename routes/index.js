@@ -1048,6 +1048,65 @@ app.post('/classdata', function(req,res){
     });*/
   }
 });
+//https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=grading&tab3=history&action=form&studentid=000958
+app.post('/gradeHistory', function (req, res){
+  
+  console.log('getting gradeHistory for student:' + req.body.id);
+  if(req.body.cookie && req.body.id){
+    var history = {method : 'GET',
+      url:"https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=grading&tab3=history&action=form&studentid=" + req.body.id,
+      'rejectUnauthorized' : false,
+      headers:{'cache-control' : 'no-cache',
+        'content-type': 'application/x-www-form-urlencoded',
+        'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11',
+        "Accept-Encoding" : "gzip, deflate, sdch",
+        "Accept-Language" : "en-US,en;q=0.8",
+        'Cookie':req.body.cookie          
+      }
+    }
+    request(history, function (error, response, body){
+      console.log('received response')
+      if(error){
+        console.log(error)
+      }
+      var results = [];
+      if(response.headers["set-cookie"]){
+        console.log('login required');
+        var b = {};
+        b["set-cookie"] = response.headers["set-cookie"]
+        results.push(b)
+        res.status(440).send(JSON.stringify(results))
+      }else{
+        var $ = cheerio.load(body);
+        var table = $('.list');
+        var ye = {};
+        console.log(table.children('tr').length)
+        var tr = table.children('tr')
+        tr.each(function (i, element){
+          if(i != 0){
+            var cell = $(this);
+            var year = $(cell.children('.cellCenter').get(1)).text().trim();
+            var clss = $(cell.children('.cellLeft').get(0)).text().trim();
+            var grade = $(cell.children('.cellLeft').get(2)).text().trim();
+            if(year != "" && year != undefined){
+              if(ye[year] == undefined){
+                ye[year] = []; 
+              }
+              var selection = {};
+              selection[clss] = grade
+              ye[year].push(selection)
+            }
+          }
+        });
+        console.log(ye)
+        results.push(ye);
+        res.send(JSON.stringify(results));
+        
+      }
+    });
+  }
+
+});
 //https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=000958&action=form&courseCode=33500&courseSection=1&mp=MP3
 app.post('/classAverages', function(req,res){
   console.log('classAverages requested for className :' + req.body.className)

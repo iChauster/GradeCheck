@@ -35,6 +35,8 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         self.gpaCircle.layer.cornerRadius = 0.5 * gpaCircle.bounds.size.width;
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.transitionGPA))
+        self.gpaCircle.addGestureRecognizer(tap)
         self.statTable.dataSource = self;
         self.statTable.delegate = self;
         self.statTable.layer.cornerRadius = 10;
@@ -48,6 +50,9 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         self.getGPA()
         // Do any additional setup after loading the view.
+    }
+    @objc func transitionGPA(){
+        self.performSegue(withIdentifier: "GPASegue", sender: self)
     }
     func touched(){
         print("called")
@@ -172,6 +177,10 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }else if(segue.identifier == "SettingSegue"){
             let view = segue.destination as! SettingsViewController
             view.objectID = self.idString
+        }else if(segue.identifier == "GPASegue"){
+            let view = segue.destination as! GPAHistoryViewController
+            view.idString = self.idString;
+            view.cookie = self.cookie;
         }
     }
     
