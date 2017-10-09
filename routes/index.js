@@ -1093,7 +1093,8 @@ app.post('/gradeHistory', function (req, res){
                 ye[year] = []; 
               }
               var selection = {};
-              selection[clss] = grade
+              selection["class"] = clss;
+              selection["grade"] = grade;
               ye[year].push(selection)
             }
           }

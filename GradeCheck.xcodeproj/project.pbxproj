@@ -37,6 +37,7 @@
 		2CA67E201DADDFDA0093B7F6 /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CA67E1F1DADDFDA0093B7F6 /* download.png */; };
 		2CB2586E1DEB68590023E9A6 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB258691DEB67F40023E9A6 /* Charts.framework */; };
 		2CB2586F1DEB68590023E9A6 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB258691DEB67F40023E9A6 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2CB7555E1F8BEE8C00E4A377 /* GPAViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7555D1F8BEE8C00E4A377 /* GPAViewCell.swift */; };
 		2CD720AF1CAB140A00338CA7 /* GraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD720AE1CAB140900338CA7 /* GraphData.swift */; };
 		2CD720B41CAB524700338CA7 /* appIcon180.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD720B31CAB524700338CA7 /* appIcon180.png */; };
 		2CD720B61CAB52B800338CA7 /* appIcon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD720B51CAB52B800338CA7 /* appIcon120.png */; };
@@ -161,6 +162,7 @@
 		2CA67E1F1DADDFDA0093B7F6 /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = download.png; path = ../../../Downloads/download.png; sourceTree = "<group>"; };
 		2CB258621DEB67F40023E9A6 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../Downloads/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		2CB258731DECECB40023E9A6 /* GradeCheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GradeCheck.entitlements; sourceTree = "<group>"; };
+		2CB7555D1F8BEE8C00E4A377 /* GPAViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPAViewCell.swift; sourceTree = "<group>"; };
 		2CD720AE1CAB140900338CA7 /* GraphData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphData.swift; sourceTree = "<group>"; };
 		2CD720B31CAB524700338CA7 /* appIcon180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon180.png; path = ../../../Downloads/appIcon180.png; sourceTree = "<group>"; };
 		2CD720B51CAB52B800338CA7 /* appIcon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon120.png; path = ../../../Downloads/appIcon120.png; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				ED7AA20F1C9508C4001B2E68 /* StatViewController.swift */,
 				2C825A431F8403C1007456DF /* GPAHistoryViewController.swift */,
 				2C825A501F86C562007456DF /* YearViewController.swift */,
+				2CB7555D1F8BEE8C00E4A377 /* GPAViewCell.swift */,
 				ED7AA2271CA0975B001B2E68 /* StatTableViewCell.swift */,
 				ED7AA2111C962171001B2E68 /* GPAView.swift */,
 				ED7AA2291CA0C0FC001B2E68 /* DetailStatViewController.swift */,
@@ -568,6 +571,7 @@
 				2C1E22551DFC896A008CC80F /* IColor.swift in Sources */,
 				2C825A511F86C562007456DF /* YearViewController.swift in Sources */,
 				2C6AB4881CFCF4AC00E77252 /* SettingsTableViewCell.swift in Sources */,
+				2CB7555E1F8BEE8C00E4A377 /* GPAViewCell.swift in Sources */,
 				ED7AA22A1CA0C0FC001B2E68 /* DetailStatViewController.swift in Sources */,
 				2CFE269E1CCBEC54001B7AAE /* ProjectionGradeViewController.swift in Sources */,
 				ED7AA2081C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift in Sources */,

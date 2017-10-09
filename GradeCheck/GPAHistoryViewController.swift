@@ -10,26 +10,66 @@ import UIKit
 
 class GPAHistoryViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        return UIViewController()
+        guard let viewControllerIndex = viewControllersArray.index(of: viewController) else {
+            return nil
+        }
+        
+        let previousIndex = viewControllerIndex - 1
+        
+        guard previousIndex >= 0 else {
+            return nil
+        }
+        
+        guard viewControllersArray.count > previousIndex else {
+            return nil
+        }
+        
+        return viewControllersArray[previousIndex]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        return UIViewController()
+        guard let viewControllerIndex = viewControllersArray.index(of: viewController) else {
+            return nil
+        }
+        
+        let nextIndex = viewControllerIndex + 1
+        let orderedViewControllersCount = viewControllersArray.count
+        
+        guard orderedViewControllersCount != nextIndex else {
+            return nil
+        }
+        
+        guard orderedViewControllersCount > nextIndex else {
+            return nil
+        }
+        
+        return viewControllersArray[nextIndex]
     }
     
+    func presentationCount(for pageViewController: UIPageViewController) -> Int {
+        return viewControllersArray.count
+    }
+    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+        guard let firstViewController = viewControllers?.first,
+            let firstViewControllerIndex = viewControllersArray.index(of: firstViewController) else {
+                return 0
+        }
+        
+        return firstViewControllerIndex
+    }
     var pageView : UIPageViewController!
     var cookie : String!
     var idString : String!
-    //let url = "http://gradecheck.herokuapp.com/"
-    let url = "http://localhost:2800/"
+    let url = "http://gradecheck.herokuapp.com/"
+    var viewControllersArray = [UIViewController]()
+    let grades = ["09", "10", "11", "12"]
     override func viewDidLoad() {
         super.viewDidLoad()
         print(cookie)
         print(self.idString)
-        self.dataSource = self
-        let c = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "YVC")
-        var r = [c]
-        self.setViewControllers(r, direction: .forward, animated: true, completion: nil)
+        dataSource = self
+        delegate = self
+        
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"
@@ -56,8 +96,23 @@ class GPAHistoryViewController: UIPageViewController, UIPageViewControllerDelega
                 if(httpResponse?.statusCode == 200){
                     DispatchQueue.main.async(execute: {
                         do{
-                            var data = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
-                            print(data)
+                            let data = try JSONSerialization.jsonObject(with: data!, options: []) as! Array<Any>;
+                            let history = data[0]
+                            let dict = history as! Dictionary<String, Array<Any>>
+                            print(dict)
+                            for i in 0..<self.grades.count {
+                                let str = self.grades[i]
+                                if let a = dict[str] {
+                                    print(a)
+                                    let c = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "YVC") as! YearViewController
+                                    c.data = a
+                                    c.yearString = str
+                                    self.viewControllersArray.append(c)
+                                }
+                            }
+                            self.setViewControllers([self.viewControllersArray[0]], direction: .forward, animated: true, completion: nil)
+                            
+                            
                         }catch{
                             
                         }
