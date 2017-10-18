@@ -46,7 +46,6 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let rightSwipe = UISwipeGestureRecognizer(target: self.tabBarController, action: #selector(GradeViewController.swipeRight))
         rightSwipe.direction = .right;
         self.view.addGestureRecognizer(rightSwipe)
-
         
         self.getGPA()
         // Do any additional setup after loading the view.

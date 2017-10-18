@@ -125,7 +125,19 @@ class GPAHistoryViewController: UIPageViewController, UIPageViewControllerDelega
         dataTask.resume()
         // Do any additional setup after loading the view.
     }
-
+    
+    override func viewDidLayoutSubviews() {
+        //corrects scrollview frame to allow for full-screen view controller pages
+        for subView in self.view.subviews {
+            if subView is UIScrollView {
+                subView.frame = self.view.bounds
+            }
+        }
+        super.viewDidLayoutSubviews()
+    }
+    @objc func dismissController(){
+        self.dismiss(animated: true, completion: nil)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

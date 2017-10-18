@@ -49,7 +49,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 console.log('running');
 // catch 404 and forward to error handler
-mongoose.connect('mongodb://genesisboys:gradecheck@ds019048.mlab.com:19048/gradecheck');
+mongoose.connect('mongodb://gradecheck:awakenbti@ds019048.mlab.com:19048/gradecheck');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
