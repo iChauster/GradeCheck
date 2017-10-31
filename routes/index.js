@@ -1019,7 +1019,8 @@ app.post('/classdata', function(req,res){
         }
       });
       console.log(last);
-      res.status(200).send(JSON.stringify(last));
+      var sub = []
+      res.status(200).send(JSON.stringify(sub));
   
 
     })
