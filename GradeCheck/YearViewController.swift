@@ -55,10 +55,12 @@ class YearViewController: UIViewController, UITableViewDelegate, UITableViewData
         var g = obj["grade"]! + "%"
         if(g.contains("%")){
             g = String(g.characters.dropLast());
+            if(g != "P" && g != "F"){
             let color = UIColor().getColor(grade: Double(g)!)
             cell.views.backgroundColor = color
             cell.color = color
             cell.percent = Int(g)
+            }
         }else{
             cell.views.backgroundColor = UIColor.black
             cell.color = UIColor.black
@@ -101,6 +103,7 @@ class YearViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
             }else{
                 grade = a["grade"]
+                if(grade != "P" && grade != "F"){
                 gradeInt = Int(grade)!;
                 gradeTotal += Double(gradeInt);
                 if(gradeInt > 95){
@@ -108,6 +111,7 @@ class YearViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
                 gpaTotal += Double(gradeInt);
                 classes += 1;
+                }
             }
             
         }

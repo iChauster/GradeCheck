@@ -688,10 +688,25 @@ app.post('/listassignments',function(req,res){
               value["grade"] = perc;*/
               var gradeCell = cat.next().next();
               var ratio;
+              var sup = "";
               var percent = gradeCell.contents().filter(function(i,el){
-                 return $(this).attr('style') === "font-weight: bold;"
-              });
-                value["percent"] = percent.text().trim()
+                var element = $(this)
+                if(element.children('sup').length > 0){
+                  var s = element.children('sup');
+                  sup = s.text().trim();
+                  return $(this);
+                }else{
+                  return $(this).attr('style') === "font-weight: bold;"
+                }
+              }); 
+                if(sup != ""){
+                  console.log(sup);
+                  var str = percent.text().trim();
+                  var res = str.replace(sup, "");
+                  value["percent"] = res.trim();
+                }else{
+                  value["percent"] = percent.text().trim()
+                }
               var ratio = gradeCell.contents().filter(function(i,el){
                   if ($(this).attr('style') == "font-weight: bold;"){
                     return ""
