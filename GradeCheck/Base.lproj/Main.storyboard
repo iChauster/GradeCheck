@@ -516,7 +516,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u2C-gv-DEf">
-                                                    <rect key="frame" x="8" y="38" width="268" height="13"/>
+                                                    <rect key="frame" x="8" y="38" width="265" height="13"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="11"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -532,10 +532,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RYg-Mn-hyi" customClass="GradeView" customModule="GradeCheck" customModuleProvider="target">
-                                                    <rect key="frame" x="284" y="31" width="47" height="46"/>
+                                                    <rect key="frame" x="281" y="31" width="50" height="46"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pS5-fx-QhY">
-                                                            <rect key="frame" x="2" y="13" width="42" height="21"/>
+                                                            <rect key="frame" x="4" y="13" width="42" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -544,9 +544,9 @@
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="47" id="S2d-Ao-c8C"/>
+                                                        <constraint firstAttribute="height" constant="50" id="S2d-Ao-c8C"/>
                                                         <constraint firstAttribute="width" secondItem="RYg-Mn-hyi" secondAttribute="height" multiplier="1:1" id="mi2-Q4-6CQ"/>
-                                                        <constraint firstAttribute="width" constant="47" id="yqO-dk-7zL"/>
+                                                        <constraint firstAttribute="width" constant="50" id="yqO-dk-7zL"/>
                                                     </constraints>
                                                     <connections>
                                                         <outlet property="grade" destination="pS5-fx-QhY" id="0cr-Od-Y86"/>
@@ -564,7 +564,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="World Studies 7" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eIv-PH-opt">
-                                                    <rect key="frame" x="8" y="57" width="263" height="20"/>
+                                                    <rect key="frame" x="8" y="57" width="260" height="20"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
