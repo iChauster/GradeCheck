@@ -738,7 +738,9 @@ app.post('/listassignments',function(req,res){
                 if(gg.length == 1){
                   console.log("Letter grade detected")
                   value["gradeMax"] = 20;
-                  var s = 20 * parseFloat(value["percent"].slice(0, -1))/100.0;
+                  var j = value["percent"].slice(0,-1)
+                  console.log(j)
+                  var s = 20 * parseFloat(j)/100.0;
                   value["grade"] = s;
                   console.log(s);
                 }
