@@ -735,7 +735,7 @@ app.post('/listassignments',function(req,res){
                 }
                 value["gradeMax"] = grademax;
                 value["grade"] = grade;
-                if(gg.length == 1 && value["percent"] != undefined){
+                if(gg.length == 1 && value["percent"] != ""){
                   console.log("Letter grade detected")
                   value["gradeMax"] = 20;
                   var j = value["percent"].slice(0,-1)
