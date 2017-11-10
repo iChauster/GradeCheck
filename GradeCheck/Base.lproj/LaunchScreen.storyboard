@@ -1,8 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,17 +19,22 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitespace-montgomery-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="hqP-pU-lEE">
-                                <rect key="frame" x="225" y="225" width="150" height="150"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GradeCheckLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="hqP-pU-lEE">
+                                <rect key="frame" x="112" y="258" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="0mu-4Z-TIo"/>
+                                    <constraint firstAttribute="width" constant="150" id="4qf-0x-1zz"/>
+                                    <constraint firstAttribute="width" secondItem="hqP-pU-lEE" secondAttribute="height" multiplier="1:1" id="mjO-G1-DVy"/>
+                                </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.50196078431372548" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.50196078431372548" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hqP-pU-lEE" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Slu-dg-uj3"/>
-                            <constraint firstItem="hqP-pU-lEE" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="et6-CW-SSL"/>
+                            <constraint firstItem="hqP-pU-lEE" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1XD-Ac-3CK"/>
+                            <constraint firstItem="hqP-pU-lEE" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Zjw-M7-wtN"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -41,18 +51,18 @@
                         <viewControllerLayoutGuide type="bottom" id="b6i-ow-pDX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hAW-er-fby">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="download.png" translatesAutoresizingMaskIntoConstraints="NO" id="agc-Kd-9cQ">
-                                <rect key="frame" x="225" y="225" width="150" height="150"/>
+                                <rect key="frame" x="112.5" y="258.5" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="THh-wR-NZS"/>
                                     <constraint firstAttribute="width" constant="150" id="nOo-m8-q8t"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.64313725490196072" green="0.062745098039215685" blue="0.20392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.64313725490196072" green="0.062745098039215685" blue="0.20392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="agc-Kd-9cQ" firstAttribute="centerX" secondItem="hAW-er-fby" secondAttribute="centerX" id="Cdt-JO-PBv"/>
                             <constraint firstItem="agc-Kd-9cQ" firstAttribute="centerY" secondItem="hAW-er-fby" secondAttribute="centerY" id="gSy-q4-Ceb"/>
@@ -65,7 +75,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="GradeCheckLogo.png" width="1344" height="1341"/>
         <image name="download.png" width="209" height="206"/>
-        <image name="whitespace-montgomery-logo.png" width="150" height="150"/>
     </resources>
 </document>

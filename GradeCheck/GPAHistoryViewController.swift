@@ -69,7 +69,7 @@ class GPAHistoryViewController: UIPageViewController, UIPageViewControllerDelega
         print(self.idString)
         dataSource = self
         delegate = self
-        
+        self.view.backgroundColor = UIColor().ICGreen
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"

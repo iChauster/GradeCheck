@@ -735,6 +735,11 @@ app.post('/listassignments',function(req,res){
                 }
                 value["gradeMax"] = grademax;
                 value["grade"] = grade;
+                if(gg.length() == 1){
+                  console.log("Letter grade detected")
+                  value["gradeMax"] = 20;
+                  value["grade"] = 20 * parseFloat(value["percent"].slice(0, -1))/100.0;
+                }
               
   						results.push(value);
   					}

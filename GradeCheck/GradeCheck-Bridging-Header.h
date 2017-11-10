@@ -9,5 +9,6 @@
 #ifndef Gradecheck_Bridging_Header_h
 #define Gradecheck_Bridging_Header_h
 #import <OneSignal/OneSignal.h>
-
+#import "OnboardingViewController.h"
+#import "OnboardingContentViewController.h"
 #endif /* Gradecheck_Bridging_Header_h */

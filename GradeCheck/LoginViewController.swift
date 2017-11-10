@@ -76,6 +76,9 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
             self.makeRegisterRequest()
         }
     }
+    @IBAction func onboard(){
+        self.displayOnboarding()
+    }
     func makeRegisterRequest(){
         let headers = [
             "cache-control": "no-cache",
@@ -142,17 +145,33 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         UIGraphicsBeginImageContext(self.view.frame.size);
-        let image = UIImage(named: "back1.png")
+        let image = UIImage(named: "background.png")
         image?.draw(in: self.view.bounds)
         UIGraphicsEndImageContext()
         self.loginView.backgroundColor = UIColor(patternImage: image!)
         self.montgomery.image! = (self.montgomery.image?.withRenderingMode(.alwaysTemplate))!
-        self.montgomery.tintColor = UIColor(red: 41/255.0, green: 39/255.0, blue: 39/255.0, alpha: 1.0)
+        self.montgomery.tintColor = UIColor.white
         self.statusLabel.isHidden = true;
         let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(LoginViewController.dismissKeyboard))
         downSwipe.direction = .down;
         self.view.addGestureRecognizer(downSwipe);
         self.executeLogin()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if(!UserDefaults.standard.bool(forKey: "HasTutorial")){
+            displayOnboarding()
+        }
+    }
+    func displayOnboarding(){
+        let image = UIImage(named:"GradeCheckLogo")!
+        let newImage = resizeImage(image:image, targetSize:CGSize(width:150,height:150))
+        let firstPage = OnboardingContentViewController(title: "Hello!", body: "If you are a returning user, you can login with your student pin and password. Otherwise, you can register a new account with your Genesis username and password! ", image: newImage, buttonText: "Done", action: {
+            UserDefaults.standard.set(true, forKey: "HasTutorial")
+            self.dismiss(animated: true, completion: nil)
+        })
+        let onboardingVC = OnboardingViewController(backgroundImage: UIImage(named: "study.jpg"), contents: [firstPage])
+    
+        self.present(onboardingVC!, animated: true, completion: nil)
     }
     func executeLogin() {
         if(!UserDefaults.standard.bool(forKey: "HasRegistered")){
@@ -167,7 +186,7 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
             self.manualLogin.isHidden = true;
             self.login.layer.cornerRadius = 0.5 * login.bounds.size.width
             if(self.keychain.getPasscode(identifier: "GCUsername") != nil && self.keychain.getPasscode(identifier: "GCPassword") != nil){
-                self.animateLaunch(UIImage(named:"whitespace-montgomery-logo")!, bgColor: UIColor(red: 0.0, green: 0.5019, blue: 0.1529, alpha: 1.0))
+                self.animateLaunch(UIImage(named:"GradeCheckLogo")!, bgColor: UIColor(red: 0.0, green: 0.5019, blue: 0.1529, alpha: 1.0))
                 if(self.keychain.getPasscode(identifier: "GCEmail") == ""){
                     print(self.keychain.getPasscode(identifier: "GCEmail"))
                     makeLoginRequestWithParams(self.keychain.getPasscode(identifier: "GCUsername")!, pass: self.keychain.getPasscode(identifier: "GCPassword")! as String);
@@ -466,7 +485,31 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
         dataTask.resume()
         
     }
-    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

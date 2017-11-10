@@ -16,6 +16,7 @@ class YearViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var GPA : UILabel!
     @IBOutlet weak var numericalGPA : UILabel!
     @IBOutlet weak var tabe : UITableView!
+    @IBOutlet weak var close : UIButton!
     var data : Array! = []
     var yearString : String = ""
     override func viewDidLoad() {
@@ -29,6 +30,12 @@ class YearViewController: UIViewController, UITableViewDelegate, UITableViewData
         GPAView.layer.borderColor = UIColor().ICGreen.cgColor
         tabe.rowHeight = 80;
         tabe.estimatedRowHeight = 80;
+        
+        let image = UIImage(named: "close.png")?.withRenderingMode(.alwaysTemplate)
+        self.close.setImage(image, for: UIControlState())
+        self.close.setImage(image, for: .selected)
+        self.close.tintColor = UIColor(red: 250/255.0, green: 251/255.0, blue: 250/255.0, alpha: 1.0)
+        
         let gpahistory = self.parent as! GPAHistoryViewController
         let gestureRecog = UISwipeGestureRecognizer(target: gpahistory , action: Selector("dismissController"))
         gestureRecog.direction = .up
@@ -37,7 +44,10 @@ class YearViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Do any additional setup after loading the view.
     }
-    
+    @IBAction func dismissClose() {
+        let parent = self.parent as! GPAHistoryViewController
+        parent.dismissController()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
