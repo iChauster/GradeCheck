@@ -1158,7 +1158,7 @@ app.post('/classAverages', function(req,res){
     };
     request(gradebook,function(error,response,body){
       var results = [];
-      var pointsLeft = 0;
+      var assignments = 0;
       if(response.headers["set-cookie"]){
         console.log('needs login');
         var b ={};
@@ -1222,7 +1222,7 @@ app.post('/classAverages', function(req,res){
                 }
                 value["gradeMax"] = grademax;
                 value["grade"] = grade;
-              
+                assignments += 1;
                 results.push(value);
               }
             });
@@ -1237,8 +1237,6 @@ app.post('/classAverages', function(req,res){
               container[item.category].grades.push(parseFloat(lessPercent));
               container[item.category].gradeMax = parseFloat(item.gradeMax);
               container[item.category].gradeAchieved = parseFloat(item.grade);
-            }else if(!(isNaN(parseFloat(item.gradeMax)))){
-              pointsLeft += parseFloat(item.gradeMax)
             }
           }else{
             if(item.percent != '' && !(isNaN(parseFloat(item.grade)))){
@@ -1246,8 +1244,6 @@ app.post('/classAverages', function(req,res){
               container[item.category].grades.push(parseFloat(lessPercent));
               container[item.category].gradeMax += parseFloat(item.gradeMax);
               container[item.category].gradeAchieved += parseFloat(item.grade);
-            }else if(!(isNaN(parseFloat(item.gradeMax)))){
-              pointsLeft += parseFloat(item.gradeMax)
             }
           }
         });
@@ -1258,7 +1254,7 @@ app.post('/classAverages', function(req,res){
             var b = {};
             b["category"] = k;
             b["grades"] = container[k];
-            b["pointsLeft"] = pointsLeft;
+            b["assignments"] = assignments;
             finalGrades.push(b)
           } 
         }
