@@ -18,6 +18,9 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     @IBOutlet weak var meanView : MeanView!;
     @IBOutlet weak var rankView : RankView!;
     @IBOutlet weak var percentileView : PercentileView!
+    @IBOutlet weak var overview : UIView!
+    @IBOutlet weak var points : UILabel!
+    @IBOutlet weak var gLabel : UILabel!
     @IBOutlet weak var statisticsTable : UITableView!
     let url = "http://gradecheck.herokuapp.com/"
     //let url = "http://localhost:2800/"
@@ -47,6 +50,10 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         self.graph.animate(yAxisDuration: 3.0, easingOption: .easeInOutQuart)
         self.graph.noDataText = "No Data Available";
         self.navItem.title = self.className
+        self.overview.layer.borderWidth = 3
+        self.overview.layer.cornerRadius = 15
+        self.overview.layer.borderColor = UIColor().ICGreen.cgColor
+    
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"
@@ -54,6 +61,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         //let cookieString = "cookie=" + self.cookie
         //let idString = "&id=" + (NSUserDefaults.standardUserDefaults().objectForKey("id") as! String);
         if((self.data["grade"]as! String) != "No Grades"){
+            self.gLabel.text = self.data["grade"] as! String
             self.getClassData();
         }else{
             let alert = UIAlertController(title: "No Data!", message: "Grades are not in for the quarter yet!", preferredStyle: .alert);

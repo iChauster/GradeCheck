@@ -535,7 +535,7 @@
                                                     <rect key="frame" x="281" y="31" width="50" height="46"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pS5-fx-QhY">
-                                                            <rect key="frame" x="4" y="13" width="42" height="21"/>
+                                                            <rect key="frame" x="0.0" y="13" width="50" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1440,8 +1440,8 @@
                                     </navigationBar>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qh1-4F-BSv" customClass="PercentileView" customModule="GradeCheck" customModuleProvider="target">
-                                <rect key="frame" x="289" y="262" width="70" height="70"/>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qh1-4F-BSv" customClass="PercentileView" customModule="GradeCheck" customModuleProvider="target">
+                                <rect key="frame" x="289" y="234" width="70" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Percentile:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWh-qa-WLe">
                                         <rect key="frame" x="9" y="8" width="52" height="21"/>
@@ -1477,8 +1477,8 @@
                                     <outlet property="percentLabel" destination="LjM-tD-wSE" id="2wI-Eq-kuX"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6IF-4M-uiD" customClass="RankView" customModule="GradeCheck" customModuleProvider="target">
-                                <rect key="frame" x="142.5" y="262" width="90" height="90"/>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6IF-4M-uiD" customClass="RankView" customModule="GradeCheck" customModuleProvider="target">
+                                <rect key="frame" x="142.5" y="234" width="90" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rank:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gb4-8o-dGC">
                                         <rect key="frame" x="23" y="8" width="44" height="21"/>
@@ -1526,8 +1526,8 @@
                                     <outlet property="totalLabel" destination="YKg-eV-cKL" id="5Me-jz-Ml2"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B6k-nY-Tue" customClass="MeanView" customModule="GradeCheck" customModuleProvider="target">
-                                <rect key="frame" x="16" y="262" width="70" height="70"/>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B6k-nY-Tue" customClass="MeanView" customModule="GradeCheck" customModuleProvider="target">
+                                <rect key="frame" x="16" y="234" width="70" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mean :" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lv0-j9-0Tb">
                                         <rect key="frame" x="14.5" y="8" width="41.5" height="21"/>
@@ -1562,7 +1562,7 @@
                                     <outlet property="meanLabel" destination="eJi-th-xG9" id="o8W-ke-UxI"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHE-0S-Jcd" customClass="LineChartView" customModule="Charts">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHE-0S-Jcd" customClass="LineChartView" customModule="Charts">
                                 <rect key="frame" x="16" y="79" width="343" height="175"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1580,7 +1580,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="117" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HNa-cL-Nel">
-                                <rect key="frame" x="16" y="360" width="343" height="294"/>
+                                <rect key="frame" x="16" y="332" width="343" height="322"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailStatCell" rowHeight="117" id="nqz-0H-wKm" customClass="DetailStatTableViewCell" customModule="GradeCheck" customModuleProvider="target">
@@ -1636,45 +1636,76 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8sp-Bh-1mK">
+                                <rect key="frame" x="16" y="80" width="343" height="236"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="94%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aN5-ep-zqY">
+                                        <rect key="frame" x="136.5" y="98.5" width="70" height="39.5"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="33"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jrs-bB-p1k">
+                                        <rect key="frame" x="150.5" y="145.5" width="42" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="aN5-ep-zqY" firstAttribute="centerY" secondItem="8sp-Bh-1mK" secondAttribute="centerY" id="32N-rX-mdY"/>
+                                    <constraint firstItem="aN5-ep-zqY" firstAttribute="centerX" secondItem="8sp-Bh-1mK" secondAttribute="centerX" id="377-G6-Pvw"/>
+                                    <constraint firstItem="Jrs-bB-p1k" firstAttribute="centerX" secondItem="8sp-Bh-1mK" secondAttribute="centerX" id="BRm-Le-QSJ"/>
+                                    <constraint firstItem="Jrs-bB-p1k" firstAttribute="top" secondItem="aN5-ep-zqY" secondAttribute="bottom" constant="8" id="Xp9-BV-od1"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="qh1-4F-BSv" firstAttribute="top" secondItem="kHE-0S-Jcd" secondAttribute="bottom" constant="8" id="0ct-RD-ZIa"/>
+                            <constraint firstItem="qh1-4F-BSv" firstAttribute="top" secondItem="kHE-0S-Jcd" secondAttribute="bottom" constant="-20" id="0ct-RD-ZIa"/>
                             <constraint firstItem="kHE-0S-Jcd" firstAttribute="centerX" secondItem="dOm-zV-FlN" secondAttribute="centerX" id="7EB-zy-Z3Y"/>
                             <constraint firstItem="6lz-FQ-QCi" firstAttribute="top" secondItem="dOm-zV-FlN" secondAttribute="topMargin" id="92K-yk-gCq"/>
+                            <constraint firstItem="8sp-Bh-1mK" firstAttribute="leading" secondItem="dOm-zV-FlN" secondAttribute="leadingMargin" id="9EP-N3-Px6"/>
                             <constraint firstItem="qh1-4F-BSv" firstAttribute="trailing" secondItem="dOm-zV-FlN" secondAttribute="trailingMargin" id="BtP-Cm-UtI"/>
                             <constraint firstItem="HNa-cL-Nel" firstAttribute="top" secondItem="6IF-4M-uiD" secondAttribute="bottom" constant="8" id="DsK-kI-Vu3"/>
                             <constraint firstItem="HNa-cL-Nel" firstAttribute="leading" secondItem="dOm-zV-FlN" secondAttribute="leadingMargin" id="En7-OO-vuK"/>
                             <constraint firstItem="HNa-cL-Nel" firstAttribute="trailing" secondItem="dOm-zV-FlN" secondAttribute="trailingMargin" id="HEZ-MQ-oGm"/>
+                            <constraint firstItem="8sp-Bh-1mK" firstAttribute="trailing" secondItem="dOm-zV-FlN" secondAttribute="trailingMargin" id="I9b-Gm-PEe"/>
                             <constraint firstItem="6lz-FQ-QCi" firstAttribute="centerX" secondItem="dOm-zV-FlN" secondAttribute="centerX" id="Mg9-Ui-R8f"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6lz-FQ-QCi" secondAttribute="trailing" constant="-20" id="PaV-uT-v1e"/>
                             <constraint firstItem="kHE-0S-Jcd" firstAttribute="top" secondItem="6lz-FQ-QCi" secondAttribute="bottom" constant="15" id="THi-G6-ieZ"/>
                             <constraint firstItem="7Wi-so-Fqd" firstAttribute="top" secondItem="HNa-cL-Nel" secondAttribute="bottom" constant="13" id="TJt-eY-HLq"/>
                             <constraint firstItem="kHH-GB-NI8" firstAttribute="centerX" secondItem="dOm-zV-FlN" secondAttribute="centerX" id="TZf-YS-91F"/>
+                            <constraint firstItem="8sp-Bh-1mK" firstAttribute="top" secondItem="6lz-FQ-QCi" secondAttribute="bottom" constant="16" id="Xtr-hR-Kqf"/>
                             <constraint firstItem="6IF-4M-uiD" firstAttribute="centerX" secondItem="dOm-zV-FlN" secondAttribute="centerX" id="Zab-hl-Ihd"/>
                             <constraint firstItem="kHE-0S-Jcd" firstAttribute="trailing" secondItem="dOm-zV-FlN" secondAttribute="trailingMargin" id="Zov-Qs-hHp"/>
-                            <constraint firstItem="B6k-nY-Tue" firstAttribute="top" secondItem="kHE-0S-Jcd" secondAttribute="bottom" constant="8" id="c9e-Oj-lcl"/>
-                            <constraint firstItem="6IF-4M-uiD" firstAttribute="top" secondItem="kHE-0S-Jcd" secondAttribute="bottom" constant="8" id="cUL-fI-o0I"/>
+                            <constraint firstItem="B6k-nY-Tue" firstAttribute="top" secondItem="kHE-0S-Jcd" secondAttribute="bottom" constant="-20" id="c9e-Oj-lcl"/>
+                            <constraint firstItem="6IF-4M-uiD" firstAttribute="top" secondItem="kHE-0S-Jcd" secondAttribute="bottom" constant="-20" id="cUL-fI-o0I"/>
                             <constraint firstItem="kHH-GB-NI8" firstAttribute="top" secondItem="kHE-0S-Jcd" secondAttribute="bottom" constant="43" id="fbp-nq-Iog"/>
                             <constraint firstItem="6lz-FQ-QCi" firstAttribute="leading" secondItem="dOm-zV-FlN" secondAttribute="leadingMargin" constant="-20" id="fdo-yL-iw3"/>
                             <constraint firstItem="kHE-0S-Jcd" firstAttribute="leading" secondItem="dOm-zV-FlN" secondAttribute="leadingMargin" id="gy9-pq-g2h"/>
+                            <constraint firstItem="HNa-cL-Nel" firstAttribute="top" secondItem="8sp-Bh-1mK" secondAttribute="bottom" constant="16" id="jnc-ry-xpG"/>
                             <constraint firstItem="B6k-nY-Tue" firstAttribute="leading" secondItem="dOm-zV-FlN" secondAttribute="leadingMargin" id="kCM-II-DKl"/>
                             <constraint firstItem="HNa-cL-Nel" firstAttribute="centerX" secondItem="dOm-zV-FlN" secondAttribute="centerX" id="wiy-Lk-HKu"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="gLabel" destination="aN5-ep-zqY" id="lEK-BD-Ie1"/>
                         <outlet property="graph" destination="kHE-0S-Jcd" id="ERk-rh-Z40"/>
                         <outlet property="meanView" destination="B6k-nY-Tue" id="S7c-6y-3d7"/>
                         <outlet property="navItem" destination="A9a-SF-y5K" id="anc-SJ-PxB"/>
                         <outlet property="navigationBar" destination="Jij-jm-avc" id="u9c-Op-YOl"/>
+                        <outlet property="overview" destination="8sp-Bh-1mK" id="56q-jp-FAV"/>
                         <outlet property="percentileView" destination="qh1-4F-BSv" id="Lu1-qy-mLM"/>
+                        <outlet property="points" destination="Jrs-bB-p1k" id="tG0-JL-COP"/>
                         <outlet property="rankView" destination="6IF-4M-uiD" id="30m-Wu-XMK"/>
                         <outlet property="statisticsTable" destination="HNa-cL-Nel" id="u3P-2z-1pk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QwE-8p-Mtp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="773" y="653"/>
+            <point key="canvasLocation" x="772" y="652.62368815592208"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="k7f-Wo-foN">
