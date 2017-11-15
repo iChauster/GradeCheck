@@ -204,6 +204,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         }else{
             print("Cookie, it's " + self.cookie);
         }
+        
         self.id = UserDefaults.standard.object(forKey: "id") as! String;
         let headers = [
             "cache-control": "no-cache",
@@ -212,15 +213,20 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         let cookieString = "cookie=" + self.cookie
         let idString = "&id=" + self.id
         var postData = NSData(data: cookieString.data(using: String.Encoding.utf8)!) as Data
+        if(UserDefaults.standard.object(forKey: "GradeTableMP") != nil && UserDefaults.standard.object(forKey: "GradeTableMP") as! String != "MP4"){
+            let mp = UserDefaults.standard.object(forKey: "GradeTableMP") as! String;
+            let mpString = "&mp=" + mp;
+            postData.append(mpString.data(using: String.Encoding.utf8)!)
+        }
         postData.append(idString.data(using: String.Encoding.utf8)!)
-        
+    
         let request = NSMutableURLRequest(url: URL(string: url + "gradebook")!,
             cachePolicy: .useProtocolCachePolicy,
             timeoutInterval: 10.0)
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.httpBody = postData
-        
+    
         let session = URLSession.shared
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
@@ -258,8 +264,9 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
                 }
             }
         })
-        
+    
         dataTask.resume()
+        
 
 
         

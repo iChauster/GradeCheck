@@ -38,8 +38,8 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
         self.usn.resignFirstResponder()
         self.psw.resignFirstResponder()
         if(self.usn.text == "" || self.psw.text == ""){
-            let alert = UIAlertController(title: "funni", message: "Are you really?", preferredStyle: .alert);
-            let o = UIAlertAction(title: "srry", style: .default, handler: nil);
+            let alert = UIAlertController(title: "Input Error", message: "Please enter both credentials.", preferredStyle: .alert);
+            let o = UIAlertAction(title: "Ok", style: .default, handler: nil);
             alert.addAction(o)
             self.present(alert, animated: true, completion: nil);
             return;
@@ -63,8 +63,8 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
         self.psw.resignFirstResponder()
         
         if(self.usn.text == "" || self.psw.text == ""){
-            let alert = UIAlertController(title: "funni", message: "Are you really?", preferredStyle: .alert);
-            let o = UIAlertAction(title: "srry", style: .default, handler: nil);
+            let alert = UIAlertController(title: "Input Error", message: "Please enter both credentials.", preferredStyle: .alert);
+            let o = UIAlertAction(title: "Ok", style: .default, handler: nil);
             alert.addAction(o)
             self.present(alert, animated: true, completion: nil);
             return;
@@ -120,7 +120,7 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
                     DispatchQueue.main.async(execute: {
                         print("Authentication incorrect");
                         let alert = UIAlertController(title:"Authentication Error", message:"Please check that your genesis information is correct and register again.", preferredStyle: .alert)
-                        let action = UIAlertAction(title: "K", style: .default, handler: nil)
+                        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
                         alert.addAction(action)
                         self.present(alert, animated: true, completion: nil);
                         self.statusLabel.text = "";
@@ -131,7 +131,7 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
                 }else{
                     DispatchQueue.main.async(execute: {
                         let alert = UIAlertController(title: "An Error Occurred from the Server.", message: "Please try logging in manually, or wait. Status Code :" + String(describing: httpResponse?.statusCode), preferredStyle: .alert);
-                        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        let alertAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
                         alert.addAction(alertAction)
                         self.present(alert, animated: true, completion: nil)
                     })
@@ -315,14 +315,10 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
                 print(error)
                 let err = error! as NSError
                 if(err.code == -1001){
-                    let alert = UIAlertController(title: "Request Timeout", message: "The server can't come to the phone right now.", preferredStyle: .alert)
-                    let alertActionCancel = UIAlertAction(title: "Is it dead?", style: .cancel, handler: { (UIAlertAction) in
-                        
-                    })
-                    let alertActionTryAgain = UIAlertAction(title: "Try again.", style: .default, handler: { (UIAlertAction) in
+                    let alert = UIAlertController(title: "Request Timeout", message: "The server is currently unresponsive. Try again.", preferredStyle: .alert)
+                    let alertActionTryAgain = UIAlertAction(title: "Retry", style: .default, handler: { (UIAlertAction) in
                         self.executeLogin()
                     })
-                    alert.addAction(alertActionCancel)
                     alert.addAction(alertActionTryAgain)
                     self.present(alert, animated: true)
                 }
@@ -403,7 +399,7 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
                     if(UserDefaults.standard.bool(forKey: "HasRegistered") == false){
                         UserDefaults.standard.set("", forKey: "id")
                     }
-                    let alert = UIAlertController(title: "Connection Error:", message: "Incorrect login or server idle. Make sure you have regsitered before. Please try again! Status Code :" +
+                    let alert = UIAlertController(title: "Connection Error:", message: "Incorrect login or server idle. Make sure you have registered before. Please try again! Status Code :" +
                         String(httpResponse!.statusCode), preferredStyle: .alert);
                     let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
                         self.activity.stopAnimating();

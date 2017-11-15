@@ -16,6 +16,7 @@
 		2C04CDF11CCB362E008B9FF4 /* AssignmentScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C04CDF01CCB362E008B9FF4 /* AssignmentScoreView.swift */; };
 		2C19AF151CBC686000BB73DE /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C19AF141CBC686000BB73DE /* OneSignal.framework */; };
 		2C1E22551DFC896A008CC80F /* IColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E22541DFC896A008CC80F /* IColor.swift */; };
+		2C1FFD3C1FB6A3CB00856599 /* soft.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C1FFD391FB6A3CA00856599 /* soft.jpg */; };
 		2C22E30B1CF7C9850011C2DE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C22E30A1CF7C9850011C2DE /* settings.png */; };
 		2C22E30D1CF7CFBC0011C2DE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C22E30C1CF7CFBC0011C2DE /* SettingsViewController.swift */; };
 		2C22E30F1CF7D47A0011C2DE /* blurrymont.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C22E30E1CF7D47A0011C2DE /* blurrymont.png */; };
@@ -138,6 +139,7 @@
 		2C04CDF01CCB362E008B9FF4 /* AssignmentScoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentScoreView.swift; sourceTree = "<group>"; };
 		2C19AF141CBC686000BB73DE /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OneSignal.framework; sourceTree = "<group>"; };
 		2C1E22541DFC896A008CC80F /* IColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IColor.swift; sourceTree = "<group>"; };
+		2C1FFD391FB6A3CA00856599 /* soft.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = soft.jpg; path = ../../../Downloads/soft.jpg; sourceTree = "<group>"; };
 		2C22E30A1CF7C9850011C2DE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		2C22E30C1CF7CFBC0011C2DE /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2C22E30E1CF7D47A0011C2DE /* blurrymont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blurrymont.png; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				2C04CDEE1CCB0E32008B9FF4 /* close.png */,
 				2C22E30A1CF7C9850011C2DE /* settings.png */,
 				2C6D374B1CC85A180077F4A9 /* whitespace-montgomery-logo.png */,
+				2C1FFD391FB6A3CA00856599 /* soft.jpg */,
 				2C94C0BF1FB560DD0045677E /* study.jpg */,
 				2CEC13271CC40B1A00678AA8 /* assign.png */,
 				2C9D849F1F5CE0470011A0C3 /* Back-Chevron.png */,
@@ -513,6 +516,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED7AA20B1C83986D001B2E68 /* calendar.png in Resources */,
+				2C1FFD3C1FB6A3CB00856599 /* soft.jpg in Resources */,
 				2C94C0C01FB560DD0045677E /* study.jpg in Resources */,
 				EDBE86071C7A46B10031EE8B /* back1.png in Resources */,
 				2CEC13241CC4098300678AA8 /* statistics@2x.png in Resources */,

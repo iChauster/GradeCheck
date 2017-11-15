@@ -21,7 +21,9 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     @IBOutlet weak var overview : UIView!
     @IBOutlet weak var points : UILabel!
     @IBOutlet weak var gLabel : UILabel!
+    @IBOutlet weak var assignments : UILabel!
     @IBOutlet weak var statisticsTable : UITableView!
+    @IBOutlet weak var filterView : UIView!
     let url = "http://gradecheck.herokuapp.com/"
     //let url = "http://localhost:2800/"
     var gradesArray = NSArray()
@@ -50,9 +52,13 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         self.graph.animate(yAxisDuration: 3.0, easingOption: .easeInOutQuart)
         self.graph.noDataText = "No Data Available";
         self.navItem.title = self.className
-        self.overview.layer.borderWidth = 3
+        /*self.overview.layer.borderWidth = 3
+        
+        self.overview.layer.borderColor = UIColor().ICGreen.cgColor*/
         self.overview.layer.cornerRadius = 15
-        self.overview.layer.borderColor = UIColor().ICGreen.cgColor
+        self.filterView.layer.cornerRadius = 15
+        filterView.backgroundColor = UIColor().ICBlack.withAlphaComponent(0.5)
+        self.overview.backgroundColor = UIColor(patternImage: UIImage(named:"soft.jpg")!)
     
         let headers = [
             "cache-control": "no-cache",
@@ -193,6 +199,18 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
                         do{
                             let graphDataCont = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             self.dataArray = graphDataCont
+                            let a =  "\((self.dataArray[0] as! NSDictionary)["assignments"] as! Int)"
+
+                            self.assignments.text = self.assignments.text! + a
+                            var points = 0.0;
+                            var pointsAchieved = 0.0
+                            for i in 0..<self.dataArray.count {
+                                let dict = (self.dataArray[i] as! NSDictionary)["grades"] as! NSDictionary
+                                points += dict["gradeMax"] as! Double
+                                pointsAchieved += dict["gradeAchieved"] as! Double
+                            }
+                            let s = String(pointsAchieved) + "/" + String(points)
+                            self.points.text = self.points.text! + " " + s;
                             self.statisticsTable.reloadData();
                         }catch{
                             
