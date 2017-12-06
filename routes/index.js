@@ -479,7 +479,7 @@ app.post('/alexa', function (req,res){
               var url = response.request.uri.query;
               console.log(response.request.uri.query);
               var gradebook = {method: 'GET',
-                url: 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=' + id + '&action=form',
+                url: 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=000958&action=form',
                 'rejectUnauthorized' : false,
                 headers:{'cache-control' : 'no-cache',
                 'content-type': 'application/x-www-form-urlencoded',
@@ -493,6 +493,8 @@ app.post('/alexa', function (req,res){
               request(gradebook,function(error,response,body){
                 console.log(response.headers);
                 var $ = cheerio.load(body);
+                console.log('hello');
+                console.log(body);
                 $('td.cellRight').each(function(i,element){
                   var grade = $(this);
                   if(grade.attr('style') == "cursor:pointer;"){
