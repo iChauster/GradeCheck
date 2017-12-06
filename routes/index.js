@@ -395,7 +395,6 @@ app.post('/alexa', function (req,res){
     var password;
     username = "winnie2k6@gmail.com"
     password = "ilovrain"
-    id = 000958;
     var z = {
       response : {
         outputSpeech : {
@@ -494,7 +493,6 @@ app.post('/alexa', function (req,res){
                 console.log(response.headers);
                 var $ = cheerio.load(body);
                 console.log('hello');
-                console.log(body);
                 $('td.cellRight').each(function(i,element){
                   var grade = $(this);
                   if(grade.attr('style') == "cursor:pointer;"){
@@ -526,12 +524,11 @@ app.post('/alexa', function (req,res){
                     var classcodes = getParamNames(teacherCell.prev().children().attr('onclick'))[1];
                     classcodes = classcodes.replace(/'/g,"");
                     console.log(classcodes);
-                    g["response"] += classroom + ", " + num;
+                    g["response"] += classroom + ", " + num + " ";
                     a["class"] = classroom;
                     a["grade"] = num;
                     a["teacher"] = teacher;
                     a["classCodes"] = classcodes;
-                    console.log(g["response"]);
                   }
                 });
                 z["response"]["outputSpeech"]["text"] = g["response"];
