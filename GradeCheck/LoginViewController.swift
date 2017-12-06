@@ -169,7 +169,11 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
             UserDefaults.standard.set(true, forKey: "HasTutorial")
             self.dismiss(animated: true, completion: nil)
         })
-        let onboardingVC = OnboardingViewController(backgroundImage: UIImage(named: "study.jpg"), contents: [firstPage])
+        let secondPage = OnboardingContentViewController(title: "🤔", body: "You must be a Montgomery Student in order to use the app.", image: nil, buttonText: "Done") {
+            UserDefaults.standard.set(true, forKey: "HasTutorial")
+            self.dismiss(animated: true, completion: nil)
+        }
+        let onboardingVC = OnboardingViewController(backgroundImage: UIImage(named: "study.jpg"), contents: [firstPage,secondPage])
     
         self.present(onboardingVC!, animated: true, completion: nil)
     }

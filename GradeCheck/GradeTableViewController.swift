@@ -240,6 +240,10 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
                             self.gradeArray = try JSONSerialization.jsonObject(with: data!, options: []) as! NSArray;
                             self.tableView.reloadData()
                             self.refreshControl?.endRefreshing()
+                            let gradeView = self.tabBarController as! GradeViewController
+                            gradeView.grades = self.gradeArray
+                            let statView = gradeView.viewControllers![2] as! StatViewController
+                            statView.gradesArray = self.gradeArray
                         }catch{
                             
                         }

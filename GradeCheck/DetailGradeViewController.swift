@@ -50,6 +50,9 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         self.navBar.alpha = 0.0;
         self.assignmentTable.alpha = 0.0;
         Bundle.main.loadNibNamed("detailCell", owner: self, options: nil)
+        slideCell.autoresizingMask = [.flexibleWidth ,
+            .flexibleLeftMargin , .flexibleRightMargin ,
+            ]
         self.view.addSubview(slideCell)
         slideCell.frame = gradeFrame
         self.slideCell.content.backgroundColor = self.color
@@ -121,7 +124,8 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
                                 self.assignmentTable.backgroundView = noView;
                             }
                             UIView.animate(withDuration: 0.8, delay: 0.0, options: [.allowAnimatedContent,.curveEaseInOut,], animations: {
-                                self.slideCell.frame.origin.y = 0
+                                //self.slideCell.frame.origin.y = 0
+                                self.slideCell.frame.origin.y = self.assignmentTable.frame.origin.y - 86
                                 self.assignmentTable.alpha = 1;
                             }, completion: nil)
                             self.assignmentTable.reloadData()

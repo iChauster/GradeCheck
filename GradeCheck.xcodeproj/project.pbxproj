@@ -52,6 +52,7 @@
 		2CEC13261CC40AD500678AA8 /* assign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CEC13251CC40AD500678AA8 /* assign@2x.png */; };
 		2CEC13281CC40B1A00678AA8 /* assign.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CEC13271CC40B1A00678AA8 /* assign.png */; };
 		2CEC132A1CC40BA000678AA8 /* grades-icon3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CEC13291CC40BA000678AA8 /* grades-icon3@2x.png */; };
+		2CF269801FBBE3FD00EBAEF4 /* MarkingPeriodSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF2697F1FBBE3FD00EBAEF4 /* MarkingPeriodSwitchTableViewCell.swift */; };
 		2CFE269E1CCBEC54001B7AAE /* ProjectionGradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE269D1CCBEC54001B7AAE /* ProjectionGradeViewController.swift */; };
 		2CFE26A31CCC7105001B7AAE /* SliderPercentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE26A21CCC7105001B7AAE /* SliderPercentView.swift */; };
 		ED64DEA91CA3718D00B25150 /* DetailGradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64DEA81CA3718D00B25150 /* DetailGradeViewController.swift */; };
@@ -176,6 +177,7 @@
 		2CEC13251CC40AD500678AA8 /* assign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "assign@2x.png"; sourceTree = "<group>"; };
 		2CEC13271CC40B1A00678AA8 /* assign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = assign.png; sourceTree = "<group>"; };
 		2CEC13291CC40BA000678AA8 /* grades-icon3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grades-icon3@2x.png"; sourceTree = "<group>"; };
+		2CF2697F1FBBE3FD00EBAEF4 /* MarkingPeriodSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkingPeriodSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2CFE269D1CCBEC54001B7AAE /* ProjectionGradeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectionGradeViewController.swift; sourceTree = "<group>"; };
 		2CFE26A21CCC7105001B7AAE /* SliderPercentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderPercentView.swift; sourceTree = "<group>"; };
 		ED64DEA81CA3718D00B25150 /* DetailGradeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailGradeViewController.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				2C22E30C1CF7CFBC0011C2DE /* SettingsViewController.swift */,
+				2CF2697F1FBBE3FD00EBAEF4 /* MarkingPeriodSwitchTableViewCell.swift */,
 				2C6AB4871CFCF4AC00E77252 /* SettingsTableViewCell.swift */,
 				2C6AB48D1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift */,
 			);
@@ -587,6 +590,7 @@
 				2C04CDF11CCB362E008B9FF4 /* AssignmentScoreView.swift in Sources */,
 				ED64DEAF1CA4677E00B25150 /* DetailGradeTableViewCell.swift in Sources */,
 				EDBE85E01C78ED280031EE8B /* AppDelegate.swift in Sources */,
+				2CF269801FBBE3FD00EBAEF4 /* MarkingPeriodSwitchTableViewCell.swift in Sources */,
 				2C04CDDA1CC9951B008B9FF4 /* TableSectionHeader.swift in Sources */,
 				EDBE86091C7A4B9A0031EE8B /* Keychain.swift in Sources */,
 				ED7AA20D1C84E9CF001B2E68 /* CellAnimation.swift in Sources */,

@@ -11,7 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var MHSButton : UIButton!
     @IBOutlet weak var SettingsTable : UITableView!
-    let cellTitles = ["Update Password", "Change Student"]
+    let cellTitles = ["Log Out"]
     let url = "http://localhost:2800/"
     var objectID = "";
 
@@ -21,9 +21,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
-            return 2;
-        }else{
             return 1;
+        }else{
+            return 2;
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -33,7 +33,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         if(section == 0){
             return "ACCOUNT"
         }else{
-            return "STATISTICS"
+            return "GRADES"
         }
     }
     
@@ -44,14 +44,34 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.intention = self.cellTitles[indexPath.row];
             return cell;
         }else{
-            let switchCell = tableView.dequeueReusableCell(withIdentifier: "SettingsSwitchCell") as! SettingsSwitchTableViewCell
-            switchCell.segmentControl.setTitle("Weighted GPA", forSegmentAt: 0)
-            switchCell.segmentControl.setTitle("Unweighted GPA", forSegmentAt: 1)
-            if (UserDefaults.standard.object(forKey: "GPA") as! String == "Unweighted"){
-                switchCell.segmentControl.selectedSegmentIndex = 1;
+            if(indexPath.row == 0){
+                let switchCell = tableView.dequeueReusableCell(withIdentifier: "SettingsSwitchCell") as! SettingsSwitchTableViewCell
+                switchCell.segmentControl.setTitle("Weighted GPA", forSegmentAt: 0)
+                switchCell.segmentControl.setTitle("Unweighted GPA", forSegmentAt: 1)
+                if (UserDefaults.standard.object(forKey: "GPA") as! String == "Unweighted"){
+                    switchCell.segmentControl.selectedSegmentIndex = 1;
+                }
+                switchCell.segmentControl.tintColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
+                return switchCell
+            }else{
+                let mpSwitchCell = tableView.dequeueReusableCell(withIdentifier: "MarkingPeriodSwitchCell") as! MarkingPeriodSwitchTableViewCell
+                
+                if let string = UserDefaults.standard.object(forKey: "GradeTableMP") as? String {
+                
+                    if(string == "MP1"){
+                        mpSwitchCell.segControl.selectedSegmentIndex = 0
+                    }else if(string == "MP2"){
+                        mpSwitchCell.segControl.selectedSegmentIndex = 1
+                    }else if(string == "MP3"){
+                        mpSwitchCell.segControl.selectedSegmentIndex = 2
+                    }else if(string == "MP4"){
+                        mpSwitchCell.segControl.selectedSegmentIndex = 3
+                    }
+                }
+                mpSwitchCell.segControl.tintColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
+                return mpSwitchCell
+                
             }
-            switchCell.segmentControl.tintColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
-            return switchCell
         }
     }
     
@@ -66,21 +86,16 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.section == 0){
             let cell = self.SettingsTable.cellForRow(at: indexPath) as! SettingsTableViewCell
-            if(cell.intention == "Update Password"){
-                let alert = UIAlertController(title: "Update Password", message: "Enter your new password", preferredStyle: .alert)
-                let action = UIAlertAction(title: "Update", style: .default, handler: { (alertAction) in
-                    let passwordTextField = alert.textFields![0]
-                    let newPassword = passwordTextField.text!
-                    self.updateUser("preference",value: newPassword)
-                })
-                alert.addTextField { (textField) in
-                    textField.placeholder = "New Password"
-                    textField.isSecureTextEntry = true
-                }
-                alert.addAction(action)
-                self.present(alert, animated: true, completion: nil)
-            }else if(cell.intention == "Change Student"){
-                
+            if(cell.intention == "Log Out"){
+                let key = Keychain()
+                key.setPasscode(identifier: "GCUsername", passcode: "");
+                key.setPasscode(identifier: "GCPassword", passcode: "");
+                key.setPasscode(identifier: "GCEmail", passcode:  "");
+                UserDefaults.standard.set(false, forKey: "HasRegistered")
+                UserDefaults.standard.set(nil, forKey: "GradeTableMP")
+                UserDefaults.standard.set("", forKey: "id");
+                UserDefaults.standard.synchronize()
+                self.performSegue(withIdentifier: "Reset", sender: nil)
             }
         }
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -67,6 +67,9 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFh-5q-W4G">
                             <rect key="frame" x="0.0" y="0.0" width="34" height="70"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="2aL-eG-NSO"/>
+                            </constraints>
                             <connections>
                                 <action selector="segueBack" destination="-1" eventType="touchUpInside" id="Eoo-OU-ILW"/>
                             </connections>
@@ -82,6 +85,7 @@
                         <constraint firstItem="Ntg-aC-eAW" firstAttribute="leading" secondItem="jBg-lb-Ye3" secondAttribute="trailing" constant="21" id="HwD-je-0li"/>
                         <constraint firstItem="i9g-Vv-xoZ" firstAttribute="leading" secondItem="RFh-5q-W4G" secondAttribute="trailing" constant="8" id="K4c-RG-jhB"/>
                         <constraint firstAttribute="bottom" secondItem="TZ2-Sc-A2E" secondAttribute="bottom" constant="-3" id="TAG-od-yOs"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="UYE-QO-Tbp"/>
                         <constraint firstItem="i9g-Vv-xoZ" firstAttribute="leading" secondItem="jBg-lb-Ye3" secondAttribute="trailing" constant="21" id="Y5d-hd-1bo"/>
                         <constraint firstAttribute="trailing" secondItem="TZ2-Sc-A2E" secondAttribute="trailing" constant="8" id="YgJ-Ay-uvW"/>
                         <constraint firstAttribute="bottom" secondItem="Ntg-aC-eAW" secondAttribute="bottom" constant="8" id="Yj6-o8-gBS"/>

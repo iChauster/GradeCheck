@@ -21,6 +21,7 @@ class ProjectionGradeViewController: UIViewController {
     @IBOutlet weak var dateLabel : UILabel!
     @IBOutlet weak var classTitleLabel : UILabel!
     @IBOutlet weak var teacherTitleLabel: UILabel!
+    @IBOutlet weak var xView : UIView!
     var assignment : NSDictionary!
     var category : String!
     var cookie : String!
@@ -81,6 +82,7 @@ class ProjectionGradeViewController: UIViewController {
         self.categoryTitle.text = self.category
         print(self.color)
         self.navBar.barTintColor = self.color
+        self.xView.backgroundColor = self.color
         self.navItem.title = dict["title"] as? String
         self.navBar.tintColor = UIColor.white
         // Do any additional setup after loading the view.

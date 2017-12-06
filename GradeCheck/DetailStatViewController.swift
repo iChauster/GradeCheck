@@ -24,6 +24,7 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     @IBOutlet weak var assignments : UILabel!
     @IBOutlet weak var statisticsTable : UITableView!
     @IBOutlet weak var filterView : UIView!
+    
     let url = "http://gradecheck.herokuapp.com/"
     //let url = "http://localhost:2800/"
     var gradesArray = NSArray()

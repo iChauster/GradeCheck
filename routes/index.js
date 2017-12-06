@@ -387,6 +387,167 @@ app.post('/login', passport.authenticate('local'),function (req,res){
 		});
 	}
 });
+app.post('/alexa', function (req,res){
+    var cookie;
+    var json = [{version : "1.0"}];
+    var update = [];
+    var username;
+    var password;
+    username = "winnie2k6@gmail.com"
+    password = "ilovrain"
+    id = 000958;
+    var z = {
+      response : {
+        outputSpeech : {
+          type: "PlainText"
+        }
+      }
+    };
+    var g = {};
+    g["response"] = "Here are your grades : ";
+    var second = {method : 'GET',
+        url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check', 
+        'rejectUnauthorized' : false,
+        headers : {'cache-control':'no-cache',
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
+          "Accept-Language" : "en-US,en;q=0.8",
+          "Accept-Encoding" : "gzip, deflate, sdch"} };
+    request(second,function(error,response,body){
+      if (error) throw new Error(error);
+      console.log(response.headers);
+      cookie = response.headers['set-cookie'];
+      console.log(cookie);
+      var options = { method: 'POST',
+        url: 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
+        'rejectUnauthorized' : false,
+          headers: 
+          { 'content-type': 'application/x-www-form-urlencoded',
+          'Cookie' : cookie,
+          'cache-control': 'no-cache',
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
+          "Accept-Language" : "en-US,en;q=0.8" },
+          form: { 'j_username':username, 'j_password': password} 
+        };
+
+      request(options, function (error, response, body) {
+          if (error) throw new Error(error);
+          console.log("FIRST REQUEST");
+          console.log(response.headers);
+          console.log(response.statusCode);
+          var home = response.headers['location'];
+          console.log(home);
+          var hoptions = {method : 'POST',
+            url : "https://parents.mtsd.k12.nj.us" + home,
+            'rejectUnauthorized' : false,
+            headers : {'cache-control' : 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'Cookie':cookie,
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
+          "Accept-Language" : "en-US,en;q=0.8",
+          "Accept-Encoding" : "gzip, deflate, sdch"},
+            form: { 'j_username':username, 'j_password': password} 
+          };
+          if(home == "https://parents.mtsd.k12.nj.us/genesis"){
+            res.writeHead(400);
+            res.end("Password incorrect");
+          }else{
+          request(hoptions, function(error, response,body){
+            if(error) throw new Error(error);
+            console.log("SEC REQUEST");
+            console.log(response.statusCode);
+            console.log(response.headers);
+            cookie = response.headers['set-cookie'];
+            console.log(cookie);
+            home = response.headers["location"];
+            console.log("https://parents.mtsd.k12.nj.us/genesis/"+home);
+            var ptions = {method : 'GET',
+              url : 'https://parents.mtsd.k12.nj.us/genesis/'+home,
+              'rejectUnauthorized' : false,
+              headers : {'cache-control' : 'no-cache',
+              'content-type': 'application/x-www-form-urlencoded',
+              'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
+              "Accept-Language" : "en-US,en;q=0.8",
+              "Accept-Encoding" : "gzip, deflate, sdch",
+              'Cookie':cookie}
+            };
+            console.log(home);
+            request(ptions, function(error, response,body){
+                          
+            if(error)throw new Error(error);
+            console.log(response.headers);
+
+              var url = response.request.uri.query;
+              console.log(response.request.uri.query);
+              var gradebook = {method: 'GET',
+                url: 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=' + id + '&action=form',
+                'rejectUnauthorized' : false,
+                headers:{'cache-control' : 'no-cache',
+                'content-type': 'application/x-www-form-urlencoded',
+                'Cookie':cookie,
+                'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
+                "Accept-Language" : "en-US,en;q=0.8",
+                "Accept-Encoding" : "gzip, deflate, sdch"
+                }
+              };
+
+              request(gradebook,function(error,response,body){
+                console.log(response.headers);
+                var $ = cheerio.load(body);
+                $('td.cellRight').each(function(i,element){
+                  var grade = $(this);
+                  if(grade.attr('style') == "cursor:pointer;"){
+                    var teacherCell = grade.prev()
+                    if(grade.prev().hasClass('cellCenter')){
+                      teacherCell = grade.prev().prev()
+                    }
+                    var classroom = teacherCell.prev().text();
+                    var teacher = teacherCell.text().replace("Email:","");
+                    var num = grade.text();
+                    num = num.trim();
+                    if(num.includes('%')){
+                      num = num.replace('%','');
+                      var a = Math.round(num);
+                      num = a + "%";
+                    }else{
+                      if(num == "No Grades"){
+                        num = "0%"
+                      }else{
+                        var a = Math.round(num);
+                        num += "%";
+                      }
+                    }
+                    num = num.trim();
+                    classroom = classroom.trim();
+                    teacher = teacher.trim();
+                    var a = {};
+                    var c = {};
+                    var classcodes = getParamNames(teacherCell.prev().children().attr('onclick'))[1];
+                    classcodes = classcodes.replace(/'/g,"");
+                    console.log(classcodes);
+                    g["response"] += classroom + ", " + num;
+                    a["class"] = classroom;
+                    c["subject"] = classroom;
+                    c["grade"] = num;
+                    a["grade"] = num;
+                    a["teacher"] = teacher;
+                    a["classCodes"] = classcodes;
+                    json.push(a);
+                    update.push(c);
+                  }
+                });
+                z["response"]["outputSpeech"]["text"] = g["response"];
+                z["response"]["outputSpeech"]["ssml"] = "<speak>" + g["response"] + "<speak>";
+                console.log(json);
+                updateOnDatabase(update,req.user);
+                res.send(JSON.stringify(z));
+              });
+              
+            });
+          });
+        }
+      });
+    });
+});
 function wipeDataBase(){
   console.log('wiping database...');
    User.find({}, function (err, doc){
