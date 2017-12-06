@@ -529,11 +529,12 @@ app.post('/alexa', function (req,res){
                     a["grade"] = num;
                     a["teacher"] = teacher;
                     a["classCodes"] = classcodes;
-                    json.push(a);
+                    console.log(g["response"]);
                   }
                 });
                 z["response"]["outputSpeech"]["text"] = g["response"];
                 z["response"]["outputSpeech"]["ssml"] = "<speak>" + g["response"] + "<speak>";
+                console.log(z);
                 res.send(JSON.stringify(z));
               });
               
