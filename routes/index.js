@@ -526,19 +526,14 @@ app.post('/alexa', function (req,res){
                     console.log(classcodes);
                     g["response"] += classroom + ", " + num;
                     a["class"] = classroom;
-                    c["subject"] = classroom;
-                    c["grade"] = num;
                     a["grade"] = num;
                     a["teacher"] = teacher;
                     a["classCodes"] = classcodes;
                     json.push(a);
-                    update.push(c);
                   }
                 });
                 z["response"]["outputSpeech"]["text"] = g["response"];
                 z["response"]["outputSpeech"]["ssml"] = "<speak>" + g["response"] + "<speak>";
-                console.log(json);
-                updateOnDatabase(update,req.user);
                 res.send(JSON.stringify(z));
               });
               
