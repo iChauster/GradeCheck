@@ -1328,7 +1328,7 @@ app.post('/classAverages', function(req,res){
             if(assignment.prev().attr('class') == "cellLeft"){
               var value = {};
               console.log(assignment);
-              var due = assignment.prev().prev().prev().prev().prev();
+              var due = assignment.prev().prev().prev().prev().prev().prev();
               var day = due.children().first();
               var another = due.prev();
               var str = another.text().trim();
