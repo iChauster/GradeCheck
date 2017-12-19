@@ -1199,7 +1199,7 @@ app.post('/classdata', function(req,res){
         }
       });
       console.log(last);
-      var sub = []
+      var sub = [100]
       res.status(200).send(JSON.stringify(sub));
   
 

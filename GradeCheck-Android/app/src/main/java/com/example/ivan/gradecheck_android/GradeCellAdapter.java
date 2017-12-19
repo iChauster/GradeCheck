@@ -98,10 +98,7 @@ public class GradeCellAdapter extends RecyclerView.Adapter<GradeCellAdapter.View
                         i.putExtra("class", object.toString());
                         i.putExtra("auth", s);
 
-                        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true);
-
-                        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pairs);
-                        activity.startActivity(i, transitionActivityOptions.toBundle());
+                        activity.startActivity(i);
                     }
                 }
             });

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.transition.Explode;
 import android.app.Activity;
 import android.transition.Fade;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
@@ -407,6 +408,7 @@ public class GradeTable extends AppCompatActivity{
         }
 
     }
+
     public void refreshGrades(String cookie, String id, String URL){
         Req r = new Req();
         System.out.println(cookie);

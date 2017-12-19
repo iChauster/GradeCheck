@@ -3,14 +3,18 @@ package com.example.ivan.gradecheck_android;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.*;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.view.View;
+
 import org.json.JSONArray;
 
 import org.json.JSONException;
@@ -65,13 +69,28 @@ public class ClassView extends AppCompatActivity {
             }
         }
         if(Build.VERSION.SDK_INT >= 21) {
-            setActionBar(myToolbar);
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setTitle(title);
+            System.out.println("HELLO");
             myToolbar.requestLayout();
+            setSupportActionBar(myToolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(title);
+            System.out.println("YES");
         }
 
     }
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        System.out.println("pressed");
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if(Build.VERSION.SDK_INT >= 21){
+                    finishAfterTransition();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public String[] getCookieAndID(){
         SharedPreferences pref = getSharedPreferences("GradeCheckInfo", 0);
 
@@ -82,6 +101,7 @@ public class ClassView extends AppCompatActivity {
     public String getClassCodes(){
         return classCodes;
     }
+
     public void makeClassAssignmentsRequest(String cookie, String id, String course, String section, String URL) {
         Req r = new Req();
         System.out.println(cookie);
@@ -139,18 +159,7 @@ public class ClassView extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                if(Build.VERSION.SDK_INT >= 21) {
-                    finishAfterTransition();
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+
     private void setupWindowAnimations() {
         if(Build.VERSION.SDK_INT >= 21) {
             Explode ex = new Explode();
