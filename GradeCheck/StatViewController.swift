@@ -50,6 +50,11 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.getGPA()
         // Do any additional setup after loading the view.
     }
+    func gpaReload(){
+        if(self.gpaCircle != nil){
+            self.getGPA()
+        }
+    }
     @objc func transitionGPA(){
         self.performSegue(withIdentifier: "GPASegue", sender: self)
     }

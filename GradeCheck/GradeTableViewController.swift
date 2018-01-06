@@ -244,6 +244,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
                             gradeView.grades = self.gradeArray
                             let statView = gradeView.viewControllers![2] as! StatViewController
                             statView.gradesArray = self.gradeArray
+                            statView.gpaReload()
                         }catch{
                             
                         }

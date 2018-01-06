@@ -797,7 +797,7 @@ app.post('/listassignments',function(req,res){
               value["dueDate"] = day.text().trim();
               var another = due.prev();
               var str = another.text().trim();
-              value["stringDate"] = day.next().text().trim() + "/2017";
+              value["stringDate"] = day.next().text().trim() + "/2018";
               value["mp"] = str;
               //var percent = assignment.next().text();
               var courseCell = assignment.next().children().first();
@@ -964,7 +964,7 @@ app.post('/assignments', function(req, res){
               value["dueDate"] = day.text().trim();
               var another = due.prev();
               var str = another.text().trim();
-              value["stringDate"] = day.next().text().trim() + "/2017";
+              value["stringDate"] = day.next().text().trim() + "/2018";
               value["mp"] = str;
   						//var percent = assignment.next().text();
               var courseCell = assignment.next().children().first();

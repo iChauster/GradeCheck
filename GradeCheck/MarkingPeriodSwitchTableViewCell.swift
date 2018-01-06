@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol ReloadProtocol : NSObjectProtocol {
+    func reloadData()
+    func reloadGPA()
+}
+
 class MarkingPeriodSwitchTableViewCell: UITableViewCell {
     @IBOutlet weak var segControl : UISegmentedControl!
+    weak var delegate: ReloadProtocol?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -34,6 +40,7 @@ class MarkingPeriodSwitchTableViewCell: UITableViewCell {
             UserDefaults.standard.set("MP4", forKey: "GradeTableMP")
             print("Set to MP4")
         }
+        self.delegate?.reloadData()
         UserDefaults.standard.synchronize()
 
     }

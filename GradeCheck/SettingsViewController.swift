@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ReloadProtocol {
     @IBOutlet weak var MHSButton : UIButton!
     @IBOutlet weak var SettingsTable : UITableView!
     let cellTitles = ["Log Out"]
@@ -52,6 +52,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                     switchCell.segmentControl.selectedSegmentIndex = 1;
                 }
                 switchCell.segmentControl.tintColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
+                switchCell.delegate = self
                 return switchCell
             }else{
                 let mpSwitchCell = tableView.dequeueReusableCell(withIdentifier: "MarkingPeriodSwitchCell") as! MarkingPeriodSwitchTableViewCell
@@ -68,13 +69,23 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                         mpSwitchCell.segControl.selectedSegmentIndex = 3
                     }
                 }
+                mpSwitchCell.delegate = self;
                 mpSwitchCell.segControl.tintColor = UIColor(red: 0.1574, green: 0.6298, blue: 0.2128, alpha: 1.0)
                 return mpSwitchCell
                 
             }
         }
     }
-    
+    func reloadData() {
+        let parent = self.presentingViewController as! GradeViewController
+        let gradeTable = parent.viewControllers?.first as! GradeTableViewController
+        gradeTable.refresh()
+    }
+    func reloadGPA() {
+        let parent = self.presentingViewController as! GradeViewController
+        let statView = parent.viewControllers?[2] as! StatViewController
+        statView.gpaReload()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         print(objectID)

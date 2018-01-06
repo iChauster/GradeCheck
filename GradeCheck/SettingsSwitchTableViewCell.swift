@@ -10,6 +10,7 @@ import UIKit
 
 class SettingsSwitchTableViewCell: UITableViewCell {
     @IBOutlet weak var segmentControl : UISegmentedControl!
+    weak var delegate : ReloadProtocol?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -27,8 +28,8 @@ class SettingsSwitchTableViewCell: UITableViewCell {
         }else if(sender.selectedSegmentIndex == 1){
             UserDefaults.standard.set("Unweighted", forKey: "GPA")
             print("Set to Unweighted")
-
         }
+        delegate?.reloadGPA()
     }
 
 }

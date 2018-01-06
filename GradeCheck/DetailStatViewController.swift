@@ -25,8 +25,8 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
     @IBOutlet weak var statisticsTable : UITableView!
     @IBOutlet weak var filterView : UIView!
     
-    //let url = "http://gradecheck.herokuapp.com/"
-    let url = "http://localhost:2800/"
+    let url = "http://gradecheck.herokuapp.com/"
+    //let url = "http://localhost:2800/"
     var gradesArray = NSArray()
     var cookie : String!
     var results : [GraphData] = [];
