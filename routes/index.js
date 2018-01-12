@@ -368,6 +368,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   									a["class"] = classroom;
                     c["subject"] = classroom;
                     c["grade"] = num;
+                    c["teacher"] = teacher;
   									a["grade"] = num;
   									a["teacher"] = teacher;
                     a["classCodes"] = classcodes;
