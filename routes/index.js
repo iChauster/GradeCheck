@@ -3,16 +3,19 @@ var request = require('request');
 var cheerio = require('cheerio');
 var passport = require('passport');
 var User = require('../models/user');
+var GradeChange = require('../models/gradeChange');
 var CryptoJS = require('crypto-js');
 var ObjectID = require('mongodb').ObjectID;
 var app = express.Router();
+var push = require('../controllers/push')
 
 /*
 
   spaghetti
 
 */
-var markingPeriod = "MP2";
+
+var markingPeriod = "MP3";
 /* GET home page. */
 app.get('/', function(req, res, next) {
   console.log(req.headers);
@@ -41,6 +44,7 @@ app.post('/register', function(req, res) {
       }
   });
 });
+
 function isValid(username,pass,callback){
     var bool  = false;
     if(typeof username !== undefined && typeof pass !== undefined && username != "" && pass != ""){
@@ -562,6 +566,9 @@ function wipeAccounts(position, array){
     });
   }
 }
+function updateOnDatabaseWithID(art, id){
+  //TODO
+}
 function updateOnDatabase(art,user){
   console.log('called')
   console.log(art);
@@ -586,7 +593,15 @@ function updateOnDatabase(art,user){
               console.log(err);
             }
               console.log(numberAffected);
-            });
+          });
+          /*var change = new GradeChange({username:user.username, className : art[i].subject, teacher:art[i].teacher, timeStamp : Date()})
+          change.save(function(err,doc){
+            if(err){
+              console.log(err);
+            }
+            push.checkForPush(doc, change.className, change.teacher)
+            console.log("checking for push")
+          });*/
         }
       }
     }
