@@ -49,7 +49,7 @@ class GradeViewController: UITabBarController {
         self.tabBar.addGestureRecognizer(rightSwipe)
         // Do any additional setup after loading the view.
     }
-    func refreshAndLogin(_ cookie:String){
+    func refreshAndLogin(_ cookie:String, comp: @escaping (_ needsReload : Bool) -> Void) {
         print(cookie);
         let headers = [
             "cache-control": "no-cache",
@@ -96,6 +96,7 @@ class GradeViewController: UITabBarController {
                             assignments.cookie = hafl[0] as! String;
                             let stats = self.viewControllers?[2] as! StatViewController
                             stats.cookie = hafl[0] as! String;
+                            comp(true)
                         }catch{
                             
                         }

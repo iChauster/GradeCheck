@@ -12,7 +12,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var MHSButton : UIButton!
     @IBOutlet weak var SettingsTable : UITableView!
     let cellTitles = ["Log Out"]
-    let url = "http://localhost:2800/"
+    //let url = "http://localhost:2800/"
+    let url = "http://gradecheck.herokuapp.com/"
     var objectID = "";
 
     override var prefersStatusBarHidden : Bool {
@@ -21,7 +22,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
-            return 1;
+            return 2;
         }else{
             return 2;
         }
@@ -39,10 +40,20 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.section == 0){
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell") as! SettingsTableViewCell
-            cell.title.text = self.cellTitles[indexPath.row];
-            cell.intention = self.cellTitles[indexPath.row];
-            return cell;
+            if(indexPath.row == 0){
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell") as! SettingsTableViewCell
+                cell.title.text = self.cellTitles[indexPath.row];
+                cell.intention = self.cellTitles[indexPath.row];
+                return cell;
+            }else{
+                let cell = tableView.dequeueReusableCell(withIdentifier: "PushCell") as! PushTableViewCell
+                if(UserDefaults.standard.bool(forKey: "PushNotifs")){
+                    cell.pushToggle.isOn = true
+                }else{
+                    cell.pushToggle.isOn = false
+                }
+                return cell
+            }
         }else{
             if(indexPath.row == 0){
                 let switchCell = tableView.dequeueReusableCell(withIdentifier: "SettingsSwitchCell") as! SettingsSwitchTableViewCell
@@ -79,7 +90,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func reloadData() {
         let parent = self.presentingViewController as! GradeViewController
         let gradeTable = parent.viewControllers?.first as! GradeTableViewController
-        gradeTable.refresh()
+        gradeTable.refresh({_ in })
     }
     func reloadGPA() {
         let parent = self.presentingViewController as! GradeViewController

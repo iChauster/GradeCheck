@@ -31,6 +31,7 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
     var phoneNumberOption : String?
     var selectedIndex : Int?
     let url = "http://gradecheck.herokuapp.com/"
+    //let url = "http://localhost:2800/"
     @IBAction func login(_ sender:UIButton!){
         NSLog("clicked");
         NSLog(usn!.text!);

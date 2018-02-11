@@ -74,6 +74,11 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         self.cours = course;
         let section = tok[1];
         self.sectio = section
+        self.getClassInformation(course: course, section: section)
+    
+        // Do any additional setup after loading the view.
+    }
+    func getClassInformation(course:String, section: String){
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"
@@ -92,8 +97,8 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
             postData.append(mpString.data(using: String.Encoding.utf8)!)
         }
         let request = NSMutableURLRequest(url: URL(string: url + "listassignments")!,
-            cachePolicy: .useProtocolCachePolicy,
-            timeoutInterval: 10.0)
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.httpBody = postData
@@ -135,14 +140,21 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
                         }
                     })
                     
+                }else{
+                    let tabBar = self.presentingViewController as! GradeViewController
+                    let presVC = tabBar.selectedViewController as! GradeTableViewController
+                    presVC.refresh({ (b : Bool) in
+                        DispatchQueue.main.async(execute: {
+                            self.cookie = presVC.cookie
+                            self.getClassInformation(course: course, section: section)
+                        })
+                    })
+                    
                 }
             }
         })
         
         dataTask.resume()
-        
-
-        // Do any additional setup after loading the view.
     }
     func handleLongPress(_ sender:UILongPressGestureRecognizer){
         if(sender.state == .began){

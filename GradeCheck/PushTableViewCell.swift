@@ -9,7 +9,7 @@
 import UIKit
 
 class PushTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var pushToggle : UISwitch!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,5 +20,18 @@ class PushTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    @IBAction func updateUserToken(_ sender:UISwitch){
+        if(sender.isOn){
+            OneSignal.defaultClient().enable(inAppAlertNotification: true)
+            OneSignal.defaultClient().idsAvailable({ (userId, pushToken) in
+                print("UserId:%@", userId)
+                if (pushToken != nil) {
+                    print("pushToken:%@", pushToken)
+                    //send userToken
+                }
+            })
+        }else{
+            OneSignal.defaultClient().enable(inAppAlertNotification: false)
+        }
+    }
 }

@@ -902,6 +902,37 @@
                                             <outlet property="segControl" destination="BSi-yn-MD9" id="unv-Mo-yYC"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PushCell" id="vSZ-zy-OXH" customClass="PushTableViewCell" customModule="GradeCheck" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="160" width="341" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vSZ-zy-OXH" id="8Ho-gI-qzK">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Push" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrx-0g-NMR">
+                                                    <rect key="frame" x="15" y="11" width="38.5" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1JP-pN-bG6">
+                                                    <rect key="frame" x="284" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="updateUserToken:" destination="vSZ-zy-OXH" eventType="valueChanged" id="gFN-9p-wTO"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="yrx-0g-NMR" firstAttribute="centerY" secondItem="8Ho-gI-qzK" secondAttribute="centerY" id="Ttq-FN-7rj"/>
+                                                <constraint firstItem="yrx-0g-NMR" firstAttribute="leading" secondItem="8Ho-gI-qzK" secondAttribute="leadingMargin" id="U8Z-yy-BcB"/>
+                                                <constraint firstAttribute="trailing" secondItem="1JP-pN-bG6" secondAttribute="trailing" constant="8" id="XMi-lg-4t9"/>
+                                                <constraint firstItem="1JP-pN-bG6" firstAttribute="centerY" secondItem="8Ho-gI-qzK" secondAttribute="centerY" id="aL3-XS-iPY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="pushToggle" destination="1JP-pN-bG6" id="0bi-X4-2ai"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="iWY-Kg-wDl" id="U5r-HM-Vui"/>

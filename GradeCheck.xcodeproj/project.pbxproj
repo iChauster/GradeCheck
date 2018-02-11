@@ -44,6 +44,7 @@
 		2CB2586E1DEB68590023E9A6 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB258691DEB67F40023E9A6 /* Charts.framework */; };
 		2CB2586F1DEB68590023E9A6 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB258691DEB67F40023E9A6 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2CB7555E1F8BEE8C00E4A377 /* GPAViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7555D1F8BEE8C00E4A377 /* GPAViewCell.swift */; };
+		2CB7FCB1202ABFB3004C3DE7 /* PushTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7FCB0202ABFB3004C3DE7 /* PushTableViewCell.swift */; };
 		2CD720AF1CAB140A00338CA7 /* GraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD720AE1CAB140900338CA7 /* GraphData.swift */; };
 		2CD720C11CAC5B2200338CA7 /* DetailStatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD720C01CAC5B2200338CA7 /* DetailStatTableViewCell.swift */; };
 		2CEC13161CC27D6B00678AA8 /* grades-icon3.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CEC13151CC27D6B00678AA8 /* grades-icon3.png */; };
@@ -169,6 +170,7 @@
 		2CB258621DEB67F40023E9A6 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../Downloads/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		2CB258731DECECB40023E9A6 /* GradeCheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GradeCheck.entitlements; sourceTree = "<group>"; };
 		2CB7555D1F8BEE8C00E4A377 /* GPAViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPAViewCell.swift; sourceTree = "<group>"; };
+		2CB7FCB0202ABFB3004C3DE7 /* PushTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTableViewCell.swift; sourceTree = "<group>"; };
 		2CD720AE1CAB140900338CA7 /* GraphData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphData.swift; sourceTree = "<group>"; };
 		2CD720C01CAC5B2200338CA7 /* DetailStatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailStatTableViewCell.swift; sourceTree = "<group>"; };
 		2CEC13151CC27D6B00678AA8 /* grades-icon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grades-icon3.png"; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 			children = (
 				2C22E30C1CF7CFBC0011C2DE /* SettingsViewController.swift */,
 				2CF2697F1FBBE3FD00EBAEF4 /* MarkingPeriodSwitchTableViewCell.swift */,
+				2CB7FCB0202ABFB3004C3DE7 /* PushTableViewCell.swift */,
 				2C6AB4871CFCF4AC00E77252 /* SettingsTableViewCell.swift */,
 				2C6AB48D1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift */,
 			);
@@ -453,7 +456,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -573,6 +576,7 @@
 				2CB7555E1F8BEE8C00E4A377 /* GPAViewCell.swift in Sources */,
 				ED7AA22A1CA0C0FC001B2E68 /* DetailStatViewController.swift in Sources */,
 				2CFE269E1CCBEC54001B7AAE /* ProjectionGradeViewController.swift in Sources */,
+				2CB7FCB1202ABFB3004C3DE7 /* PushTableViewCell.swift in Sources */,
 				ED7AA2081C7E9BFF001B2E68 /* AssignmentsTableViewCell.swift in Sources */,
 				2C9D84981F5CD82C0011A0C3 /* SlideCell.swift in Sources */,
 				ED7AA2281CA0975D001B2E68 /* StatTableViewCell.swift in Sources */,

@@ -22,7 +22,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.backgroundColor = UIColor.black
         self.refreshControl!.tintColor = UIColor.white
-        self.refreshControl!.addTarget(self, action: #selector(GradeTableViewController.refresh), for: UIControlEvents.valueChanged);
+        self.refreshControl!.addTarget(self, action: #selector(self.refreshHandler), for: UIControlEvents.valueChanged);
         let leftSwipe = UISwipeGestureRecognizer.init(target: self.tabBarController, action: #selector(GradeViewController.swipeLeft))
         leftSwipe.direction = .left
         self.tableView.addGestureRecognizer(leftSwipe);
@@ -41,6 +41,15 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
     var openingFrame : CGRect?
     override var prefersStatusBarHidden : Bool {
         return true;
+    }
+    func refreshHandler(){
+        self.refresh { (b : Bool) in
+            if(b){
+                if(UserDefaults.standard.object(forKey: "GradeTableMP") != nil && UserDefaults.standard.object(forKey: "GradeTableMP") as! String != "MP4"){
+                    self.gradebookWithMarkingPeriod(UserDefaults.standard.object(forKey: "GradeTableMP") as! String);
+                }
+            }
+        }
     }
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let presentationAnimator = ExpandAnimator.animator
@@ -179,7 +188,8 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
                             let hafl = cooke.object(forKey: "set-cookie") as! NSArray;
                             self.cookie = hafl[0] as! String;
                             print(self.cookie);
-                            self.tabBarController?.perform(#selector(GradeViewController.refreshAndLogin), with: self.cookie)
+                            let tbc = self.tabBarController as! GradeViewController
+                            tbc.refreshAndLogin(self.cookie, comp: {_ in })
                             self.refreshControl?.endRefreshing()
                         }catch{
                             
@@ -193,9 +203,11 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         dataTask.resume()
     }
     
-    func refresh(){
-        self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSForegroundColorAttributeName:UIColor.white])
-        print("refreshing....")
+    func refresh(_ comp: @escaping (_ needsReload : Bool) -> Void){
+        DispatchQueue.main.async {
+            self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSForegroundColorAttributeName:UIColor.white])
+            print("refreshing....")
+        }
         if(self.cookie == ""){
             let cookieID = gradeArray[0] as! NSDictionary;
             let cookieArray = cookieID.object(forKey: "cookie") as? NSArray;
@@ -245,6 +257,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
                             let statView = gradeView.viewControllers![2] as! StatViewController
                             statView.gradesArray = self.gradeArray
                             statView.gpaReload()
+                            comp(false)
                         }catch{
                             
                         }
@@ -258,9 +271,13 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
                             let cooke = cookie[0] as! NSDictionary
                             let hafl = cooke.object(forKey: "set-cookie") as! NSArray;
                             self.cookie = hafl[0] as! String;
-                            print(self.cookie);
-                            self.tabBarController?.perform(#selector(GradeViewController.refreshAndLogin), with: self.cookie)
-                            self.refreshControl?.endRefreshing()
+                            print(self.cookie)
+                            let tbc = self.tabBarController as! GradeViewController
+                            tbc.refreshAndLogin(self.cookie, comp: {bool in
+                                    comp(bool)
+                                    self.refreshControl?.endRefreshing()
+                            })
+                            
                         }catch{
                             
                         }
