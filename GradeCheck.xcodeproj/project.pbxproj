@@ -16,10 +16,11 @@
 		2C04CDF11CCB362E008B9FF4 /* AssignmentScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C04CDF01CCB362E008B9FF4 /* AssignmentScoreView.swift */; };
 		2C19AF151CBC686000BB73DE /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C19AF141CBC686000BB73DE /* OneSignal.framework */; };
 		2C1E22551DFC896A008CC80F /* IColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E22541DFC896A008CC80F /* IColor.swift */; };
-		2C1FFD3C1FB6A3CB00856599 /* soft.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C1FFD391FB6A3CA00856599 /* soft.jpg */; };
 		2C22E30B1CF7C9850011C2DE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C22E30A1CF7C9850011C2DE /* settings.png */; };
 		2C22E30D1CF7CFBC0011C2DE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C22E30C1CF7CFBC0011C2DE /* SettingsViewController.swift */; };
 		2C22E30F1CF7D47A0011C2DE /* blurrymont.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C22E30E1CF7D47A0011C2DE /* blurrymont.png */; };
+		2C58876E20727E0700F942C1 /* soft.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C58876D20727E0700F942C1 /* soft.jpg */; };
+		2C58877020727FC000F942C1 /* GradeCheckLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C58876F20727FBF00F942C1 /* GradeCheckLogo.png */; };
 		2C6AB4881CFCF4AC00E77252 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6AB4871CFCF4AC00E77252 /* SettingsTableViewCell.swift */; };
 		2C6AB48E1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6AB48D1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift */; };
 		2C6D37451CC82BAF0077F4A9 /* PercentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */; };
@@ -27,8 +28,6 @@
 		2C825A441F8403C1007456DF /* GPAHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C825A431F8403C1007456DF /* GPAHistoryViewController.swift */; };
 		2C825A511F86C562007456DF /* YearViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C825A501F86C562007456DF /* YearViewController.swift */; };
 		2C918C4E1CAC8CA300C80299 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */; };
-		2C94C0A81FB3A10A0045677E /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 2C94C0A71FB3A10A0045677E /* AppIcon.appiconset */; };
-		2C94C0AA1FB3A2950045677E /* GradeCheckLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C94C0A91FB3A2950045677E /* GradeCheckLogo.png */; };
 		2C94C0B81FB3AE8E0045677E /* OnboardingContentViewController_Private.h in Sources */ = {isa = PBXBuildFile; fileRef = 2C94C0B61FB3A8520045677E /* OnboardingContentViewController_Private.h */; };
 		2C94C0B91FB3AE8E0045677E /* OnboardingContentViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 2C94C0B41FB3A8510045677E /* OnboardingContentViewController.h */; };
 		2C94C0BA1FB3AE8E0045677E /* OnboardingContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C94C0B51FB3A8520045677E /* OnboardingContentViewController.m */; };
@@ -40,9 +39,7 @@
 		2C9D84981F5CD82C0011A0C3 /* SlideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9D84971F5CD82C0011A0C3 /* SlideCell.swift */; };
 		2C9D84A01F5CE0470011A0C3 /* Back-Chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9D849F1F5CE0470011A0C3 /* Back-Chevron.png */; };
 		2CA5B1511CC70E30005F80CE /* ExpandAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA5B1501CC70E30005F80CE /* ExpandAnimator.swift */; };
-		2CA67E201DADDFDA0093B7F6 /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CA67E1F1DADDFDA0093B7F6 /* download.png */; };
-		2CB2586E1DEB68590023E9A6 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB258691DEB67F40023E9A6 /* Charts.framework */; };
-		2CB2586F1DEB68590023E9A6 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB258691DEB67F40023E9A6 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2CA8429A2067393600B3163B /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CA842962067392D00B3163B /* Charts.framework */; };
 		2CB7555E1F8BEE8C00E4A377 /* GPAViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7555D1F8BEE8C00E4A377 /* GPAViewCell.swift */; };
 		2CB7FCB1202ABFB3004C3DE7 /* PushTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7FCB0202ABFB3004C3DE7 /* PushTableViewCell.swift */; };
 		2CD720AF1CAB140A00338CA7 /* GraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD720AE1CAB140900338CA7 /* GraphData.swift */; };
@@ -80,33 +77,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2CB258681DEB67F40023E9A6 /* PBXContainerItemProxy */ = {
+		2CA842952067392D00B3163B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2CB258621DEB67F40023E9A6 /* Charts.xcodeproj */;
+			containerPortal = 2CA842902067392D00B3163B /* Charts.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 06165F241D8110E600722320;
+			remoteGlobalIDString = 65AD9E95D9ED4DC0BD73A743;
 			remoteInfo = Charts;
 		};
-		2CB2586A1DEB67F40023E9A6 /* PBXContainerItemProxy */ = {
+		2CA842972067392D00B3163B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2CB258621DEB67F40023E9A6 /* Charts.xcodeproj */;
+			containerPortal = 2CA842902067392D00B3163B /* Charts.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 06B120D51D811E6200D14B02;
-			remoteInfo = ChartsRealm;
-		};
-		2CB2586C1DEB67F40023E9A6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2CB258621DEB67F40023E9A6 /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 06165F2E1D8110E600722320;
+			remoteGlobalIDString = 1CBBC58C6CE1EBEE9852CE41;
 			remoteInfo = ChartsTests;
-		};
-		2CB258701DEB68590023E9A6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2CB258621DEB67F40023E9A6 /* Charts.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 06165F231D8110E600722320;
-			remoteInfo = Charts;
 		};
 		EDBE85F11C78ED290031EE8B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -124,7 +107,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2CB2586F1DEB68590023E9A6 /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,10 +123,11 @@
 		2C04CDF01CCB362E008B9FF4 /* AssignmentScoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentScoreView.swift; sourceTree = "<group>"; };
 		2C19AF141CBC686000BB73DE /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OneSignal.framework; sourceTree = "<group>"; };
 		2C1E22541DFC896A008CC80F /* IColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IColor.swift; sourceTree = "<group>"; };
-		2C1FFD391FB6A3CA00856599 /* soft.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = soft.jpg; path = ../../../Downloads/soft.jpg; sourceTree = "<group>"; };
 		2C22E30A1CF7C9850011C2DE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		2C22E30C1CF7CFBC0011C2DE /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2C22E30E1CF7D47A0011C2DE /* blurrymont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blurrymont.png; sourceTree = "<group>"; };
+		2C58876D20727E0700F942C1 /* soft.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = soft.jpg; sourceTree = "<group>"; };
+		2C58876F20727FBF00F942C1 /* GradeCheckLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GradeCheckLogo.png; sourceTree = "<group>"; };
 		2C6AB4871CFCF4AC00E77252 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		2C6AB48D1CFCFE0B00E77252 /* SettingsSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C6D37441CC82BAF0077F4A9 /* PercentLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PercentLabel.swift; sourceTree = "<group>"; };
@@ -153,8 +136,6 @@
 		2C825A501F86C562007456DF /* YearViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearViewController.swift; sourceTree = "<group>"; };
 		2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2C918C4F1CAC8D8400C80299 /* GradeCheck-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GradeCheck-Bridging-Header.h"; sourceTree = "<group>"; };
-		2C94C0A71FB3A10A0045677E /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppIcon.appiconset; path = ../../../Downloads/GCheckFinal/ios/AppIcon.appiconset; sourceTree = "<group>"; };
-		2C94C0A91FB3A2950045677E /* GradeCheckLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GradeCheckLogo.png; path = ../../../Downloads/GradeCheckLogo.png; sourceTree = "<group>"; };
 		2C94C0B31FB3A8510045677E /* OnboardingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingViewController.h; sourceTree = "<group>"; };
 		2C94C0B41FB3A8510045677E /* OnboardingContentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingContentViewController.h; sourceTree = "<group>"; };
 		2C94C0B51FB3A8520045677E /* OnboardingContentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OnboardingContentViewController.m; sourceTree = "<group>"; };
@@ -166,8 +147,7 @@
 		2C9D84971F5CD82C0011A0C3 /* SlideCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideCell.swift; sourceTree = "<group>"; };
 		2C9D849F1F5CE0470011A0C3 /* Back-Chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back-Chevron.png"; sourceTree = "<group>"; };
 		2CA5B1501CC70E30005F80CE /* ExpandAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandAnimator.swift; sourceTree = "<group>"; };
-		2CA67E1F1DADDFDA0093B7F6 /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = download.png; path = ../../../Downloads/download.png; sourceTree = "<group>"; };
-		2CB258621DEB67F40023E9A6 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../Downloads/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
+		2CA842902067392D00B3163B /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../Downloads/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		2CB258731DECECB40023E9A6 /* GradeCheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GradeCheck.entitlements; sourceTree = "<group>"; };
 		2CB7555D1F8BEE8C00E4A377 /* GPAViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPAViewCell.swift; sourceTree = "<group>"; };
 		2CB7FCB0202ABFB3004C3DE7 /* PushTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTableViewCell.swift; sourceTree = "<group>"; };
@@ -214,7 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CB2586E1DEB68590023E9A6 /* Charts.framework in Frameworks */,
+				2CA8429A2067393600B3163B /* Charts.framework in Frameworks */,
 				2C918C4E1CAC8CA300C80299 /* SystemConfiguration.framework in Frameworks */,
 				2C19AF151CBC686000BB73DE /* OneSignal.framework in Frameworks */,
 			);
@@ -254,14 +234,20 @@
 			name = "New Group";
 			sourceTree = "<group>";
 		};
-		2CB258631DEB67F40023E9A6 /* Products */ = {
+		2CA842912067392D00B3163B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2CB258691DEB67F40023E9A6 /* Charts.framework */,
-				2CB2586B1DEB67F40023E9A6 /* ChartsRealm.framework */,
-				2CB2586D1DEB67F40023E9A6 /* ChartsTests.xctest */,
+				2CA842962067392D00B3163B /* Charts.framework */,
+				2CA842982067392D00B3163B /* ChartsTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2CA842992067393600B3163B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		ED7AA2091C7E9C0B001B2E68 /* Assignments */ = {
@@ -298,12 +284,13 @@
 		EDBE85D31C78ED260031EE8B = {
 			isa = PBXGroup;
 			children = (
-				2CB258621DEB67F40023E9A6 /* Charts.xcodeproj */,
+				2CA842902067392D00B3163B /* Charts.xcodeproj */,
 				2C19AF141CBC686000BB73DE /* OneSignal.framework */,
 				2C918C4D1CAC8CA300C80299 /* SystemConfiguration.framework */,
 				EDBE85DE1C78ED280031EE8B /* GradeCheck */,
 				EDBE85F31C78ED2A0031EE8B /* GradeCheckUITests */,
 				EDBE85DD1C78ED280031EE8B /* Products */,
+				2CA842992067393600B3163B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -353,26 +340,24 @@
 		EDBE86031C7A2D5D0031EE8B /* art */ = {
 			isa = PBXGroup;
 			children = (
-				2CA67E1F1DADDFDA0093B7F6 /* download.png */,
 				2C22E30E1CF7D47A0011C2DE /* blurrymont.png */,
 				2C04CDEE1CCB0E32008B9FF4 /* close.png */,
 				2C22E30A1CF7C9850011C2DE /* settings.png */,
+				2C58876F20727FBF00F942C1 /* GradeCheckLogo.png */,
 				2C6D374B1CC85A180077F4A9 /* whitespace-montgomery-logo.png */,
-				2C1FFD391FB6A3CA00856599 /* soft.jpg */,
 				2C94C0BF1FB560DD0045677E /* study.jpg */,
 				2CEC13271CC40B1A00678AA8 /* assign.png */,
 				2C9D849F1F5CE0470011A0C3 /* Back-Chevron.png */,
+				2C58876D20727E0700F942C1 /* soft.jpg */,
 				2C04CDEA1CC9B2FC008B9FF4 /* check.png */,
 				2CEC13231CC4098300678AA8 /* statistics@2x.png */,
 				EDBE86061C7A46B10031EE8B /* back1.png */,
 				2CEC131F1CC2835E00678AA8 /* statistics.png */,
-				2C94C0A91FB3A2950045677E /* GradeCheckLogo.png */,
 				2CEC13251CC40AD500678AA8 /* assign@2x.png */,
 				2CEC13291CC40BA000678AA8 /* grades-icon3@2x.png */,
 				2CEC13151CC27D6B00678AA8 /* grades-icon3.png */,
 				ED7AA20A1C83986D001B2E68 /* calendar.png */,
 				2C94C0BD1FB55C2A0045677E /* background.png */,
-				2C94C0A71FB3A10A0045677E /* AppIcon.appiconset */,
 			);
 			name = art;
 			sourceTree = "<group>";
@@ -408,7 +393,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				2CB258711DEB68590023E9A6 /* PBXTargetDependency */,
 			);
 			name = GradeCheck;
 			productName = GradeCheck;
@@ -480,8 +464,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 2CB258631DEB67F40023E9A6 /* Products */;
-					ProjectRef = 2CB258621DEB67F40023E9A6 /* Charts.xcodeproj */;
+					ProductGroup = 2CA842912067392D00B3163B /* Products */;
+					ProjectRef = 2CA842902067392D00B3163B /* Charts.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -493,25 +477,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		2CB258691DEB67F40023E9A6 /* Charts.framework */ = {
+		2CA842962067392D00B3163B /* Charts.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Charts.framework;
-			remoteRef = 2CB258681DEB67F40023E9A6 /* PBXContainerItemProxy */;
+			remoteRef = 2CA842952067392D00B3163B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2CB2586B1DEB67F40023E9A6 /* ChartsRealm.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ChartsRealm.framework;
-			remoteRef = 2CB2586A1DEB67F40023E9A6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2CB2586D1DEB67F40023E9A6 /* ChartsTests.xctest */ = {
+		2CA842982067392D00B3163B /* ChartsTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = ChartsTests.xctest;
-			remoteRef = 2CB2586C1DEB67F40023E9A6 /* PBXContainerItemProxy */;
+			remoteRef = 2CA842972067392D00B3163B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -522,7 +499,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED7AA20B1C83986D001B2E68 /* calendar.png in Resources */,
-				2C1FFD3C1FB6A3CB00856599 /* soft.jpg in Resources */,
 				2C94C0C01FB560DD0045677E /* study.jpg in Resources */,
 				EDBE86071C7A46B10031EE8B /* back1.png in Resources */,
 				2CEC13241CC4098300678AA8 /* statistics@2x.png in Resources */,
@@ -536,16 +512,15 @@
 				2C9D84A01F5CE0470011A0C3 /* Back-Chevron.png in Resources */,
 				2CEC13281CC40B1A00678AA8 /* assign.png in Resources */,
 				2C6D374C1CC85A180077F4A9 /* whitespace-montgomery-logo.png in Resources */,
-				2CA67E201DADDFDA0093B7F6 /* download.png in Resources */,
-				2C94C0A81FB3A10A0045677E /* AppIcon.appiconset in Resources */,
 				2C94C0BE1FB55C2B0045677E /* background.png in Resources */,
+				2C58877020727FC000F942C1 /* GradeCheckLogo.png in Resources */,
 				2C22E30B1CF7C9850011C2DE /* settings.png in Resources */,
 				2C04CDEF1CCB0E32008B9FF4 /* close.png in Resources */,
 				EDBE85E71C78ED280031EE8B /* Assets.xcassets in Resources */,
 				2C04CDE31CC997E6008B9FF4 /* TableSectionHeader.xib in Resources */,
-				2C94C0AA1FB3A2950045677E /* GradeCheckLogo.png in Resources */,
 				EDBE85E51C78ED280031EE8B /* Main.storyboard in Resources */,
 				2CEC13261CC40AD500678AA8 /* assign@2x.png in Resources */,
+				2C58876E20727E0700F942C1 /* soft.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,11 +592,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2CB258711DEB68590023E9A6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Charts;
-			targetProxy = 2CB258701DEB68590023E9A6 /* PBXContainerItemProxy */;
-		};
 		EDBE85F21C78ED290031EE8B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EDBE85DB1C78ED270031EE8B /* GradeCheck */;

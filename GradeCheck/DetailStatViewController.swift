@@ -46,8 +46,6 @@ class DetailStatViewController: UIViewController, ChartViewDelegate, UITableView
         self.graph.delegate = self;
         self.statisticsTable.dataSource = self;
         self.statisticsTable.delegate = self;
-        self.graph.descriptionText = "Check out your class's grading curve.";
-        self.graph.descriptionTextColor = UIColor.white;
         self.graph.drawGridBackgroundEnabled = true;
         self.graph.gridBackgroundColor = UIColor(red: 0.0, green: 0.5019, blue: 0.2509, alpha: 1.0)
         self.graph.animate(yAxisDuration: 3.0, easingOption: .easeInOutQuart)
