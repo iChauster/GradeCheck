@@ -15,7 +15,7 @@ var push = require('../controllers/push')
 
 */
 
-var markingPeriod = "MP4";
+var markingPeriod = "MP1";
 /* GET home page. */
 app.get('/', function(req, res, next) {
   console.log(req.headers);
