@@ -224,7 +224,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
     console.log(username);
     console.log(req.body.password);
 		var second = {method : 'GET',
-				url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check', 
+				url : 'https://parents.mtsd.k12.nj.us/genesis/', 
 				'rejectUnauthorized' : false,
 				headers : {'cache-control':'no-cache',
           'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36',
