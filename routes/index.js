@@ -49,7 +49,7 @@ function isValid(username,pass,callback){
     var bool  = false;
     if(typeof username !== undefined && typeof pass !== undefined && username != "" && pass != ""){
       var second = {method : 'GET',
-          url : 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
+          url : 'https://parents.mtsd.k12.nj.us/genesis/',
           'rejectUnauthorized' : false,
           headers : {'cache-control':'no-cache',
         'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'} };
@@ -80,7 +80,7 @@ function isValid(username,pass,callback){
             }else if(home == "https://parents.mtsd.k12.nj.us/genesis"){
               bool = false;
             }else{
-              bool = false;
+              bool = true;
             }
             callback(bool);
             return bool;
@@ -174,7 +174,7 @@ app.post('/relogin', passport.authenticate('local'), function (req,res){
       console.log(response.statusCode);
       var home = response.headers['location'];
       var se = {method : "POST",
-        url : "https://parents.mtsd.k12.nj.us" + home,
+        url : home,
         'rejectUnauthorized' : false,
         headers : {
           'cache-control' : 'no-cache',
