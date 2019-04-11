@@ -191,7 +191,7 @@ app.post('/relogin', passport.authenticate('local'), function (req,res){
         }else{
           console.log(response.statusCode);
           console.log(response.headers);
-          //cookie = response.headers['set-cookie'];
+          cookie = response.headers['set-cookie'];
           var cookieObject = {};
           cookieObject["cookie"] = cookie;
           js.push(cookieObject);
@@ -274,7 +274,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
             console.log("SEC REQUEST");
   					console.log(response.statusCode);
   					console.log(response.headers);
-  					//cookie = response.headers['set-cookie'];
+  					cookie = response.headers['set-cookie'];
             console.log(cookie);
             home = response.headers["location"];
   					console.log("https://parents.mtsd.k12.nj.us/genesis/"+home);
