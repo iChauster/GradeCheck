@@ -191,7 +191,7 @@ app.post('/relogin', passport.authenticate('local'), function (req,res){
         }else{
           console.log(response.statusCode);
           console.log(response.headers);
-          cookie = response.headers['set-cookie'];
+          //cookie = response.headers['set-cookie'];
           var cookieObject = {};
           cookieObject["cookie"] = cookie;
           js.push(cookieObject);
