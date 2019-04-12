@@ -174,7 +174,7 @@ app.post('/relogin', passport.authenticate('local'), function (req,res){
       console.log(response.statusCode);
       var home = response.headers['location'];
       var se = {method : "POST",
-        url : home,
+        url : "https://parents.mtsd.k12.nj.us" + home,
         'rejectUnauthorized' : false,
         headers : {
           'cache-control' : 'no-cache',
