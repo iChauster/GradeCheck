@@ -894,6 +894,8 @@ app.post('/listassignments',function(req,res){
                 var grademax;
                 if(gg[1] != undefined){
                   grademax = gg[1].trim();
+                  if(grademax && grademax.includes('Absent'))
+                    grademax = "0"
                 }else{
                   console.log("ret");
                   console.log(ratio);
@@ -903,10 +905,10 @@ app.post('/listassignments',function(req,res){
                   }
                   console.log(maxPoints);
                   grademax = maxPoints;
+                  if(grademax && grademax.includes('Absent'))
+                    grademax = "0"
                   grade = "";
                 }
-                if(grademax.includes('Absent'))
-                    grademax = "0"
                 value["gradeMax"] = grademax;
                 value["grade"] = grade;
                 if(gg.length == 1 && value["percent"] != ""){
