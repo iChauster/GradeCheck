@@ -896,15 +896,17 @@ app.post('/listassignments',function(req,res){
                   grademax = gg[1].trim();
                 }else{
                   console.log("ret");
-                    console.log(ratio);
-                    var gra = ratio.split(":");
-                    if(gra[1] != undefined){
-                      var maxPoints = gra[1].trim();
-                    }
-                    console.log(maxPoints);
-                    grademax = maxPoints;
-                    grade = "";
+                  console.log(ratio);
+                  var gra = ratio.split(":");
+                  if(gra[1] != undefined){
+                    var maxPoints = gra[1].trim();
+                  }
+                  console.log(maxPoints);
+                  grademax = maxPoints;
+                  grade = "";
                 }
+                if(grademax.includes('Absent'))
+                    grademax = "0"
                 value["gradeMax"] = grademax;
                 value["grade"] = grade;
                 if(gg.length == 1 && value["percent"] != ""){
