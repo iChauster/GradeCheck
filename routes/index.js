@@ -173,8 +173,12 @@ app.post('/relogin', passport.authenticate('local'), function (req,res){
       console.log(response.headers);
       console.log(response.statusCode);
       var home = response.headers['location'];
+      if (!home.startsWith('https')){
+        home = "https://parents.mtsd.k12.nj.us" + home;
+      }
+      console.log(home);
       var se = {method : "POST",
-        url : "https://parents.mtsd.k12.nj.us" + home,
+        url : home,
         'rejectUnauthorized' : false,
         headers : {
           'cache-control' : 'no-cache',
@@ -254,6 +258,9 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   				console.log(response.statusCode);
   				var home = response.headers['location'];
   				console.log(home);
+          if (!home.startsWith("https://")){
+            home = "https://parents.mtsd.k12.nj.us" + home;
+          }
   				var hoptions = {method : 'POST',
   					url : home,
   					'rejectUnauthorized' : false,
@@ -274,7 +281,9 @@ app.post('/login', passport.authenticate('local'),function (req,res){
             console.log("SEC REQUEST");
   					console.log(response.statusCode);
   					console.log(response.headers);
-  					cookie = response.headers['set-cookie'];
+            if (response.headers['set-cookie']){
+              cookie = response.headers['set-cookie']
+            }
             console.log(cookie);
             home = response.headers["location"];
   					console.log("https://parents.mtsd.k12.nj.us/genesis/"+home);
