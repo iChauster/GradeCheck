@@ -255,7 +255,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
   				var home = response.headers['location'];
   				console.log(home);
   				var hoptions = {method : 'POST',
-  					url : "https://parents.mtsd.k12.nj.us" + home,
+  					url : home,
   					'rejectUnauthorized' : false,
   					headers : {'cache-control' : 'no-cache',
   					'content-type': 'application/x-www-form-urlencoded',
@@ -270,7 +270,7 @@ app.post('/login', passport.authenticate('local'),function (req,res){
             res.end("Password incorrect");
           }else{
 	  			request(hoptions, function(error, response,body){
-  					if(error) throw new Error(error);
+  					if(error) console.log(error)
             console.log("SEC REQUEST");
   					console.log(response.statusCode);
   					console.log(response.headers);
