@@ -10,9 +10,7 @@ This application is used in conjunction with the iOS calendar and can project fu
 The Push Notification service was also working to check for changes, but we are working with the school itself to develop a better, more efficient way to be run. 
 
 # Screenshots
-<img src="/screenshots/GradeTable.PNG" width="285">
-<img src="/screenshots/Projections.PNG" width="285">
-<img src="/screenshots/Stats.PNG" width="285">
+<img src="/screenshots/GradeTable.PNG" width="285"> <img src="/screenshots/Projections.PNG" width="285"> <img src="/screenshots/Stats.PNG" width="285">
 
 ### future
 Ultimately, I want to impact the students, many of which are my peers, as much as possible. Creating this platform has already allowed many students to plan ahead and see where they need to focus and improve. 
