@@ -24,8 +24,8 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
     var sectio : String!
     var selectedCell : DetailGradeTableViewCell?
     var gradeFrame : CGRect!
-    let url = "http://gradecheck.herokuapp.com/"
-    //let url = "http://localhost:2800/"
+    //let url = "http://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
 
     @IBOutlet weak var navItem : UINavigationItem!;
     @IBOutlet weak var navBar : UINavigationBar!
@@ -156,7 +156,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         
         dataTask.resume()
     }
-    func handleLongPress(_ sender:UILongPressGestureRecognizer){
+    @objc func handleLongPress(_ sender:UILongPressGestureRecognizer){
         if(sender.state == .began){
             let press = sender.location(in: self.assignmentTable)
             if let indexPath = self.assignmentTable.indexPathForRow(at: press){
@@ -191,7 +191,7 @@ class DetailGradeViewController: UIViewController,UITableViewDataSource,UITableV
         cell.detail.text = assignDictionary.object(forKey: "details") as? String;
         cell.type.text = (object as AnyObject).object(forKey: "category") as? String;
         var g = (object as AnyObject).object(forKey: "percent") as! String;
-        if let a = String(g){
+        if let a = g as? String {
             cell.grade.grade.text = a
         }else{
             cell.grade.grade.text = "A"

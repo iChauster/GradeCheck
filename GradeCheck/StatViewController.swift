@@ -102,7 +102,7 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.sortedArray.append(new)
                 continue;
             }
-            if(((((a as AnyObject).object(forKey: "class")! as AnyObject).contains(" H") && ((a as AnyObject).object(forKey: "class") as! String).characters.last == "H") || ((a as AnyObject).object(forKey: "class")! as AnyObject).contains("AP") || ((a as AnyObject).object(forKey: "class")! as AnyObject).contains("Honors") || ((a as AnyObject).object(forKey: "class")! as AnyObject).contains("Hon")) && UserDefaults.standard.object(forKey: "GPA") as! String == "Weighted"){
+            if(((((a as AnyObject).object(forKey: "class")! as AnyObject).contains(" H") && ((a as AnyObject).object(forKey: "class") as! String).characters.last == "H") || ((a as AnyObject).object(forKey: "class")! as AnyObject).contains("AP") || ((a as AnyObject).object(forKey: "class")! as AnyObject).contains("Honors") || ((a as AnyObject).object(forKey: "class")! as AnyObject).contains("H-") || ((a as AnyObject).object(forKey: "class")! as AnyObject).contains("Hon")) && UserDefaults.standard.object(forKey: "GPA") as! String == "Weighted"){
                 grade = (a as AnyObject).object(forKey: "grade") as! String;
                 grade = String(grade.characters.dropLast());
                 gradeInt = Int(grade)! + 5;
@@ -138,7 +138,7 @@ class StatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         print(round(gpaAvg))
         let gpaDifference = 10 - round(gpaAvg)/10
         print(gpaDifference);
-        let gpa = 4.5 - gpaDifference;
+        let gpa = round(10*(4.5 - gpaDifference))/10;
         print(gpa);
         CellAnimation.growAndShrink(self.gpaCircle);
         self.gpaCircle.GPA.text = String(gpa)

@@ -22,7 +22,7 @@ app.get('/', function(req, res, next) {
   res.render('info');
 });
 app.post('/register', function(req, res) {
-	var actual = CryptoJS.AES.encrypt(req.body.password,"LookDown"); //should switch to process.env for higher security reasons
+	var actual = CryptoJS.AES.encrypt(req.body.password, ###); //should switch to process.env for higher security reasons
   isValid(req.body.username,req.body.password, function(bool){
     if(bool){
         console.log("GOOD TO PROCEED");
@@ -57,7 +57,6 @@ function isValid(username,pass,callback){
         if (error) throw new Error(error);
 
         cookie = response.headers['set-cookie'];
-        console.log(cookie);
         var options = { method: 'POST',
           url: 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
           'rejectUnauthorized' : false,
@@ -95,7 +94,6 @@ app.post('/update', function(req,res){
 			if(err){console.log(err)}
         	if (user) {
             	    if(req.body.username){
-                    console.log(req.body.username);
                     var a = {};
                     a["username"] = req.body.username;
                     User.find(a,function(err,users){
@@ -103,8 +101,6 @@ app.post('/update', function(req,res){
                         console.log(err);
                       }
                       if(users.length != 0){
-                        console.log(users.id);
-                        console.log("TAKEN");
                         User.remove({_id : ObjectID(req.body.id)}, function (err){
                           if(err){
                             console.log(err);
@@ -127,7 +123,7 @@ app.post('/update', function(req,res){
                     isValid(user.studId,req.body.preference, function (bool){
                       if(bool){
                         console.log("GOOD");
-                        var encrypts = CryptoJS.AES.encrypt(req.body.preference, "LookDown");
+                        var encrypts = CryptoJS.AES.encrypt(req.body.preference, ###);
                         user.preference = encrypts;
                         user.setPassword(req.body.preference);
                       }else{
@@ -218,15 +214,11 @@ app.post('/login', passport.authenticate('local'),function (req,res){
       username = req.body.email;
       console.log(username + "email found");
     }else if (req.user && req.user.studId != ""){
-      console.log(req.user);
       username = req.user.studId;
       console.log('dataBase EMAIL');
     }else{
       username = req.body.username;
-      console.log(username + "no email, go to username");
     }
-    console.log(username);
-    console.log(req.body.password);
 		var second = {method : 'GET',
 				url : 'https://parents.mtsd.k12.nj.us/genesis/', 
 				'rejectUnauthorized' : false,
@@ -238,7 +230,6 @@ app.post('/login', passport.authenticate('local'),function (req,res){
 			if (error) throw new Error(error);
       console.log(response.headers);
 			cookie = response.headers['set-cookie'];
-      console.log(cookie);
 			var options = { method: 'POST',
  	 			url: 'https://parents.mtsd.k12.nj.us/genesis/j_security_check',
  	 			'rejectUnauthorized' : false,
@@ -407,8 +398,8 @@ app.post('/alexa', function (req,res){
     var update = [];
     var username;
     var password;
-    username = "winnie2k6@gmail.com"
-    password = "ilovrain"
+    username = ###
+    password = ###
     var z = {
       response : {
         outputSpeech : {
@@ -642,8 +633,6 @@ app.post('/searchForSiblings', function (req,res){
 });
 app.post('/gradebook', function(req,res){
 	if(req.body.cookie && req.body.id){
-		console.log(req.body.cookie);
-		console.log(req.body.id);
 		var rep = [];
     var url = 'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=' + req.body.id + '&action=form';
     if(req.body.mp){
@@ -942,8 +931,6 @@ app.post('/listassignments',function(req,res){
 });
 app.post('/assignments', function(req, res){
 	if(req.body.cookie && req.body.id){
-		console.log(req.body.cookie);
-		console.log(req.body.id);
 		var total = [];
     var today = new Date();
     var dd = today.getDate();
@@ -1261,7 +1248,6 @@ app.post('/classdata', function(req,res){
 //https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=grading&tab3=history&action=form&studentid=000958
 app.post('/gradeHistory', function (req, res){
   
-  console.log('getting gradeHistory for student:' + req.body.id);
   if(req.body.cookie && req.body.id){
     var history = {method : 'GET',
       url:"https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=grading&tab3=history&action=form&studentid=" + req.body.id,
@@ -1328,7 +1314,7 @@ app.post('/classAverages', function(req,res){
     }else{
       markingP = markingPeriod
     }
-    console.log(req.body.cookie + " " + req.body.id);
+
     var gradebook = {method: 'GET',
         url:'https://parents.mtsd.k12.nj.us/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=coursesummary&studentid=' + req.body.id + 
       '&action=form&courseCode=' + req.body.course +"&courseSection="+ req.body.section + "&mp=" + markingP,

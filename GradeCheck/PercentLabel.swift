@@ -50,7 +50,7 @@ class PercentLabel: UILabel {
         }
     }
     
-    func updateValue(_ timer: Timer) {
+    @objc func updateValue(_ timer: Timer) {
         let now = Date.timeIntervalSinceReferenceDate
         
         progress = progress + now - lastUpdate

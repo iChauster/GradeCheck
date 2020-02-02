@@ -49,7 +49,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 console.log('running');
 // catch 404 and forward to error handler
-mongoose.connect('mongodb://gradecheck:awakenbti@ds019048.mlab.com:19048/gradecheck');
+mongoose.connect('###');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
@@ -111,6 +111,7 @@ setInterval(function(){
     console.log('taking a break. Be back in 6 hours ~');
   }
 }, thirty)
+
 function restart(){
   User.find({}, function(err,doc){
     if(err)
@@ -125,6 +126,24 @@ function restart(){
     });
   });
 }
+
+function clean(){
+  User.find({}, function(err,doc){
+    if(err)
+      console.log(err);
+    doc.forEach(function(doc){
+      if (doc['username'].match(/[a-z]/i)){
+        console.log('removing ' + doc['username'])
+        User.remove(doc, {justOne:true}, function(error, numberAffected, raw) {
+          if(error) console.log(err);
+        });
+      }
+    });
+  });
+}
+
+clean()
+
 /*var hour = 1*60*1000;
 setInterval(function(){
   console.log("Every Hour");
@@ -154,7 +173,6 @@ setInterval(function(){
       console.log(doc.username);
                                   
       var pref = doc.preference;
-      var s = CryptoJS.AES.decrypt(pref.toString(),"LookDown");
       var a = s.toString(CryptoJS.enc.Utf8);
       var cookie;
       var art = [];

@@ -38,6 +38,8 @@
 		2C9D84941F5CD57C0011A0C3 /* detailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C9D84931F5CD57C0011A0C3 /* detailCell.xib */; };
 		2C9D84981F5CD82C0011A0C3 /* SlideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9D84971F5CD82C0011A0C3 /* SlideCell.swift */; };
 		2C9D84A01F5CE0470011A0C3 /* Back-Chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9D849F1F5CE0470011A0C3 /* Back-Chevron.png */; };
+		2CA3478421F99096009E6B7A /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CA842962067392D00B3163B /* Charts.framework */; };
+		2CA3478521F99096009E6B7A /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CA842962067392D00B3163B /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2CA5B1511CC70E30005F80CE /* ExpandAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA5B1501CC70E30005F80CE /* ExpandAnimator.swift */; };
 		2CA8429A2067393600B3163B /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CA842962067392D00B3163B /* Charts.framework */; };
 		2CB7555E1F8BEE8C00E4A377 /* GPAViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7555D1F8BEE8C00E4A377 /* GPAViewCell.swift */; };
@@ -77,6 +79,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2CA3478621F99096009E6B7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CA842902067392D00B3163B /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A58A4ED274A941CA248EA921;
+			remoteInfo = Charts;
+		};
 		2CA842952067392D00B3163B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2CA842902067392D00B3163B /* Charts.xcodeproj */;
@@ -107,6 +116,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2CA3478521F99096009E6B7A /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CA8429A2067393600B3163B /* Charts.framework in Frameworks */,
+				2CA3478421F99096009E6B7A /* Charts.framework in Frameworks */,
 				2C918C4E1CAC8CA300C80299 /* SystemConfiguration.framework in Frameworks */,
 				2C19AF151CBC686000BB73DE /* OneSignal.framework in Frameworks */,
 			);
@@ -393,6 +404,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				2CA3478721F99096009E6B7A /* PBXTargetDependency */,
 			);
 			name = GradeCheck;
 			productName = GradeCheck;
@@ -456,6 +468,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -592,6 +605,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2CA3478721F99096009E6B7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Charts;
+			targetProxy = 2CA3478621F99096009E6B7A /* PBXContainerItemProxy */;
+		};
 		EDBE85F21C78ED290031EE8B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EDBE85DB1C78ED270031EE8B /* GradeCheck */;
@@ -729,7 +747,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -756,7 +774,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GradeCheck/GradeCheck-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

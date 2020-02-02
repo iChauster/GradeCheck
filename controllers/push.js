@@ -74,7 +74,7 @@ module.exports = {
 	},
 	retrieveData : function(doc, callback){
 		var pref = doc.preference,
-			s = CryptoJS.AES.decrypt(pref.toString(),"LookDown"),
+			s = CryptoJS.AES.decrypt(pref.toString(), ###),
 			a = s.toString(CryptoJS.enc.Utf8);
 			gradesArray = doc.grades
 		var u = doc.studId

@@ -142,7 +142,7 @@ class AssignmentsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
     }
-    func handleLongPress(_ sender: UILongPressGestureRecognizer){
+    @objc func handleLongPress(_ sender: UILongPressGestureRecognizer){
         if (sender.state == .began){
             let touchPoint = sender.location(in: self.view)
             if let indexPath = self.tableView.indexPathForRow(at: touchPoint){
@@ -169,8 +169,8 @@ class AssignmentsTableViewController: UITableViewController {
             }
         }
     }
-    func refresh(){
-        self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSForegroundColorAttributeName:UIColor.white])
+    @objc func refresh(){
+        self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
         let headers = [
             "cache-control": "no-cache",
             "content-type": "application/x-www-form-urlencoded"

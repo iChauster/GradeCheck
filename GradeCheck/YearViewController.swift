@@ -100,7 +100,7 @@ class YearViewController: UIViewController, UITableViewDelegate, UITableViewData
             if(a["grade"] == "No Grades" || a["grade"] == "0%"){
                 continue;
             }
-            if((((a["class"]?.contains(" H"))! && a["class"]?.characters.last == "H") || (a["class"]?.contains("AP"))! || (a["class"]?.contains("Honors"))! || (a["class"]?.contains("Hon"))!) && UserDefaults.standard.object(forKey: "GPA") as! String == "Weighted"){
+            if((((a["class"]?.contains(" H"))! && a["class"]?.characters.last == "H") || (a["class"]?.contains("AP"))! || (a["class"]?.contains("Honors"))! || ((a["class"]?.contains("H-"))!) || (a["class"]?.contains("Hon"))!) && UserDefaults.standard.object(forKey: "GPA") as! String == "Weighted"){
                 grade = a["grade"]
                 gradeInt = Int(grade)! + 5;
                 gradeTotal += Double(gradeInt);
@@ -133,7 +133,7 @@ class YearViewController: UIViewController, UITableViewDelegate, UITableViewData
         print(round(gpaAvg))
         let gpaDifference = 10 - round(gpaAvg)/10
         print(gpaDifference);
-        let gpa = 4.5 - gpaDifference;
+        let gpa = round(10*(4.5 - gpaDifference))/10;
         print(gpa);
         self.GPA.text = String(gpa)
         self.numericalGPA.text = String(average) + "%";

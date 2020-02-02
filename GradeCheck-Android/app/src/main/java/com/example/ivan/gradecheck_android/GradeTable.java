@@ -303,7 +303,7 @@ public class GradeTable extends AppCompatActivity{
                     sortedArray.add(g);
                     continue;
                 }
-                if((className.contains(" H") && className.charAt(className.length()-1) == 'H') || className.contains("Honors") || className.contains("AP") || className.contains("Hon")){
+                if((className.contains("-H") && className.contains(" H") && className.charAt(className.length()-1) == 'H') || className.contains("Honors") || className.contains("AP") || className.contains("Hon")){
                     System.out.println(className + " is a Honors Class");
                     double grade = doubGrade + 5;
                     gradeTotal += grade;

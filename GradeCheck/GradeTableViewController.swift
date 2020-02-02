@@ -42,7 +42,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
     override var prefersStatusBarHidden : Bool {
         return true;
     }
-    func refreshHandler(){
+    @objc func refreshHandler(){
         self.refresh { (b : Bool) in
             if(b){
                 if(UserDefaults.standard.object(forKey: "GradeTableMP") != nil && UserDefaults.standard.object(forKey: "GradeTableMP") as! String != "MP4"){
@@ -63,7 +63,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
         presentationAnimator.transitionMode = .dismiss;
         return presentationAnimator
     }
-    func markingPeriodSwitch(_ sender:UILongPressGestureRecognizer){
+    @objc func markingPeriodSwitch(_ sender:UILongPressGestureRecognizer){
         print("longPress:",sender.state.rawValue);
         if(sender.state == .began){
             let blurEffect = UIBlurEffect(style: .light)
@@ -205,7 +205,7 @@ class GradeTableViewController: UITableViewController, UIViewControllerTransitio
     
     func refresh(_ comp: @escaping (_ needsReload : Bool) -> Void){
         DispatchQueue.main.async {
-            self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSForegroundColorAttributeName:UIColor.white])
+            self.refreshControl!.attributedTitle = NSAttributedString(string: "Hang Tight", attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
             print("refreshing....")
         }
         if(self.cookie == ""){

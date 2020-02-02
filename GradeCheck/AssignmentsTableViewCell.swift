@@ -65,7 +65,7 @@ class AssignmentsTableViewCell: UITableViewCell {
                         if let c = eventStore.calendar(withIdentifier: UserDefaults.standard.object(forKey: "calendarIdentifier") as! String) {
                             calendar = c
                         }else{
-                            calendar = eventStore.defaultCalendarForNewEvents
+                            calendar = eventStore.defaultCalendarForNewEvents!
                         }
                     }
                     print("granted \(granted)")

@@ -218,7 +218,7 @@ class LoginViewController: UIViewController, CAAnimationDelegate {
             // Do any additional setup after loading the view.
         }
     }
-    func dismissKeyboard(){
+    @objc func dismissKeyboard(){
         if(self.usn.isFirstResponder || self.psw.isFirstResponder){
             self.usn.resignFirstResponder()
             self.psw.resignFirstResponder();

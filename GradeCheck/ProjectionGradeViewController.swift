@@ -31,8 +31,8 @@ class ProjectionGradeViewController: UIViewController {
     var markingPeriod : String?
     var data : NSArray!
     var otherAssignments : NSArray!
-    //let url = "http://localhost:2800/"
-    let url = "http://gradecheck.herokuapp.com/"
+    let url = "http://localhost:2800/"
+    //let url = "http://gradecheck.herokuapp.com/"
     var final : NSMutableDictionary! = NSMutableDictionary()
     var weights : NSMutableArray! = NSMutableArray()
     var originalMin : NSDictionary! = NSDictionary()
@@ -173,6 +173,7 @@ class ProjectionGradeViewController: UIViewController {
                         let array = val as! NSMutableArray
                         var min = array[0] as! Double
                         var max = array[1] as! Double
+                        print(dict)
                         if let dou = Double(dict["grade"] as! String){
                             min += dou
                             max += Double(dict["gradeMax"] as! String)!

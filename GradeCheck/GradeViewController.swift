@@ -19,10 +19,10 @@ class GradeViewController: UITabBarController {
         self.tabBar.tintColor = UIColor(red: 55/255, green: 127/255, blue: 58/255, alpha: 1.0);
         let items = self.tabBar.items
         for item in items! {
-            let unselectedItem: NSDictionary = [NSForegroundColorAttributeName: UIColor(red: 55/255, green: 127/255, blue: 58/255, alpha: 1.0)]
-            let selectedItem: NSDictionary = [NSForegroundColorAttributeName: UIColor(red: 91/255, green: 208/255, blue: 98/255, alpha: 1.0)]
-            item.setTitleTextAttributes(unselectedItem as? [String : AnyObject], for: UIControlState())
-            item.setTitleTextAttributes(selectedItem as? [String : AnyObject], for: .selected)
+            let unselectedItem: NSDictionary = [NSAttributedStringKey.foregroundColor: UIColor(red: 55/255, green: 127/255, blue: 58/255, alpha: 1.0)]
+            let selectedItem: NSDictionary = [NSAttributedStringKey.foregroundColor: UIColor(red: 91/255, green: 208/255, blue: 98/255, alpha: 1.0)]
+            item.setTitleTextAttributes(unselectedItem as? [NSAttributedStringKey : AnyObject], for: UIControlState())
+            item.setTitleTextAttributes(selectedItem as? [NSAttributedStringKey : AnyObject], for: .selected)
         }
         
         print("Load");
@@ -49,7 +49,7 @@ class GradeViewController: UITabBarController {
         self.tabBar.addGestureRecognizer(rightSwipe)
         // Do any additional setup after loading the view.
     }
-    func refreshAndLogin(_ cookie:String, comp: @escaping (_ needsReload : Bool) -> Void) {
+    @objc func refreshAndLogin(_ cookie:String, comp: @escaping (_ needsReload : Bool) -> Void) {
         print(cookie);
         let headers = [
             "cache-control": "no-cache",
@@ -124,7 +124,7 @@ class GradeViewController: UITabBarController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func swipeLeft(){
+    @objc func swipeLeft(){
         print("swipe left")
         let a = self.selectedIndex
         if (a < 2){
@@ -133,7 +133,7 @@ class GradeViewController: UITabBarController {
             self.selectedIndex = 0;
         }
     }
-    func swipeRight(){
+    @objc func swipeRight(){
         print("swipe right")
         let a = self.selectedIndex
         if (a > 0){
