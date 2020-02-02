@@ -17,7 +17,7 @@
     "moment": "^2.12.0",
     "moment-timezone": "^0.5.11",
     "mongodb": "^2.1.11",
-    "mongoose": "^4.4.10",
+    "mongoose": "^5.8.11",
     "morgan": "^1.6.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
