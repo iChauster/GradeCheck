@@ -16,7 +16,7 @@
     "jade": "^1.11.0",
     "moment": "^2.12.0",
     "moment-timezone": "^0.5.11",
-    "mongodb": "^2.1.11",
+    "mongodb": "^3.6.1",
     "mongoose": "^5.8.11",
     "morgan": "^1.6.1",
     "passport": "^0.3.2",
